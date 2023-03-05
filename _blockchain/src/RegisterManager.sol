@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
+import "../lib/@openzeppelin/contracts/security/Pausable.sol";
+import "../lib/@openzeppelin/contracts/access/AccessControl.sol";
+import "../lib/@openzeppelin/contracts/proxy/utils/Initializable.sol";
 
 /// @title Participant
 /// @notice Represents a participant in the event.

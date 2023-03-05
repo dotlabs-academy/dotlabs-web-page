@@ -2,7 +2,7 @@
 pragma solidity 0.8.17;
 
 import "../lib/forge-std/src/Test.sol";
-import "../contracts/RegisterManagerV1.sol";
+import "../src/RegisterManager.sol";
 
 contract RegisterManagerV1Test is Test {
     RegisterManagerV1 registerManagerV1;
