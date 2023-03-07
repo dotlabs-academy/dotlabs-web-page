@@ -2,17 +2,17 @@ import { ComponentWithBooleanAction } from "../../types/index";
 
 export const Guide = ({ action }: ComponentWithBooleanAction) => {
   const darkerText = (text: string) => (
-    <span className="text-zinc-400">{text}</span>
+    <span className="text-zinc-500">{text}</span>
   );
   return (
-    <div className="flex flex-col font-bold text-zinc-300 font-mono gap-5">
+    <div className="flex flex-col font-bold text-zinc-400 font-mono gap-5">
       <p>There are some many things you need to know before.</p>
       <ul className="flex flex-col gap-2">
         <li>
-          You need at least {darkerText(" 0.6 Goerli ETH")} to get register your
-          participation.
-          {darkerText(" 0.5 Goerli ETH")} to pay the registration fee and{" "}
-          {darkerText(" 0.1 Goerli ETH")} to pay the gas fee with no problems.
+          You need at least {darkerText(" 0.15 Goerli ETH")} to get register
+          your participation.
+          {darkerText(" 0.1 Goerli ETH")} to pay the registration fee and{" "}
+          {darkerText(" 0.05 Goerli ETH")} to pay the gas fee without problems.
         </li>
         <li>
           You will get back the registration fee when you proof your presence in

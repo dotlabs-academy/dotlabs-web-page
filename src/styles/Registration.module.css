@@ -1,0 +1,18 @@
+.containerBlackBorder {
+  border: 3px solid black;
+  border-radius: 20px;
+  box-shadow: 8px 8px black;
+  padding: 2.5rem 5%;
+}
+
+.containerBlackBorderSM {
+  border: 3px solid black;
+  border-radius: 20px;
+  box-shadow: 6px 6px black;
+  padding: 0.3rem 5%;
+  width: 50%;
+}
+
+.containerBlackBorderSM:hover {
+  box-shadow: 2px 2px black;
+}

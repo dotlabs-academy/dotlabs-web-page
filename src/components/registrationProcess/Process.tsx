@@ -7,18 +7,13 @@ import { ConnectedButton } from "../buttons/ConnectedButton";
 import { RegistrationForm } from "@/components/registrationProcess/Form";
 
 export const RegistrationProcess = () => {
-  const { address, isDisconnected } = useAccount();
+  const { address, isDisconnected, isConnecting, isConnected } = useAccount();
   const { setOpen } = useModal();
-  const [isConnected, setIsConnected] = useState(false);
   const [isAcceptedConditions, setIsAcceptedConditions] = useState(false);
 
-  useEffect(() => {
-    if (!isDisconnected) {
-      setIsConnected(!isDisconnected);
-    }
-  }, [isDisconnected]);
+  useEffect(() => {}, [isDisconnected]);
 
-  const renderIfConnected = () => {
+  const renderIfWalletConnected = () => {
     return (
       <div className="flex flex-col gap-5">
         {isConnected && <ConnectedButton action={setOpen} />}
@@ -30,20 +25,22 @@ export const RegistrationProcess = () => {
     );
   };
 
-  const renderIfDisconnected = () => {
+  const renderIfWalletDisconnected = () => {
     return (
       <>
-        <p className="text-2xl font-bold text-zinc-300 font-mono ">
+        <p className="text-2xl font-bold text-zinc-400  ">
           Please connect your wallet to start
         </p>
-        <ConnectKitButton theme="soft" />
+        <ConnectKitButton theme="retro" />
       </>
     );
   };
 
   return (
     <div className="flex flex-col items-center mt-5 gap-5">
-      {isDisconnected ? renderIfDisconnected() : renderIfConnected()}
+      {isDisconnected
+        ? renderIfWalletDisconnected()
+        : renderIfWalletConnected()}
     </div>
   );
 };
