@@ -1,50 +1,36 @@
-import styles from "@/styles/Registration.module.css";
 import { useAccount } from "wagmi";
 import { useFormik } from "formik";
-import { LabelStd } from "../formUtils/LabelStd";
-import { InputErrorStd } from "../formUtils/InputErrorStd";
-import { validateField, checkStateAndSetClass } from "../../../lib/formUtils";
+
+import styles from "@/styles/Registration.module.css";
+import { LabelStd } from "../common/LabelStd";
+import { InputErrorStd } from "../common/InputErrorStd";
+import { FormValues } from "../../../lib/formUtils";
+import {
+  checkStateAndSetClass,
+  validate,
+  resetForm,
+} from "../../../lib/formUtils";
 
 const labelStdClassName = "text-xl font-bold";
 const labelInputContainerClassName = "flex flex-col items-center gap-2";
 const inputClassName =
   "min-w-[250px] w-full border-2 border-zinc-300 text-zinc-500 rounded-md px-3 py-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent focus:shadow-md";
 
-const validate = (values: any) => {
-  let errors: any = {};
-
-  errors.name = validateField({ value: values.name, minLength: 6 });
-  errors.legalID = validateField({
-    value: values.legalID,
-    minLength: 10,
-    isLegalID: true,
-  });
-  errors.email = validateField({
-    value: values.email,
-    minLength: 10,
-    isEmail: true,
-  });
-  errors.eps = validateField({ value: values.eps, minLength: 3 });
-
-  if (Object.values(errors).every((error) => error === undefined)) {
-    errors = {};
-  }
-
-  return errors;
+const initialsFormValues: FormValues = {
+  name: "",
+  legalID: "",
+  email: "",
+  eps: "",
 };
 
 export const RegistrationForm = () => {
   const { address } = useAccount();
 
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      legalID: "",
-      email: "",
-      eps: "",
-    },
+    initialValues: initialsFormValues,
     validate,
     onSubmit: (values) => {
+      resetForm(formik, initialsFormValues);
       alert(JSON.stringify(values, null, 2));
     },
   });

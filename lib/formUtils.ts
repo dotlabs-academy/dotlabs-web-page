@@ -6,6 +6,13 @@ interface ValidateFieldOptions {
   isLegalID?: boolean;
 }
 
+export interface FormValues {
+  name: string;
+  legalID: string;
+  email: string;
+  eps: string;
+}
+
 export const validateField = ({
   value,
   minLength = 5,
@@ -15,6 +22,8 @@ export const validateField = ({
 }: ValidateFieldOptions) => {
   if (!value) {
     return "Required";
+  } else if (value === "") {
+    return;
   } else if (value.length < minLength) {
     return `Must be ${minLength} characters or more`;
   } else if (value.length > maxLength) {
@@ -33,6 +42,40 @@ export const validateField = ({
       }
     }
   }
+};
+
+export const validate = (values: FormValues) => {
+  let errors: any = {};
+
+  errors.name = validateField({ value: values.name, minLength: 6 });
+  errors.legalID = validateField({
+    value: values.legalID,
+    minLength: 10,
+    isLegalID: true,
+  });
+  errors.email = validateField({
+    value: values.email,
+    minLength: 10,
+    isEmail: true,
+  });
+  errors.eps = validateField({ value: values.eps, minLength: 3 });
+
+  if (Object.values(errors).every((error) => error === undefined)) {
+    errors = {};
+  }
+
+  return errors;
+};
+
+// ! type
+export const resetForm = (formik: any, defaultValues: FormValues) => {
+  formik.setValues(defaultValues);
+  formik.setTouched({
+    name: false,
+    legalID: false,
+    email: false,
+    eps: false,
+  });
 };
 
 export const checkStateAndSetClass = (

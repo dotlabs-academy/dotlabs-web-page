@@ -7,20 +7,31 @@ import { ConnectedButton } from "../buttons/ConnectedButton";
 import { RegistrationForm } from "@/components/registrationProcess/Form";
 
 export const RegistrationProcess = () => {
-  const { address, isDisconnected, isConnecting, isConnected } = useAccount();
+  const { address, isDisconnected, isConnecting, isConnected, isReconnecting } =
+    useAccount();
   const { setOpen } = useModal();
   const [isAcceptedConditions, setIsAcceptedConditions] = useState(false);
 
   useEffect(() => {}, [isDisconnected]);
 
   const renderIfWalletConnected = () => {
+    const renderGuide = () => {
+      if (!isAcceptedConditions && isConnected)
+        return <Guide action={setIsAcceptedConditions} />;
+
+      return null;
+    };
+
+    const renderForm = () => {
+      if (isAcceptedConditions && isConnected) return <RegistrationForm />;
+      return null;
+    };
+
     return (
       <div className="flex flex-col gap-5">
-        {isConnected && <ConnectedButton action={setOpen} />}
-        {!isAcceptedConditions && isConnected && (
-          <Guide action={setIsAcceptedConditions} />
-        )}
-        {isAcceptedConditions && <RegistrationForm />}
+        <ConnectedButton action={setOpen} />
+        {renderGuide()}
+        {renderForm()}
       </div>
     );
   };
@@ -38,7 +49,7 @@ export const RegistrationProcess = () => {
 
   return (
     <div className="flex flex-col items-center mt-5 gap-5">
-      {isDisconnected
+      {isDisconnected || isConnecting || isReconnecting
         ? renderIfWalletDisconnected()
         : renderIfWalletConnected()}
     </div>
