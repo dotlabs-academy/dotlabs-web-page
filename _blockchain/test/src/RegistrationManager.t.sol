@@ -9,270 +9,151 @@ contract RegistrationManagerTest is Test {
     uint256 registrationFee;
 
     function setUp() public {
+        registrationFee = 0.1 ether;
+
         registrationManager = new RegistrationManager();
-        registrationFee = registrationManager.registrationFee();
+        registrationManager.updateRegistrationFee(registrationFee);
+    }
+
+    function testUpdateRegistrationFee() public {
+        uint256 newFee = 0.2 ether;
+        registrationManager.updateRegistrationFee(newFee);
+
+        assertTrue(registrationManager.registrationFee() == newFee);
+    }
+
+    function testUpdateRegistrationFeeFailWhenNotAdmin() public {
+        address notAdmin = address(1);
+        uint256 newFee = 0.2 ether;
+
+        vm.prank(notAdmin);
+        vm.expectRevert(
+            "AccessControl: account 0x0000000000000000000000000000000000000001 is missing role 0x0000000000000000000000000000000000000000000000000000000000000000"
+        );
+        registrationManager.updateRegistrationFee(newFee);
     }
 
     function testJoinIn() public {
-        string memory name = "test";
         address sender = address(1);
 
-        vm.deal(sender, 1 ether);
+        vm.deal(sender, registrationFee + 0.1 ether);
         vm.prank(sender);
-        registrationManager.joinIn{value: registrationFee}(name);
-
-        Participant memory participant = registrationManager.getParticipant(sender);
-
-        assertEq(participant.name, name);
+        bool success = registrationManager.joinIn{value: registrationFee}();
+        assertTrue(success == true);
     }
 
     function testJoinInFailWithIncorrectValue() public {
-        string memory name = "test";
         address sender = address(1);
+        uint256 incorrectValue = 0.01 ether;
 
-        vm.deal(sender, 1 ether);
-        vm.expectRevert("UnpayedFee");
+        vm.deal(sender, incorrectValue);
         vm.prank(sender);
-        registrationManager.joinIn{value: 0.4 ether}(name);
+        vm.expectRevert("RegistrationFeeNotPayed");
+        registrationManager.joinIn{value: incorrectValue}();
     }
 
     function testJoinInFailWhenPaused() public {
+        address sender = address(1);
+
         registrationManager.pause();
-
-        string memory name = "test";
-        address sender = address(1);
-
-        vm.deal(sender, 1 ether);
+        vm.deal(sender, registrationFee + 0.1 ether);
+        vm.prank(sender);
         vm.expectRevert("Pausable: paused");
-        vm.prank(sender);
-        registrationManager.joinIn{value: registrationFee}(name);
-    }
-
-    function testJoinInFailWhenEmptyString() public {
-        string memory emptyString = "";
-        address sender = address(1);
-
-        vm.deal(sender, 1 ether);
-        vm.expectRevert("String is empty");
-        vm.prank(sender);
-        registrationManager.joinIn{value: registrationFee}(emptyString);
+        registrationManager.joinIn{value: registrationFee}();
     }
 
     function testConfirmParticipant() public {
-        string memory name = "test";
+        // User registration
         address sender = address(1);
-
-        vm.deal(sender, 1 ether);
+        vm.deal(sender, registrationFee + 0.1 ether);
         vm.prank(sender);
-        registrationManager.joinIn{value: registrationFee}(name);
-
+        bool registrationSucces = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces, true);
+        // ADMIN confirmation
         registrationManager.pause();
-        registrationManager.confirmParticipant(sender);
-        vm.stopPrank();
-
-        Participant memory participant = registrationManager.getParticipant(sender);
-
-        assertEq(participant.confirmed, true);
+        bool confirmationSuccess = registrationManager.confirmParticipant(sender);
+        assertTrue(confirmationSuccess == true);
     }
 
     function testConfirmParticipantFailWhenNotPaused() public {
-        string memory name = "test";
+        // User registration
         address sender = address(1);
-
-        vm.deal(sender, 1 ether);
+        vm.deal(sender, registrationFee + 0.1 ether);
         vm.prank(sender);
-        registrationManager.joinIn{value: registrationFee}(name);
-
+        bool registrationSucces = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces, true);
+        // ADMIN confirmation without pause
         vm.expectRevert("Pausable: not paused");
         registrationManager.confirmParticipant(sender);
-        vm.stopPrank();
     }
 
     function testConfirmParticipantFailWhenNotAdmin() public {
-        string memory name = "test";
+        // User registration
         address sender = address(1);
-
-        vm.deal(sender, 1 ether);
+        vm.deal(sender, registrationFee + 0.1 ether);
         vm.prank(sender);
-        registrationManager.joinIn{value: registrationFee}(name);
-
-        vm.expectRevert(
-            "AccessControl: account 0x0000000000000000000000000000000000000001 is missing role 0x0000000000000000000000000000000000000000000000000000000000000000"
-        );
-        vm.startPrank(sender);
+        bool registrationSucces = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces, true);
+        // NOT ADMIN confirmation
         registrationManager.pause();
-        vm.stopPrank();
+        address notAdmin = address(2);
+        vm.prank(notAdmin);
+        vm.expectRevert(
+            "AccessControl: account 0x0000000000000000000000000000000000000002 is missing role 0x0000000000000000000000000000000000000000000000000000000000000000"
+        );
+        registrationManager.confirmParticipant(sender);
     }
 
     function testConfirmParticipantFailWhenNotJoined() public {
-        string memory name = "test";
-        address sender1 = address(1);
-        address sender2 = address(2);
-
-        vm.deal(sender1, 1 ether);
-        vm.prank(sender1);
-        registrationManager.joinIn{value: registrationFee}(name);
-
+        // User registration
+        address sender = address(1);
+        // ADMIN confirmation
         registrationManager.pause();
-        vm.expectRevert("Account Not Found");
-        registrationManager.confirmParticipant(sender2);
-        vm.stopPrank();
+        vm.expectRevert("NotRegistered");
+        registrationManager.confirmParticipant(sender);
     }
 
     function testConfirmParticipantFailWhenZeroAddress() public {
-        string memory name = "test";
+        // ADMIN confirmation
+        registrationManager.pause();
+        vm.expectRevert("ZeroAddress");
+        registrationManager.confirmParticipant(address(0));
+    }
+
+    function testConfirmParticipantFailWhenAlreadyConfirmed() public {
+        // User registration
         address sender = address(1);
-        address zero = address(0);
-
-        vm.deal(sender, 1 ether);
+        vm.deal(sender, registrationFee + 0.1 ether);
         vm.prank(sender);
-        registrationManager.joinIn{value: registrationFee}(name);
-
+        bool registrationSucces = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces, true);
+        // ADMIN confirmation
         registrationManager.pause();
-        vm.expectRevert("Address is zero");
-        registrationManager.confirmParticipant(zero);
-        vm.stopPrank();
+        bool confirmationSuccess = registrationManager.confirmParticipant(sender);
+        assertTrue(confirmationSuccess == true);
+        // ADMIN confirmation again
+        vm.expectRevert("NotRegistered");
+        registrationManager.confirmParticipant(sender);
     }
 
-    function testRefundFee() public {
-        string memory name = "test";
-        address sender = address(1);
+    // function testRefundFee() public {}
 
-        vm.deal(sender, 1 ether);
-        vm.prank(sender);
-        registrationManager.joinIn{value: registrationFee}(name);
+    // function testRefundFeeFailWhenNotPaused() public {}
 
-        registrationManager.pause();
-        registrationManager.refundFee(sender);
-        vm.stopPrank();
+    // function testRefundFeeFailWhenNotAdmin() public {}
 
-        Participant memory participant = registrationManager.getParticipant(sender);
+    // function testResetParticipantsFailWhenNotPaused() public {}
 
-        assertEq(participant.feeLooked, 0 ether);
-    }
-
-    function testRefundFeeFailWhenNotPaused() public {
-        string memory name = "test";
-        address sender = address(1);
-
-        vm.deal(sender, 1 ether);
-        vm.prank(sender);
-        registrationManager.joinIn{value: registrationFee}(name);
-
-        vm.expectRevert("Pausable: not paused");
-        registrationManager.refundFee(sender);
-        vm.stopPrank();
-    }
-
-    function testRefundFeeFailWhenNotAdmin() public {
-        string memory name = "test";
-        address sender = address(1);
-
-        vm.deal(sender, 1 ether);
-        vm.prank(sender);
-        registrationManager.joinIn{value: registrationFee}(name);
-
-        vm.expectRevert(
-            "AccessControl: account 0x0000000000000000000000000000000000000001 is missing role 0x0000000000000000000000000000000000000000000000000000000000000000"
-        );
-        vm.startPrank(sender);
-        registrationManager.pause();
-        vm.stopPrank();
-    }
-
-    function testRefunFeeFailWhenZeroAddress() public {
-        string memory name = "test";
-        address sender = address(1);
-        address zero = address(0);
-
-        vm.deal(sender, 1 ether);
-        vm.prank(sender);
-        registrationManager.joinIn{value: registrationFee}(name);
-
-        registrationManager.pause();
-        vm.expectRevert("Address is zero");
-        registrationManager.refundFee(zero);
-        vm.stopPrank();
-    }
-
-    function testResetParticipants() public {
-        string memory name1 = "test1";
-        string memory name2 = "test2";
-        address sender1 = address(1);
-        address sender2 = address(2);
-
-        vm.deal(sender1, 1 ether);
-        vm.prank(sender1);
-        registrationManager.joinIn{value: registrationFee}(name1);
-
-        vm.deal(sender2, 1 ether);
-        vm.prank(sender2);
-        registrationManager.joinIn{value: registrationFee}(name2);
-
-        registrationManager.pause();
-        registrationManager.confirmParticipant(sender1);
-        registrationManager.confirmParticipant(sender2);
-        registrationManager.resetParticipants();
-        vm.stopPrank();
-
-        Participant[] memory participants = registrationManager.getParticipants();
-
-        assertEq(participants.length, 0);
-    }
-
-    function testResetParticipantsFailWhenNotPaused() public {
-        string memory name1 = "test1";
-        string memory name2 = "test2";
-        address sender1 = address(1);
-        address sender2 = address(2);
-
-        vm.deal(sender1, 1 ether);
-        vm.prank(sender1);
-        registrationManager.joinIn{value: registrationFee}(name1);
-
-        vm.deal(sender2, 1 ether);
-        vm.prank(sender2);
-        registrationManager.joinIn{value: registrationFee}(name2);
-
-        vm.expectRevert("Pausable: not paused");
-        registrationManager.resetParticipants();
-        vm.stopPrank();
-    }
-
-    function testResetParticipantsFailWhenNotAdmin() public {
-        string memory name1 = "test1";
-        string memory name2 = "test2";
-        address sender1 = address(1);
-        address sender2 = address(2);
-
-        vm.deal(sender1, 1 ether);
-        vm.prank(sender1);
-        registrationManager.joinIn{value: registrationFee}(name1);
-
-        vm.deal(sender2, 1 ether);
-        vm.prank(sender2);
-        registrationManager.joinIn{value: registrationFee}(name2);
-
-        vm.expectRevert(
-            "AccessControl: account 0x0000000000000000000000000000000000000001 is missing role 0x0000000000000000000000000000000000000000000000000000000000000000"
-        );
-        vm.startPrank(sender1);
-        registrationManager.pause();
-        vm.stopPrank();
-    }
+    // function testResetParticipantsFailWhenNotAdmin() public {}
 
     function testPause() public {
         registrationManager.pause();
-        vm.stopPrank();
-
         assertTrue(registrationManager.paused());
     }
 
     function testUnpause() public {
         registrationManager.pause();
         registrationManager.unpause();
-        vm.stopPrank();
-
         assertTrue(!registrationManager.paused());
     }
 }

@@ -6,34 +6,26 @@ import "../lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
 import "../lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol";
 import "../lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol";
 
-/// @title Participant
-/// @notice Represents a participant in the event.
-struct Participant {
-    /// @notice The name of the participant.
-    string name;
-    /// @notice The Ethereum wallet address of the participant.
-    address walletAddress;
-    /// @notice Indicates whether the participant has been confirmed by an DEFAULT_ADMIN_ROLE.
-    bool confirmed;
-    /// @notice The fee the participant has agreed to pay to participate in the event, in wei. This amount will be refunded if the participant attends.
-    uint256 feeLooked;
-}
-
 /// @custom:security-contact cocodrilette@gmail.com
 contract RegistrationManager is Initializable, Pausable, AccessControl, ReentrancyGuard {
-    uint256 public registrationFee = 0.5 ether;
+    uint256 public registrationFee;
 
-    mapping(address => bool) private isRegistered;
-    mapping(address => uint256) private participantIndexByAddress;
-    Participant[] public participants;
+    /// @notice This is the most efficient way to know if a user is registered.
+    mapping(address => bool) public isRegistered;
+    mapping(address => bool) public isConfirmed;
+    address[] public registeredUsers;
 
-    modifier notEmptyString(string memory _string) {
-        require(bytes(_string).length != 0, "String is empty");
+    event RegistrationFeeUpdated(address indexed admin, uint256 newFee, uint256 previosFee);
+    event UserRegistered(address indexed newUser);
+
+    modifier notContractSender() {
+        if ((msg.sender).code.length != 0) revert("SenderIsContract");
         _;
     }
 
     modifier notZeroAddress(address _address) {
-        require(_address != address(0), "Address is zero");
+        if (_address == address(0)) revert("ZeroAddress");
+        if (msg.sender == address(0)) revert("ZeroAddress");
         _;
     }
 
@@ -42,19 +34,29 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
     }
 
     /**
+     * @param _newFee The value to rewrite the current `registrationFee`
+     * @return A boolean value indicating whether the operation was successful.
+     */
+    function updateRegistrationFee(uint256 _newFee) external whenPaused onlyRole(DEFAULT_ADMIN_ROLE) returns (bool) {
+        uint256 prevFee = registrationFee;
+        registrationFee = _newFee;
+
+        emit RegistrationFeeUpdated(msg.sender, _newFee, prevFee);
+        return true;
+    }
+
+    /**
      * @dev Allow a participant to join in by paying the registration fee.
-     * @param _name The name of the participant.
      * @return A boolean value indicating whether the operation was successful.
      * @dev The participant must not have already registered and must pay the registration fee.
      */
-    function joinIn(string calldata _name) external payable whenNotPaused notEmptyString(_name) returns (bool) {
-        address sender = _getSenderSafe();
-        if (isRegistered[sender]) revert("AlreadyRegistered");
-        if (msg.value != registrationFee) revert("UnpayedFee");
+    function joinIn() external payable whenNotPaused notContractSender returns (bool) {
+        if (msg.value != registrationFee) revert("RegistrationFeeNotPayed");
 
-        participantIndexByAddress[sender] = participants.length;
-        participants.push(Participant({name: _name, walletAddress: sender, confirmed: false, feeLooked: msg.value}));
-        isRegistered[sender] = true;
+        if (isRegistered[msg.sender]) revert("AlreadyRegistered");
+
+        isRegistered[msg.sender] = true;
+        registeredUsers.push(msg.sender);
 
         return true;
     }
@@ -69,14 +71,13 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
     function confirmParticipant(address _account)
         external
         onlyRole(DEFAULT_ADMIN_ROLE)
-        whenPaused
         notZeroAddress(_account)
+        whenPaused
         returns (bool)
     {
-        Participant storage participant = _getParticipant(_account);
-        if (participant.confirmed) revert("AlreadyConfirmed");
-        participant.confirmed = true;
-        isRegistered[_account] = false;
+        if (isRegistered[_account] == false) revert("NotRegistered");
+
+        isConfirmed[_account] = true;
 
         return true;
     }
@@ -89,38 +90,34 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
      * @dev If the participant's fee is less than the registration fee, a NoFundsLooked error is thrown.
      * @dev If the refund transaction fails, a TransactionFailed error is thrown.
      */
-    function refundFee(address _account)
-        external
-        onlyRole(DEFAULT_ADMIN_ROLE)
-        whenPaused
-        notZeroAddress(_account)
-        nonReentrant
-        returns (bool)
-    {
-        Participant storage participant = _getParticipant(_account);
-        if (participant.feeLooked < registrationFee) revert("NoFundsLooked");
-        (bool success,) = payable(_account).call{value: registrationFee}("");
+    function refundFee(address _account) external onlyRole(DEFAULT_ADMIN_ROLE) whenPaused nonReentrant returns (bool) {
+        if (isRegistered[_account] == false) {
+            revert("NotRegistered");
+        }
+
+        if (isConfirmed[_account] == false) {
+            revert("NotConfirmed");
+        }
+
+        (bool success,) = _account.call{value: registrationFee}("");
         if (!success) revert("TransactionFailed");
 
-        participant.feeLooked -= registrationFee;
+        isRegistered[_account] = false;
+        isConfirmed[_account] = false;
 
-        return success;
+        return true;
     }
 
-    /**
-     * @notice Resets the participants array, removing all participants from the tournament.
-     * @dev Only the account with the DEFAULT_ADMIN_ROLE can reset the participants array.
-     */
-    function resetParticipants() external whenPaused onlyRole(DEFAULT_ADMIN_ROLE) {
-        delete participants;
+    function getRegisteredUsers() external view returns (address[] memory) {
+        return registeredUsers;
     }
 
-    function getParticipants() external view returns (Participant[] memory) {
-        return participants;
-    }
-
-    function getParticipant(address _account) external view returns (Participant memory) {
-        return _getParticipant(_account);
+    function reset() external onlyRole(DEFAULT_ADMIN_ROLE) {
+        for (uint256 i = 0; i < registeredUsers.length; i++) {
+            isRegistered[registeredUsers[i]] = false;
+            isConfirmed[registeredUsers[i]] = false;
+        }
+        delete registeredUsers;
     }
 
     /**
@@ -148,24 +145,5 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
         address sender = msg.sender;
         if (sender.code.length != 0) revert("ContractSender");
         return sender;
-    }
-
-    /**
-     * @notice Returns the storage reference to the Participant with the given account address.
-     * @param _account The account address of the participant to retrieve.
-     * @return participant The storage reference to the Participant with the given account address.
-     * @dev If no Participant exists with the given account address, the AccountNotFound error is thrown.
-     */
-    function _getParticipant(address _account)
-        private
-        view
-        notZeroAddress(_account)
-        returns (Participant storage participant)
-    {
-        uint256 index = participantIndexByAddress[_account];
-        if (index == 0 && participants[0].walletAddress != _account) {
-            revert("Account Not Found");
-        }
-        participant = participants[index];
     }
 }
