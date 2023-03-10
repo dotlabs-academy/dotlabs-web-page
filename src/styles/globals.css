@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --blue-main: rgb(28, 13, 93);
+}

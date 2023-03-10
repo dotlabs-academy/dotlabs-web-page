@@ -1,0 +1,7 @@
+{
+  "name": "blockchain",
+  "scripts": {
+    "deploy:goerli": "source .env && forge script script/RegistrationManager.s.sol:RegistrationManagerScript --rpc-url $GOERLI_RPC_URL --broadcast --verify -vvv",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

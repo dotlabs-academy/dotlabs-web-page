@@ -1,18 +1,20 @@
+
+
 .containerBlackBorder {
-  border: 3px solid black;
+  border: 3px solid var(--blue-main);
   border-radius: 20px;
-  box-shadow: 8px 8px black;
+  box-shadow: 8px 8px var(--blue-main);
   padding: 2.5rem 5%;
 }
 
 .containerBlackBorderSM {
-  border: 3px solid black;
+  border: 3px solid var(--blue-main);
   border-radius: 20px;
-  box-shadow: 6px 6px black;
+  box-shadow: 6px 6px var(--blue-main);
   padding: 0.3rem 5%;
   width: 50%;
 }
 
 .containerBlackBorderSM:hover {
-  box-shadow: 2px 2px black;
+  box-shadow: 2px 2px var(--blue-main);
 }

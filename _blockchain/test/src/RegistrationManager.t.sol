@@ -10,9 +10,9 @@ contract RegistrationManagerTest is Test {
 
     function setUp() public {
         registrationFee = 0.1 ether;
+        registrationManager = new RegistrationManager(registrationFee);
 
-        registrationManager = new RegistrationManager();
-        registrationManager.updateRegistrationFee(registrationFee);
+        assertEq(registrationManager.registrationFee(), registrationFee);
     }
 
     function testUpdateRegistrationFee() public {
@@ -132,19 +132,152 @@ contract RegistrationManagerTest is Test {
         bool confirmationSuccess = registrationManager.confirmParticipant(sender);
         assertTrue(confirmationSuccess == true);
         // ADMIN confirmation again
-        vm.expectRevert("NotRegistered");
+        vm.expectRevert("AlreadyConfirmed");
         registrationManager.confirmParticipant(sender);
     }
 
-    // function testRefundFee() public {}
+    function testRefundFee() public {
+        // User registration
+        address sender = address(1);
+        vm.deal(sender, registrationFee + 0.1 ether);
+        vm.prank(sender);
+        bool registrationSucces = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces, true);
+        // ADMIN refund
+        registrationManager.pause();
+        registrationManager.confirmParticipant(sender);
+        bool refundSuccess = registrationManager.refundFee(sender);
+        assertTrue(refundSuccess == true);
+    }
 
-    // function testRefundFeeFailWhenNotPaused() public {}
+    function testRefundFailWhenNotConfirmed() public {
+        address sender = address(1);
+        vm.deal(sender, registrationFee + 0.1 ether);
+        vm.prank(sender);
+        bool registrationSucces = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces, true);
+        // ADMIN refund
+        registrationManager.pause();
+        vm.expectRevert("NotConfirmed");
+        registrationManager.refundFee(sender);
+    }
 
-    // function testRefundFeeFailWhenNotAdmin() public {}
+    function testRefundFeeFailWhenNotPaused() public {
+        // User registration
+        address sender = address(1);
+        vm.deal(sender, registrationFee + 0.1 ether);
+        vm.prank(sender);
+        bool registrationSucces = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces, true);
+        // ADMIN refund
+        vm.expectRevert("Pausable: not paused");
+        registrationManager.refundFee(sender);
+    }
 
-    // function testResetParticipantsFailWhenNotPaused() public {}
+    function testRefundFeeFailWhenNotAdmin() public {
+        // User registration
+        address sender = address(1);
+        vm.deal(sender, registrationFee + 0.1 ether);
+        vm.prank(sender);
+        bool registrationSucces = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces, true);
+        // ADMIN refund
+        registrationManager.pause();
+        registrationManager.confirmParticipant(sender);
+        address notAdmin = address(2);
+        vm.prank(notAdmin);
+        vm.expectRevert(
+            "AccessControl: account 0x0000000000000000000000000000000000000002 is missing role 0x0000000000000000000000000000000000000000000000000000000000000000"
+        );
+        registrationManager.refundFee(sender);
+    }
 
-    // function testResetParticipantsFailWhenNotAdmin() public {}
+    function testReset() public {
+        // Users registration
+        address sender1 = address(1);
+        address sender2 = address(2);
+
+        vm.deal(sender1, registrationFee + 0.1 ether);
+        vm.prank(sender1);
+        bool registrationSucces1 = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces1, true);
+
+        vm.deal(sender2, registrationFee + 0.1 ether);
+        vm.prank(sender2);
+        bool registrationSucces2 = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces2, true);
+
+        // ADMIN confirmation
+        registrationManager.pause();
+        registrationManager.confirmParticipant(sender1);
+        registrationManager.confirmParticipant(sender2);
+
+        // ADMIN reset
+        registrationManager.reset();
+        assertTrue(registrationManager.isRegistered(sender1) == false);
+        assertTrue(registrationManager.isRegistered(sender2) == false);
+        assertTrue(registrationManager.isConfirmed(sender1) == false);
+        assertTrue(registrationManager.isConfirmed(sender2) == false);
+
+        address[] memory users = registrationManager.getRegisteredUsers();
+
+        assertTrue(users.length == 0);
+    }
+
+    function testResetFailWhenNotPaused() public {
+        // Users registration
+        address sender1 = address(1);
+        address sender2 = address(2);
+
+        vm.deal(sender1, registrationFee + 0.1 ether);
+        vm.prank(sender1);
+        bool registrationSucces1 = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces1, true);
+
+        vm.deal(sender2, registrationFee + 0.1 ether);
+        vm.prank(sender2);
+        bool registrationSucces2 = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces2, true);
+
+        // ADMIN confirmation
+        registrationManager.pause();
+        registrationManager.confirmParticipant(sender1);
+        registrationManager.confirmParticipant(sender2);
+        registrationManager.unpause(); // !
+
+        // ADMIN reset
+        vm.expectRevert("Pausable: not paused");
+        registrationManager.reset();
+    }
+
+    function testResetFailWhenNotAdmin() public {
+        // Users registration
+        address sender1 = address(1);
+        address sender2 = address(2);
+
+        vm.deal(sender1, registrationFee + 0.1 ether);
+        vm.prank(sender1);
+        bool registrationSucces1 = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces1, true);
+
+        vm.deal(sender2, registrationFee + 0.1 ether);
+        vm.prank(sender2);
+        bool registrationSucces2 = registrationManager.joinIn{value: registrationFee}();
+        assertEq(registrationSucces2, true);
+
+        // ADMIN confirmation
+        registrationManager.pause();
+        registrationManager.confirmParticipant(sender1);
+        registrationManager.confirmParticipant(sender2);
+
+        // NOT ADMIN reset
+        address notAdmin = address(3);
+        vm.prank(notAdmin);
+        vm.expectRevert(
+            "AccessControl: account 0x0000000000000000000000000000000000000003 is missing role 0x0000000000000000000000000000000000000000000000000000000000000000"
+        );
+        registrationManager.reset();
+    }
 
     function testPause() public {
         registrationManager.pause();

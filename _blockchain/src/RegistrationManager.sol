@@ -29,7 +29,8 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
         _;
     }
 
-    constructor() {
+    constructor(uint256 _initialRegistrationFee) {
+        registrationFee = _initialRegistrationFee;
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
@@ -37,7 +38,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
      * @param _newFee The value to rewrite the current `registrationFee`
      * @return A boolean value indicating whether the operation was successful.
      */
-    function updateRegistrationFee(uint256 _newFee) external whenPaused onlyRole(DEFAULT_ADMIN_ROLE) returns (bool) {
+    function updateRegistrationFee(uint256 _newFee) external onlyRole(DEFAULT_ADMIN_ROLE) returns (bool) {
         uint256 prevFee = registrationFee;
         registrationFee = _newFee;
 
@@ -75,6 +76,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
         whenPaused
         returns (bool)
     {
+        if (isConfirmed[_account] == true) revert("AlreadyConfirmed");
         if (isRegistered[_account] == false) revert("NotRegistered");
 
         isConfirmed[_account] = true;
@@ -90,7 +92,14 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
      * @dev If the participant's fee is less than the registration fee, a NoFundsLooked error is thrown.
      * @dev If the refund transaction fails, a TransactionFailed error is thrown.
      */
-    function refundFee(address _account) external onlyRole(DEFAULT_ADMIN_ROLE) whenPaused nonReentrant returns (bool) {
+    function refundFee(address _account)
+        external
+        payable
+        onlyRole(DEFAULT_ADMIN_ROLE)
+        whenPaused
+        nonReentrant
+        returns (bool)
+    {
         if (isRegistered[_account] == false) {
             revert("NotRegistered");
         }
@@ -99,7 +108,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
             revert("NotConfirmed");
         }
 
-        (bool success,) = _account.call{value: registrationFee}("");
+        (bool success,) = payable(_account).call{value: registrationFee}("");
         if (!success) revert("TransactionFailed");
 
         isRegistered[_account] = false;
@@ -112,7 +121,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
         return registeredUsers;
     }
 
-    function reset() external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function reset() external whenPaused onlyRole(DEFAULT_ADMIN_ROLE) {
         for (uint256 i = 0; i < registeredUsers.length; i++) {
             isRegistered[registeredUsers[i]] = false;
             isConfirmed[registeredUsers[i]] = false;

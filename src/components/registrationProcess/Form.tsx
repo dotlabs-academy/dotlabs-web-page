@@ -1,10 +1,18 @@
-import { useAccount } from "wagmi";
+import {
+  useAccount,
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+} from "wagmi";
 import { useFormik } from "formik";
+import { BiLoaderAlt } from "react-icons/bi";
 
 import styles from "@/styles/Registration.module.css";
 import { LabelStd } from "../common/LabelStd";
 import { InputErrorStd } from "../common/InputErrorStd";
 import { FormValues } from "../../../lib/formUtils";
+import { appConfig } from "../../constants/index";
+import { useRef, useState, useEffect } from "react";
 import {
   checkStateAndSetClass,
   validate,
@@ -23,17 +31,56 @@ const initialsFormValues: FormValues = {
   eps: "",
 };
 
+const { registrationManager } = appConfig.contracts;
+
 export const RegistrationForm = () => {
+  const registrationFee = useRef<any>(0);
+  const [isLoading, setIsLoading] = useState(false);
   const { address } = useAccount();
+  const { data } = useContractRead({
+    address: registrationManager.address,
+    abi: registrationManager.abi,
+    functionName: "registrationFee",
+  });
+
+  const { config, error } = usePrepareContractWrite({
+    address: registrationManager.address,
+    abi: registrationManager.abi,
+    functionName: "joinIn",
+    overrides: {
+      value: registrationFee.current,
+    },
+  });
+
+  const { write, isSuccess } = useContractWrite(config);
 
   const formik = useFormik({
     initialValues: initialsFormValues,
     validate,
     onSubmit: (values) => {
       resetForm(formik, initialsFormValues);
+
+      setIsLoading(true);
+      if (write) {
+        write();
+      } else {
+        console.log("Cannot write to contract", error);
+      }
+      setIsLoading(false);
+
       alert(JSON.stringify(values, null, 2));
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      registrationFee.current = data;
+      console.log({
+        registrationFee: registrationFee.current,
+      });
+      setIsLoading(false);
+    }
+  }, [data]);
 
   return (
     <form
@@ -152,11 +199,11 @@ export const RegistrationForm = () => {
       </div>
 
       <button
-        disabled={formik.isSubmitting}
+        disabled={formik.isSubmitting || isLoading}
         type="submit"
-        className={`${styles.containerBlackBorderSM} mx-auto hover:text-black transition-all mt-5 font-extrabold`}
+        className={`${styles.containerBlackBorderSM} mx-auto hover:text-black transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
       >
-        Send
+        {isLoading ? <BiLoaderAlt className="mx-auto animate-spin" /> : "Send"}
       </button>
     </form>
   );
