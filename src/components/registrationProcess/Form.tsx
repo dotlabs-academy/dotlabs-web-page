@@ -1,8 +1,11 @@
+import { useState, useEffect, useContext } from "react";
+import { ethers } from "ethers";
 import {
   useAccount,
-  useContractRead,
   useContractWrite,
   usePrepareContractWrite,
+  useContractRead,
+  useSigner,
 } from "wagmi";
 import { useFormik } from "formik";
 import { BiLoaderAlt } from "react-icons/bi";
@@ -11,13 +14,16 @@ import styles from "@/styles/Registration.module.css";
 import { LabelStd } from "../common/LabelStd";
 import { InputErrorStd } from "../common/InputErrorStd";
 import { FormValues } from "../../../lib/formUtils";
-import { appConfig } from "../../constants/index";
-import { useRef, useState, useEffect } from "react";
+import {
+  ContractContext,
+  IContractContext,
+} from "../../hooks/RegistrationManagerContractContext";
 import {
   checkStateAndSetClass,
   validate,
   resetForm,
 } from "../../../lib/formUtils";
+import { useRouter } from "next/router";
 
 const labelStdClassName = "text-xl font-bold";
 const labelInputContainerClassName = "flex flex-col items-center gap-2";
@@ -31,56 +37,52 @@ const initialsFormValues: FormValues = {
   eps: "",
 };
 
-const { registrationManager } = appConfig.contracts;
-
 export const RegistrationForm = () => {
-  const registrationFee = useRef<any>(0);
+  const router = useRouter();
+  const { address, contract } = useContext(ContractContext) as IContractContext;
   const [isLoading, setIsLoading] = useState(false);
-  const { address } = useAccount();
-  const { data } = useContractRead({
-    address: registrationManager.address,
-    abi: registrationManager.abi,
-    functionName: "registrationFee",
-  });
+  const [isError, setIsError] = useState(false);
+  const { data } = useSigner();
 
-  const { config, error } = usePrepareContractWrite({
-    address: registrationManager.address,
-    abi: registrationManager.abi,
-    functionName: "joinIn",
-    overrides: {
-      value: registrationFee.current,
-    },
-  });
+  const handleSubmit = async (values: FormValues) => {
+    setIsLoading(true);
 
-  const { write, isSuccess } = useContractWrite(config);
+    if (data) {
+      const success = await contract.joinIn(data);
+
+      if (success) {
+        router.reload();
+        setIsError(false);
+        resetForm(formik, initialsFormValues);
+      } else {
+        setIsError(true);
+        console.log("Something went wrong");
+      }
+    }
+
+    setIsLoading(false);
+  };
+
+  const errorButton = () => {
+    return (
+      <button
+        type="submit"
+        className="w-full text-red-400 py-1.5 rounded-md font-bold text-xl"
+      >
+        {isLoading ? (
+          <BiLoaderAlt className="animate-spin" />
+        ) : (
+          <span>Something went wrong. Try again.</span>
+        )}
+      </button>
+    );
+  };
 
   const formik = useFormik({
     initialValues: initialsFormValues,
     validate,
-    onSubmit: (values) => {
-      resetForm(formik, initialsFormValues);
-
-      setIsLoading(true);
-      if (write) {
-        write();
-      } else {
-        console.log("Cannot write to contract", error);
-      }
-      setIsLoading(false);
-
-      alert(JSON.stringify(values, null, 2));
-    },
+    onSubmit: (values) => handleSubmit(values),
   });
-
-  useEffect(() => {
-    if (data) {
-      registrationFee.current = data;
-      console.log({
-        registrationFee: registrationFee.current,
-      });
-      setIsLoading(false);
-    }
-  }, [data]);
 
   return (
     <form
@@ -120,7 +122,6 @@ export const RegistrationForm = () => {
             formik.errors.name,
             inputClassName
           )}
-          autoComplete="off"
         />
         {formik.touched.name && formik.errors.name && (
           <InputErrorStd>{formik.errors.name}</InputErrorStd>
@@ -198,13 +199,21 @@ export const RegistrationForm = () => {
         )}
       </div>
 
-      <button
-        disabled={formik.isSubmitting || isLoading}
-        type="submit"
-        className={`${styles.containerBlackBorderSM} mx-auto hover:text-black transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
-      >
-        {isLoading ? <BiLoaderAlt className="mx-auto animate-spin" /> : "Send"}
-      </button>
+      {isError ? (
+        errorButton()
+      ) : (
+        <button
+          disabled={formik.isSubmitting || isLoading}
+          type="submit"
+          className={`${styles.containerBlackBorderSM} mx-auto hover:text-black transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
+        >
+          {isLoading ? (
+            <BiLoaderAlt className="mx-auto animate-spin" />
+          ) : (
+            "Send"
+          )}
+        </button>
+      )}
     </form>
   );
 };

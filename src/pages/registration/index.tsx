@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import styles from "@/styles/Registration.module.css";
 import { RegistrationProcess } from "@/components/registrationProcess/Process";
 import Layout from "@/components/Layout";
+import { RegistrationManagerContractContext } from "../../hooks/RegistrationManagerContractContext";
 
 const Registration: NextPage = () => {
   const InformativeMessage = () => {
@@ -31,7 +32,9 @@ const Registration: NextPage = () => {
         `}
       >
         {InformativeMessage()}
-        <RegistrationProcess />
+        <RegistrationManagerContractContext>
+          <RegistrationProcess />
+        </RegistrationManagerContractContext>
       </div>
     </Layout>
   );

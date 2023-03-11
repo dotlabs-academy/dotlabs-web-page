@@ -1,31 +1,81 @@
-import { BigNumber, Contract, Signer, ethers } from "ethers";
 import { appConfig } from "../constants/index";
+import { ethers } from "ethers";
 
-const { alchemyApiKey } = appConfig.environment;
+const { contracts, environment } = appConfig;
+const { alchemyApiKey } = environment;
 
-const provider = new ethers.providers.AlchemyProvider("goerli", alchemyApiKey);
+export class RegistrationContract {
+  private readonly provider = new ethers.providers.AlchemyProvider(
+    "goerli",
+    alchemyApiKey
+  );
+  private readonly contract: ethers.Contract;
+  private readonly address: `0x${string}` | undefined;
 
-export class RegistrationManager {
-  private readonly provider: any;
-  private readonly contract: Contract;
-  private readonly address: `0x${string}`;
-  private readonly abi: any;
-  constructor(_address: `0x${string}`, _abi: any) {
-    this.provider = provider;
-    this.address = _address;
-    this.abi = _abi;
-    this.contract = new ethers.Contract(this.address, this.abi, this.provider);
+  constructor(address: `0x${string}`, abi: any) {
+    this.contract = new ethers.Contract(address, abi, this.provider);
+    this.address = address;
   }
 
-  async getRegistrationFee(): Promise<BigNumber> {
-    const req = await this.contract.registrationFee();
-    return req;
+  async isRegistered(address: `0x${string}` | undefined) {
+    try {
+      if (!address) {
+        throw new Error("Wallet not connected");
+      } else {
+        const isRegistered = await this.contract.isRegistered(address);
+        console.log({
+          isRegistered,
+        });
+        return isRegistered;
+      }
+    } catch (error) {
+      console.log({ isRegisteredError: error });
+    }
   }
 
-  async joinIn(signer: Signer): Promise<boolean> {
-    const res = await this.contract
-      .connect(signer)
-      .joinIn({ value: await this.getRegistrationFee() });
-    return res;
+  async registrationFee() {
+    try {
+      const registrationFee = await this.contract.registrationFee();
+      const registrationFeeInEth = ethers.utils.formatEther(registrationFee);
+      console.log({
+        registrationFeeInEth,
+      });
+      return registrationFeeInEth;
+    } catch (error) {
+      console.log({ registrationFeeError: error });
+    }
+  }
+
+  async isPaused() {
+    try {
+      const isPaused = await this.contract.paused();
+      console.log({
+        isPaused,
+      });
+      return isPaused;
+    } catch (error) {
+      console.log({ isPausedError: error });
+    }
+  }
+
+  async joinIn(signer: ethers.Signer) {
+    try {
+      const parsedEth = ethers.utils.parseEther(
+        (await this.registrationFee()) || "0"
+      );
+      const success = await this.contract.connect(signer).joinIn({
+        value: parsedEth,
+      });
+      console.log({
+        success,
+      });
+      return success;
+    } catch (error) {
+      console.log({ joinInError: error });
+    }
+  }
+
+  async getContractAddress() {
+    return this.address;
   }
 }
