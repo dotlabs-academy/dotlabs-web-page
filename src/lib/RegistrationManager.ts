@@ -63,9 +63,12 @@ export class RegistrationContract {
       const parsedEth = ethers.utils.parseEther(
         (await this.registrationFee()) || "0"
       );
-      const success = await this.contract.connect(signer).joinIn({
+      const tx = await this.contract.connect(signer).joinIn({
         value: parsedEth,
       });
+
+      const success = tx.wait();
+
       console.log({
         success,
       });

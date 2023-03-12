@@ -1,8 +1,7 @@
-import { createContext, useEffect, useReducer, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { ComponentWithChildren } from "../types/index";
 import { useAccount } from "wagmi";
 import { appConfig } from "../constants/index";
-import { ethers } from "ethers";
 import { RegistrationContract } from "../lib/RegistrationManager";
 
 const { registrationManager } = appConfig.contracts;

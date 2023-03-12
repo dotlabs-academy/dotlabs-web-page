@@ -1,24 +1,40 @@
+export enum inputTypes {
+  email = "email",
+  legalId = "legalId",
+  url = "url",
+}
+
 interface ValidateFieldOptions {
   value: string;
   minLength?: number;
   maxLength?: number;
-  isEmail?: boolean;
-  isLegalID?: boolean;
+  inputType?: inputTypes | undefined;
 }
 
 export interface FormValues {
   name: string;
-  legalID: string;
   email: string;
+  legalID: string;
   eps: string;
+  phone: string;
+  gitHubProfile: string;
+}
+
+export interface UserDto {
+  name: string;
+  email: string;
+  legalID: string;
+  eps: string;
+  phone: string;
+  gitHubProfile: string;
+  address: `0x${string}` | undefined;
 }
 
 export const validateField = ({
   value,
   minLength = 5,
   maxLength = 30,
-  isEmail = false,
-  isLegalID = false,
+  inputType,
 }: ValidateFieldOptions) => {
   if (!value) {
     return "Required";
@@ -29,16 +45,22 @@ export const validateField = ({
   } else if (value.length > maxLength) {
     return `Must be ${maxLength} characters or less`;
   } else {
-    if (isEmail) {
+    if (inputType == inputTypes.email) {
       const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
       if (!re.test(value)) {
         return "Invalid email address";
       }
     }
 
-    if (isLegalID) {
+    if (inputType == inputTypes.legalId) {
       if (parseInt(value) < 10000000) {
         return "Invalid legal ID";
+      }
+    }
+
+    if (inputType == inputTypes.url) {
+      if (!value.startsWith("https://")) {
+        return "Invalid URL";
       }
     }
   }
@@ -51,14 +73,24 @@ export const validate = (values: FormValues) => {
   errors.legalID = validateField({
     value: values.legalID,
     minLength: 10,
-    isLegalID: true,
+    inputType: inputTypes.legalId,
   });
   errors.email = validateField({
     value: values.email,
     minLength: 10,
-    isEmail: true,
+    inputType: inputTypes.email,
   });
   errors.eps = validateField({ value: values.eps, minLength: 3 });
+  errors.gitHubProfile = validateField({
+    value: values.gitHubProfile,
+    minLength: 10,
+    maxLength: 100,
+    inputType: inputTypes.url,
+  });
+  errors.phone = validateField({
+    value: values.phone,
+    minLength: 10,
+  });
 
   if (Object.values(errors).every((error) => error === undefined)) {
     errors = {};
@@ -67,7 +99,6 @@ export const validate = (values: FormValues) => {
   return errors;
 };
 
-// ! type
 export const resetForm = (formik: any, defaultValues: FormValues) => {
   formik.setValues(defaultValues);
   formik.setTouched({
@@ -75,6 +106,8 @@ export const resetForm = (formik: any, defaultValues: FormValues) => {
     legalID: false,
     email: false,
     eps: false,
+    phone: false,
+    gitHubProfile: false,
   });
 };
 

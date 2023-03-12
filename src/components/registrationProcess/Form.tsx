@@ -3,10 +3,9 @@ import { useSigner } from "wagmi";
 import { useFormik } from "formik";
 import { BiLoaderAlt } from "react-icons/bi";
 
-import styles from "@/styles/Registration.module.css";
 import { LabelStd } from "../common/LabelStd";
 import { InputErrorStd } from "../common/InputErrorStd";
-import { FormValues } from "../../../lib/formUtils";
+import { FormValues, UserDto } from "../../../lib/formUtils";
 import {
   ContractContext,
   IContractContext,
@@ -28,6 +27,8 @@ const initialsFormValues: FormValues = {
   legalID: "",
   email: "",
   eps: "",
+  gitHubProfile: "",
+  phone: "",
 };
 
 export const RegistrationForm = () => {
@@ -38,21 +39,37 @@ export const RegistrationForm = () => {
   const { data } = useSigner();
 
   const handleSubmit = async (values: FormValues) => {
-    setIsLoading(true);
+    const userObj: UserDto = {
+      address,
+      ...values,
+      legalID: `${values.legalID}`,
+      phone: `+57${values.phone}`,
+    };
+
+    console.log({ userObj });
 
     if (data) {
+      setIsLoading(true);
       const success = await contract.joinIn(data);
-
       if (success) {
-        router.reload();
-        setIsError(false);
-        resetForm(formik, initialsFormValues);
-      } else {
-        setIsError(true);
-        console.log("Something went wrong");
+        //
+        const apiRes = await fetch("/api/user", {
+          method: "POST",
+          body: JSON.stringify(userObj),
+        });
+        //
+        setIsLoading(false);
+        if (apiRes.status !== 200) return console.error("error writing the db");
+        //
+        router.push("/registration/success");
       }
+
+      setIsError(true);
+      setIsLoading(false);
+      console.error("error writing the contract");
     }
 
+    resetForm(formik, initialsFormValues);
     setIsLoading(false);
   };
 
@@ -95,7 +112,6 @@ export const RegistrationForm = () => {
           name="address"
           id="address"
           className={inputClassName}
-          autoComplete="off"
           spellCheck={false}
         />
       </div>
@@ -110,6 +126,7 @@ export const RegistrationForm = () => {
           type="text"
           name="name"
           id="name"
+          placeholder="Alejandro Soto"
           className={checkStateAndSetClass(
             formik.touched.name,
             formik.errors.name,
@@ -134,12 +151,12 @@ export const RegistrationForm = () => {
           type="number"
           name="legalID"
           id="legalID"
+          placeholder="123456789"
           className={checkStateAndSetClass(
             formik.touched.legalID,
             formik.errors.legalID,
             inputClassName
           )}
-          autoComplete="off"
         />
         {formik.touched.legalID && formik.errors.legalID && (
           <InputErrorStd>{formik.errors.legalID}</InputErrorStd>
@@ -159,12 +176,12 @@ export const RegistrationForm = () => {
           type="email"
           name="email"
           id="email"
+          placeholder="user@email.com"
           className={checkStateAndSetClass(
             formik.touched.email,
             formik.errors.email,
             inputClassName
           )}
-          autoComplete="off"
         />
         {formik.touched.email && formik.errors.email && (
           <InputErrorStd>{formik.errors.email}</InputErrorStd>
@@ -180,15 +197,61 @@ export const RegistrationForm = () => {
           type="text"
           name="eps"
           id="eps"
+          placeholder="Sura"
           className={checkStateAndSetClass(
             formik.touched.eps,
             formik.errors.eps,
             inputClassName
           )}
-          autoComplete="off"
         />
         {formik.touched.eps && formik.errors.eps && (
           <InputErrorStd>{formik.errors.eps}</InputErrorStd>
+        )}
+      </div>
+      {/* ------------------------------------------------------------------ */}
+      <div className={labelInputContainerClassName}>
+        <LabelStd
+          label="GitHub_Profile"
+          htmlFor="gitHubProfile"
+          className={labelStdClassName}
+        />
+        <input
+          onChange={formik.handleChange}
+          value={formik.values.gitHubProfile}
+          onBlur={formik.handleBlur}
+          type="url"
+          name="gitHubProfile"
+          id="gitHubProfile"
+          placeholder="https://github.com/..."
+          className={checkStateAndSetClass(
+            formik.touched.gitHubProfile,
+            formik.errors.gitHubProfile,
+            inputClassName
+          )}
+        />
+        {formik.touched.gitHubProfile && formik.errors.gitHubProfile && (
+          <InputErrorStd>{formik.errors.gitHubProfile}</InputErrorStd>
+        )}
+      </div>
+      {/* ------------------------------------------------------------------ */}
+      <div className={labelInputContainerClassName}>
+        <LabelStd label="phone" htmlFor="phone" className={labelStdClassName} />
+        <input
+          onChange={formik.handleChange}
+          value={formik.values.phone}
+          onBlur={formik.handleBlur}
+          type="tel"
+          name="phone"
+          id="phone"
+          placeholder="3123123123"
+          className={checkStateAndSetClass(
+            formik.touched.phone,
+            formik.errors.phone,
+            inputClassName
+          )}
+        />
+        {formik.touched.phone && formik.errors.phone && (
+          <InputErrorStd>{formik.errors.phone}</InputErrorStd>
         )}
       </div>
 
@@ -198,7 +261,7 @@ export const RegistrationForm = () => {
         <button
           disabled={formik.isSubmitting || isLoading}
           type="submit"
-          className={`${styles.containerBlackBorderSM} mx-auto hover:text-black transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
+          className={`mx-auto hover:text-black transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           {isLoading ? (
             <BiLoaderAlt className="mx-auto animate-spin" />

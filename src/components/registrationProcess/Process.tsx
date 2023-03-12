@@ -1,11 +1,9 @@
-import { useAccount, useContractRead } from "wagmi";
+import { useAccount,  } from "wagmi";
 import { useEffect, useState, useRef, useContext } from "react";
 import { useModal } from "connectkit";
 import { Guide } from "./Guide";
 import { ConnectedButton } from "../buttons/ConnectedButton";
 import { RegistrationForm } from "@/components/registrationProcess/Form";
-import { ethers } from "ethers";
-import { appConfig } from "../../constants/index";
 import { IsRegistered } from "./IsRegistered";
 import { IsWalletDisconnected } from "./IsWalletDisconnected";
 import { IsPaused } from "./IsPaused";
@@ -20,7 +18,7 @@ export const RegistrationProcess = () => {
   ) as IContractContext;
   const [isAcceptedConditions, setIsAcceptedConditions] = useState(false);
 
-  const renderIfWalletConnectedAndConditionsAccepted = () => {
+  const RenderIfWalletConnectedAndConditionsAccepted = () => {
     const renderGuide = () => <Guide action={setIsAcceptedConditions} />;
 
     const renderForm = () => <RegistrationForm />;
@@ -34,7 +32,7 @@ export const RegistrationProcess = () => {
     );
   };
 
-  const renderIfNotRegistered = () => {
+  const RenderIfNotRegistered = () => {
     return (
       <>
         <div className="flex flex-col items-center text-zinc-500">
@@ -44,7 +42,7 @@ export const RegistrationProcess = () => {
         {(() => {
           if (isPaused) return <IsPaused />;
           if (isConnected)
-            return renderIfWalletConnectedAndConditionsAccepted();
+            return <RenderIfWalletConnectedAndConditionsAccepted />;
           return <IsWalletDisconnected />;
         })()}
       </>
@@ -53,7 +51,7 @@ export const RegistrationProcess = () => {
 
   return (
     <div className="flex flex-col items-center mt-5 gap-5">
-      {isRegistered ? <IsRegistered /> : renderIfNotRegistered()}
+      {isRegistered ? <IsRegistered /> : <RenderIfNotRegistered />}
     </div>
   );
 };

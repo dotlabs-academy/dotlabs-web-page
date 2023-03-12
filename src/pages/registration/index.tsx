@@ -1,6 +1,5 @@
 import { NextPage } from "next";
 
-import styles from "@/styles/Registration.module.css";
 import { RegistrationProcess } from "@/components/registrationProcess/Process";
 import Layout from "@/components/Layout";
 import { RegistrationManagerContractContext } from "../../hooks/RegistrationManagerContractContext";
@@ -24,7 +23,6 @@ const Registration: NextPage = () => {
     <Layout headTitle="dotlabs(Medellin) - Registration">
       <div
         className={`
-        ${styles.containerBlackBorder}
         flex flex-col w-full items-center justify-center mb-24
         max-w-2xl mx-auto mt-20 px-5
         md:py-16 md:px-16 

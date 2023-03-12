@@ -73,7 +73,6 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
         external
         onlyRole(DEFAULT_ADMIN_ROLE)
         notZeroAddress(_account)
-        whenPaused
         returns (bool)
     {
         if (isConfirmed[_account] == true) revert("AlreadyConfirmed");
@@ -94,9 +93,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
      */
     function refundFee(address _account)
         external
-        payable
         onlyRole(DEFAULT_ADMIN_ROLE)
-        whenPaused
         nonReentrant
         returns (bool)
     {

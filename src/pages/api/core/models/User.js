@@ -1,14 +1,14 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const user = new Schema(
   {
     name: String,
     email: String,
-    identification: Number,
+    legalID: String,
     address: String,
     eps: String,
     phone: String,
-    profile: String
+    gitHubProfile: String,
   },
   {
     timestamps: true,
@@ -16,4 +16,4 @@ const user = new Schema(
   }
 );
 
-module.exports = model('users', user);
+module.exports = model("users", user);
