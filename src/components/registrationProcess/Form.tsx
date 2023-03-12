@@ -1,12 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import { ethers } from "ethers";
-import {
-  useAccount,
-  useContractWrite,
-  usePrepareContractWrite,
-  useContractRead,
-  useSigner,
-} from "wagmi";
+import { useState, useContext } from "react";
+import { useSigner } from "wagmi";
 import { useFormik } from "formik";
 import { BiLoaderAlt } from "react-icons/bi";
 

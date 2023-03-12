@@ -1,7 +1,7 @@
 import { appConfig } from "../constants/index";
 import { ethers } from "ethers";
 
-const { contracts, environment } = appConfig;
+const { environment } = appConfig;
 const { alchemyApiKey } = environment;
 
 export class RegistrationContract {
