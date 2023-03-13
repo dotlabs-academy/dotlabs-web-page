@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { connectToDatabase, disconnect } from "./core/mongo";
+import { connectToDatabase } from "./core/mongo";
 import User from "./core/models/User";
 import Joi from "joi";
 import { UserDto } from "../../../lib/formUtils";
@@ -30,7 +30,6 @@ const createUser = async (data: UserDto): Promise<any> => {
   const user: any = await User.create(data); // ?
   console.log({ user });
   if (user) return user;
-  throw new Error("error on: src/pages/api/users:createUser");
 };
 
 const readUser = async (address: EthAddress): Promise<any> => {
@@ -38,7 +37,6 @@ const readUser = async (address: EthAddress): Promise<any> => {
   const user = await User.findOne({ address });
   console.log({ user });
   if (user) return user;
-  throw new Error("error on: src/pages/api/users:readUser");
 };
 
 export default async function handler(
@@ -49,26 +47,28 @@ export default async function handler(
     // Code to handle the POST request
     const data = JSON.parse(req.body);
     if (schemaPOST.validate(data).error)
-      res.status(400).json({ message: "Payload not valid" });
+      res.status(400).json({ message: "PAYLOAD_NOT_VALID" });
     else {
       console.log("190");
       await createUser(data);
-      res.status(200).json({ message: "POST request processed" });
+      res.status(200).json({ message: "USER_CREATED" });
     }
   } else if (req.method === "GET") {
     // Code to handle the POST request
     console.log(req.query);
     if (schemaGET.validate(req.query).error)
-      res.status(400).json({ message: "Payload not valid" });
+      res.status(400).json({ message: "PAYLOAD_NOT_VALID" });
     else {
       const address = (req.query.address as `0x${string}`) ?? "0x";
       const user = await readUser(address);
-      console.log(user);
+      let response;
+      if (user) response = { message: "OK", user: user };
+      else response = { message: "USER_NOT_FOUND" }
       res
         .status(200)
-        .json({ message: "POST request processed", user: user ?? {} });
+        .json(response);
     }
   } else {
-    res.status(400).json({ message: "Invalid request method" });
+    res.status(400).json({ message: "METHOT_NOT_FOUND" });
   }
 }
