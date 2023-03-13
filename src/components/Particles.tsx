@@ -28,22 +28,24 @@ export const ParticlesBack = () => {
       options={{
         background: {
           color: {
-            value: "#DCDEF2",
+            value: "#eff6ff",
           },
         },
         fpsLimit: 120,
         particles: {
           color: {
-            value: "#500759",
+            value: "rgb(221, 115, 115)",
           },
           links: {
-            color: "#500759",
-            distance: 300,
+            color:"rgb(28, 13, 93)",
+            distance: 200,
             enable: true,
-            opacity: 0.5,
+            opacity: 0.7,
             width: 1,
           },
- 
+          collisions: {
+            enable: false,
+          },
           move: {
             direction: "none",
             enable: true,
@@ -51,15 +53,16 @@ export const ParticlesBack = () => {
               default: "bounce",
             },
             random: false,
-            speed: 1.2,
+            speed: 2,
             straight: false,
           },
           number: {
             density: {
               enable: true,
-              area: 1000,
+              area: 800,
             },
             value: 80,
+            max: 90,
           },
           opacity: {
             value: 0.5,
@@ -68,11 +71,81 @@ export const ParticlesBack = () => {
             type: "circle",
           },
           size: {
-            value: { min: 1, max: 5 },
+            value: { min: 1, max: 8 },
           },
         },
         detectRetina: true,
       }}
+      // options={{
+      //   background: {
+      //     color: {
+      //       value: "#DCDEF2",
+      //     },
+      //   },
+      //   fpsLimit: 120,
+      //   particles: {
+      //     color: {
+      //       value: "#500759",
+      //     },
+      //     links: {
+      //       color: "#500759",
+      //       distance: 300,
+      //       enable: true,
+      //       opacity: 0.5,
+      //       width: 1,
+      //     },
+      //     interactivity: {
+      //       events: {
+      //         onClick: {
+      //           enable: true,
+      //           mode: "push",
+      //         },
+      //         onHover: {
+      //           enable: true,
+      //           mode: "repulse",
+      //         },
+      //         resize: true,
+      //       },
+      //       modes: {
+      //         push: {
+      //           quantity: 4,
+      //         },
+      //         repulse: {
+      //           distance: 200,
+      //           duration: 0.4,
+      //         },
+      //       },
+      //     },
+
+      //     move: {
+      //       direction: "none",
+      //       enable: true,
+      //       outModes: {
+      //         default: "bounce",
+      //       },
+      //       random: false,
+      //       speed: 1.2,
+      //       straight: false,
+      //     },
+      //     number: {
+      //       density: {
+      //         enable: true,
+      //         area: 1000,
+      //       },
+      //       value: 80,
+      //     },
+      //     opacity: {
+      //       value: 0.5,
+      //     },
+      //     shape: {
+      //       type: "circle",
+      //     },
+      //     size: {
+      //       value: { min: 1, max: 5 },
+      //     },
+      //   },
+      //   detectRetina: true,
+      // }}
     />
   );
 };
