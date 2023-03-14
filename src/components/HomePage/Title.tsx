@@ -23,7 +23,7 @@ function Title() {
       data-tilt
       data-tilt-full-page-listening
       ref={divRef}
-      className="tilt tail_container flex items-center justify-center py-5 md:py-7 lg:py-10 px-5  md:px-15 lg:px-20  "
+      className="tilt tail_container flex items-center lg:w-3/4 justify-center py-5 md:py-7 lg:py-10 px-5  md:px-15 lg:px-20  "
     >
       <div className="tail_cont flex flex-col justify-center items-center space-y-5">
         <h1
