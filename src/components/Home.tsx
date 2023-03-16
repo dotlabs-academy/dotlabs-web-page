@@ -4,10 +4,32 @@ function Home() {
   return (
     <>
       <ParticlesBack />
-      <div className="flex flex-col justify-center items-center h-80 relative z-1">
-        <h1 className="font-bitter font-bold text-8xl text-main backdrop-blur-md py-10 px-20 border-2 border-main shadow-lg">
-          DOTLABS ( )
+      <div className="flex flex-col justify-center items-center  relative z-1 h-screen max-w-4xl mx-auto">
+        <h1 className="mb-4 font-bold text-6xl text-main ">
+          Bienvenido a Dotlabs( )
         </h1>
+        <div className="max-w-lg flex flex-col gap-6 items-center text-center">
+          <p className="text-main text-2xl">
+            Donde aprenderás crypto al lado de los mejores de la comunidad
+          </p>
+
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem,
+            voluptates cumque aliquam itaque maiores doloremque ea vel optio
+            similique illum cupiditate totam quaerat veniam non accusamus.
+            Perspiciatis omnis ex sequi.
+          </p>
+
+          <div className="flex gap-12">
+            <button className="text-white p-4 bg-main text-sm">
+              Join discord
+            </button>
+            <button className="text-main p-4 bg-white text-sm">
+              Watch our lives
+            </button>
+          </div>
+        </div>
+
         {/* <p>
             Entusiastas de la tecnología unidos para compartir conocimientos y
             experiencias
