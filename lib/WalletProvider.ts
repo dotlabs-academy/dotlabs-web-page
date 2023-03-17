@@ -1,5 +1,5 @@
 import { createClient } from "wagmi";
-import { appConfig } from "../constants/index";
+import { appConfig } from "../src/constants";
 import { getDefaultClient } from "connectkit";
 import { goerli, localhost } from "wagmi/chains";
 

@@ -1,4 +1,4 @@
-import { appConfig } from "../constants/index";
+import { appConfig } from "../src/constants/index";
 import { ethers } from "ethers";
 
 const { environment } = appConfig;
@@ -29,7 +29,7 @@ export class RegistrationContract {
         return isRegistered;
       }
     } catch (error) {
-      console.log({ isRegisteredError: error });
+      console.error({ isRegisteredError: error });
     }
   }
 

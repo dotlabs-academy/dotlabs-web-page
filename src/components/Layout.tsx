@@ -10,10 +10,10 @@ interface LayoutProps extends ComponentWithChildren {
 
 const Layout = ({ children, headTitle }: LayoutProps) => {
   return (
-    <div>
+    <>
       <Header />
-      <main>{children}</main>
-    </div>
+      <main className="mt-16">{children}</main>
+    </>
   );
 };
 

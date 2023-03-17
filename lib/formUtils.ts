@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { RegistrationContract } from "../src/lib/RegistrationManager";
+import { RegistrationContract } from "./RegistrationManager";
 import { ethers } from "ethers";
 
 export const FormSchema = Yup.object().shape({

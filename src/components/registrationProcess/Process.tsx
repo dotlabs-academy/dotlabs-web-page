@@ -1,41 +1,38 @@
 import { useAccount } from "wagmi";
-import { useState, useContext, useEffect, Suspense } from "react";
-import { useModal, ConnectKitButton } from "connectkit";
-import { Guide } from "./Guide";
-import { RegistrationForm } from "@/components/registrationProcess/Form";
-import { IsWalletDisconnected } from "./IsWalletDisconnected";
-import { IContractContext } from "../../hooks/RegistrationManagerContractContext";
-import { ContractContext } from "../../hooks/RegistrationManagerContractContext";
+import { useState, useEffect } from "react";
 import { IsWalletConnected } from "./IsWalletConnected";
+import { IsWalletDisconnected } from "./IsWalletDisconnected";
+import { UserIsRegisteredOnDb } from "./UserIsRegisteredOnDb";
 
 export const RegistrationProcess = () => {
   const { isConnected, address } = useAccount();
   const [user, setUser] = useState<any>(undefined);
   const [isUserRegisteredOnDB, setIsUserRegisteredOnDB] = useState(false);
 
-  const getUserData = async () => {
-    if (address) {
-      const user = await fetch(`api/user?address=${address}`);
-      const userData = await user.json();
-      console.log({ userData });
-
-      if (userData.message === "USER_NOT_FOUND") {
-        setIsUserRegisteredOnDB(false);
-        return;
-      }
-
-      console.log({ userData });
-    }
-  };
-
   useEffect(() => {
+    if (user) return;
+    if (!isConnected) return;
     if (address) {
-      getUserData();
+      fetch(`api/user?address=${address}`)
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.message === "USER_NOT_FOUND") {
+            setIsUserRegisteredOnDB(false);
+            return data;
+          }
+
+          setIsUserRegisteredOnDB(true);
+          setUser(data.user);
+        });
     }
-  }, [isConnected, address]);
+  }, [isConnected, address, user]);
 
   if (!isConnected) {
     return <IsWalletDisconnected />;
+  }
+
+  if (user) {
+    return <UserIsRegisteredOnDb userName={user.name} />;
   }
 
   return (
