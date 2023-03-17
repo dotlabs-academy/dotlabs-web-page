@@ -1,11 +1,11 @@
 import { createClient } from "wagmi";
 import { appConfig } from "../constants/index";
 import { getDefaultClient } from "connectkit";
-import { goerli } from "wagmi/chains";
+import { goerli, localhost } from "wagmi/chains";
 
 const { alchemyApiKey } = appConfig.environment;
 
-const chains = [goerli];
+const chains = [goerli, localhost];
 
 export const client = createClient(
   getDefaultClient({

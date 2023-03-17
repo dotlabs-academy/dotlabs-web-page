@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
+pragma solidity 0.8.16;
 
 import "../lib/openzeppelin-contracts/contracts/security/Pausable.sol";
 import "../lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
@@ -10,7 +10,7 @@ import "../lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol";
 contract RegistrationManager is Initializable, Pausable, AccessControl, ReentrancyGuard {
     uint256 public registrationFee;
 
-    /// @notice This is the most efficient way to know if a user is registered.
+    /// @dev This is the most efficient way to know if a user is registered.
     mapping(address => bool) public isRegistered;
     mapping(address => bool) public isConfirmed;
     address[] public registeredUsers;
@@ -47,7 +47,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
     }
 
     /**
-     * @dev Allow a participant to join in by paying the registration fee.
+     * @notice Allow a participant to join in by paying the registration fee.
      * @return A boolean value indicating whether the operation was successful.
      * @dev The participant must not have already registered and must pay the registration fee.
      */
@@ -91,12 +91,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
      * @dev If the participant's fee is less than the registration fee, a NoFundsLooked error is thrown.
      * @dev If the refund transaction fails, a TransactionFailed error is thrown.
      */
-    function refundFee(address _account)
-        external
-        onlyRole(DEFAULT_ADMIN_ROLE)
-        nonReentrant
-        returns (bool)
-    {
+    function refundFee(address _account) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant returns (bool) {
         if (isRegistered[_account] == false) {
             revert("NotRegistered");
         }

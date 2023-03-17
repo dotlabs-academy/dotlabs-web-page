@@ -1,57 +1,49 @@
-import { useAccount,  } from "wagmi";
-import { useEffect, useState, useRef, useContext } from "react";
-import { useModal } from "connectkit";
+import { useAccount } from "wagmi";
+import { useState, useContext, useEffect, Suspense } from "react";
+import { useModal, ConnectKitButton } from "connectkit";
 import { Guide } from "./Guide";
-import { ConnectedButton } from "../buttons/ConnectedButton";
 import { RegistrationForm } from "@/components/registrationProcess/Form";
-import { IsRegistered } from "./IsRegistered";
 import { IsWalletDisconnected } from "./IsWalletDisconnected";
-import { IsPaused } from "./IsPaused";
 import { IContractContext } from "../../hooks/RegistrationManagerContractContext";
 import { ContractContext } from "../../hooks/RegistrationManagerContractContext";
+import { IsWalletConnected } from "./IsWalletConnected";
 
 export const RegistrationProcess = () => {
-  const { isConnected } = useAccount();
-  const { setOpen } = useModal();
-  const { isPaused, isRegistered, registrationFee } = useContext(
-    ContractContext
-  ) as IContractContext;
-  const [isAcceptedConditions, setIsAcceptedConditions] = useState(false);
+  const { isConnected, address } = useAccount();
+  const [user, setUser] = useState<any>(undefined);
+  const [isUserRegisteredOnDB, setIsUserRegisteredOnDB] = useState(false);
 
-  const RenderIfWalletConnectedAndConditionsAccepted = () => {
-    const renderGuide = () => <Guide action={setIsAcceptedConditions} />;
+  const getUserData = async () => {
+    if (address) {
+      const user = await fetch(`api/user?address=${address}`);
+      const userData = await user.json();
+      console.log({ userData });
 
-    const renderForm = () => <RegistrationForm />;
+      if (userData.message === "USER_NOT_FOUND") {
+        setIsUserRegisteredOnDB(false);
+        return;
+      }
 
-    return (
-      <div className="flex flex-col gap-5">
-        <ConnectedButton action={setOpen} />
-        {!isAcceptedConditions && isConnected ? renderGuide() : null}
-        {isAcceptedConditions && isConnected ? renderForm() : null}
-      </div>
-    );
+      console.log({ userData });
+    }
   };
 
-  const RenderIfNotRegistered = () => {
-    return (
-      <>
-        <div className="flex flex-col items-center text-zinc-500">
-          <p>- Registration fee -</p>
-          <p className="text-2xl">{registrationFee} Goerli ETH</p>
-        </div>
-        {(() => {
-          if (isPaused) return <IsPaused />;
-          if (isConnected)
-            return <RenderIfWalletConnectedAndConditionsAccepted />;
-          return <IsWalletDisconnected />;
-        })()}
-      </>
-    );
-  };
+  useEffect(() => {
+    if (address) {
+      getUserData();
+    }
+  }, [isConnected, address]);
+
+  if (!isConnected) {
+    return <IsWalletDisconnected />;
+  }
 
   return (
-    <div className="flex flex-col items-center mt-5 gap-5">
-      {isRegistered ? <IsRegistered /> : <RenderIfNotRegistered />}
-    </div>
+    <IsWalletConnected
+      isUserRegisteredOnDB={isUserRegisteredOnDB}
+      setIsUserRegisteredOnDB={setIsUserRegisteredOnDB}
+      user={user}
+      setUser={setUser}
+    />
   );
 };

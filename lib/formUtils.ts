@@ -1,3 +1,22 @@
+import * as Yup from "yup";
+import { RegistrationContract } from "../src/lib/RegistrationManager";
+import { ethers } from "ethers";
+
+export const FormSchema = Yup.object().shape({
+  name: Yup.string()
+    .required("Required")
+    .min(7, "Name is too short - should be 7 chars minimum."),
+  legalID: Yup.string()
+    .required("Required")
+    .min(7, "ID is too short - should be 7 chars minimum."),
+  email: Yup.string().email("Invalid email").required("Required"),
+  eps: Yup.string().required("Required"),
+  gitHubProfile: Yup.string().required("Required"),
+  phone: Yup.string()
+    .required()
+    .min(8, "Phone is too short - Should be 8 chars minimum."),
+});
+
 export enum inputTypes {
   email = "email",
   legalId = "legalId",
@@ -122,4 +141,42 @@ export const checkStateAndSetClass = (
   }
 
   return baseClass;
+};
+
+export const saveUserToDB = async (userObj: UserDto): Promise<boolean> => {
+  let ok: boolean = false;
+  const apiRes = await fetch("/api/user", {
+    method: "POST",
+    body: JSON.stringify(userObj),
+  })
+    .then((data) => data.json())
+    .catch((err) => {
+      console.error(err);
+      ok = false;
+    });
+
+  ok = apiRes.user;
+
+  console.log({
+    apiRes,
+  });
+
+  return ok;
+};
+
+export const saveUserToContract = async ({
+  contract,
+  data,
+}: {
+  contract: RegistrationContract;
+  data: ethers.Signer | undefined;
+}): Promise<boolean> => {
+  if (contract && data) {
+    const tx = await contract.joinIn({ signer: data });
+    const res = await tx.wait();
+    console.log({ res });
+    if (res) return true;
+  }
+
+  return false;
 };

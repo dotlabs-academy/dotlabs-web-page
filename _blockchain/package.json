@@ -2,6 +2,8 @@
   "name": "blockchain",
   "scripts": {
     "deploy:goerli": "source .env && forge script script/RegistrationManager.s.sol:RegistrationManagerScript --rpc-url $GOERLI_RPC_URL --broadcast --verify -vvv",
+    "deploy:sepolia": "source .env && forge script script/RegistrationManager.s.sol:RegistrationManagerScript --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvv",
+    "deploy:local": "forge script script/RegistrationManager.s.sol:RegistrationManagerScript  --fork-url http://localhost:8545 --broadcast",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

@@ -58,7 +58,7 @@ export class RegistrationContract {
     }
   }
 
-  async joinIn(signer: ethers.Signer) {
+  async joinIn({ signer }: { signer: ethers.Signer }) {
     try {
       const parsedEth = ethers.utils.parseEther(
         (await this.registrationFee()) || "0"
@@ -67,7 +67,7 @@ export class RegistrationContract {
         value: parsedEth,
       });
 
-      const success = tx.wait();
+      const success = await tx.wait();
 
       console.log({
         success,

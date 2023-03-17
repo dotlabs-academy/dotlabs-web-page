@@ -1,5 +1,5 @@
 import DotlbasLogo from "./DotlbasLogo";
-import Socials from "./Socials";
+import { ConnectKitButton } from "connectkit";
 
 const Header = () => {
   return (
@@ -9,7 +9,7 @@ const Header = () => {
       >
         <DotlbasLogo />
 
-        <Socials />
+        <ConnectKitButton theme="retro" />
       </div>
     </header>
   );

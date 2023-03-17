@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { connectToDatabase } from "./core/mongo";
-import User from "./core/models/User";
+import { connectToDatabase, userModel } from "../../../lib/db";
 import Joi from "joi";
 import { UserDto } from "../../../lib/formUtils";
 
@@ -26,17 +25,26 @@ type Data = {
 type EthAddress = `0x${string}`;
 
 const createUser = async (data: UserDto): Promise<any> => {
-  await connectToDatabase();
-  const user: any = await User.create(data); // ?
-  console.log({ user });
-  if (user) return user;
+  try {
+    await connectToDatabase();
+    const user = await userModel.create(data);
+    console.log({ user });
+    if (user) return user;
+    return { error: "USER_CREATION_FAILED" };
+  } catch (error) {
+    return { error: "DATABASE_CONNECTION_FAILED" };
+  }
 };
 
 const readUser = async (address: EthAddress): Promise<any> => {
-  await connectToDatabase();
-  const user = await User.findOne({ address });
-  console.log({ user });
-  if (user) return user;
+  try {
+    await connectToDatabase();
+    const user = await userModel.findOne({ address });
+    console.log({ user });
+    if (user) return user;
+  } catch (error) {
+    return false;
+  }
 };
 
 export default async function handler(
@@ -50,8 +58,9 @@ export default async function handler(
       res.status(400).json({ message: "PAYLOAD_NOT_VALID" });
     else {
       console.log("190");
-      await createUser(data);
-      res.status(200).json({ message: "USER_CREATED" });
+      const user = await createUser(data);
+      if (user.error) res.status(400).json({ message: user.error });
+      res.status(200).json({ message: "USER_CREATED", user });
     }
   } else if (req.method === "GET") {
     // Code to handle the POST request
@@ -63,10 +72,8 @@ export default async function handler(
       const user = await readUser(address);
       let response;
       if (user) response = { message: "OK", user: user };
-      else response = { message: "USER_NOT_FOUND" }
-      res
-        .status(200)
-        .json(response);
+      else response = { message: "USER_NOT_FOUND" };
+      res.status(200).json(response);
     }
   } else {
     res.status(400).json({ message: "METHOT_NOT_FOUND" });

@@ -1,26 +1,25 @@
 import { useState, useContext } from "react";
-import { useSigner } from "wagmi";
 import { useFormik } from "formik";
 import { BiLoaderAlt } from "react-icons/bi";
 
 import { LabelStd } from "../common/LabelStd";
 import { InputErrorStd } from "../common/InputErrorStd";
-import { FormValues, UserDto } from "../../../lib/formUtils";
+import {
+  FormValues,
+  UserDto,
+  FormSchema,
+  saveUserToDB,
+} from "../../../lib/formUtils";
 import {
   ContractContext,
   IContractContext,
 } from "../../hooks/RegistrationManagerContractContext";
-import {
-  checkStateAndSetClass,
-  validate,
-  resetForm,
-} from "../../../lib/formUtils";
-import { useRouter } from "next/router";
+import { checkStateAndSetClass, resetForm } from "../../../lib/formUtils";
 
 const labelStdClassName = "text-xl font-bold";
 const labelInputContainerClassName = "flex flex-col items-center gap-2";
 const inputClassName =
-  "min-w-[250px] w-full border-2 border-zinc-300 text-zinc-500 rounded-md px-3 py-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent focus:shadow-md";
+  "min-w-[270px] w-full border-2 border-zinc-300 text-zinc-500 rounded-md px-3 py-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent focus:shadow-md";
 
 const initialsFormValues: FormValues = {
   name: "",
@@ -31,12 +30,36 @@ const initialsFormValues: FormValues = {
   phone: "",
 };
 
-export const RegistrationForm = () => {
-  const router = useRouter();
-  const { address, contract } = useContext(ContractContext) as IContractContext;
+export interface IRegistrationFormProps {
+  setUser: React.Dispatch<React.SetStateAction<any>>;
+  setIsUserRegisteredOnDB: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const RegistrationForm = ({
+  setUser,
+  setIsUserRegisteredOnDB,
+}: IRegistrationFormProps) => {
+  const { address } = useContext(ContractContext) as IContractContext;
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const { data } = useSigner();
+
+  const ErrorButton = () => {
+    return (
+      <>
+        <span className="text-center text-red-400">Something went wrong.</span>
+        <button
+          type="submit"
+          className={`hover:text-black py-1 hover:border-green-200 hover:shadow-none border-2 shadow-sm hover:bg-green-100 rounded-md bg-red-100 border-red-300 w-full transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
+        >
+          {isLoading ? (
+            <BiLoaderAlt className="animate-spin" />
+          ) : (
+            <span>Try again</span>
+          )}
+        </button>
+      </>
+    );
+  };
 
   const handleSubmit = async (values: FormValues) => {
     const userObj: UserDto = {
@@ -46,58 +69,29 @@ export const RegistrationForm = () => {
       phone: `+57${values.phone}`,
     };
 
-    console.log({ userObj });
-
-    if (data) {
-      setIsLoading(true);
-      const success = await contract.joinIn(data);
-      if (success) {
-        //
-        const apiRes = await fetch("/api/user", {
-          method: "POST",
-          body: JSON.stringify(userObj),
-        });
-        //
-        setIsLoading(false);
-        if (apiRes.status !== 200) return console.error("error writing the db");
-        //
-        router.push("/registration/success");
-      }
-
-      setIsError(true);
+    setIsLoading(true);
+    try {
+      const apiRes = await saveUserToDB(userObj);
       setIsLoading(false);
-      console.error("error writing the contract");
+      if (apiRes) {
+        resetForm(formik, initialsFormValues);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setIsError(true);
     }
-
-    resetForm(formik, initialsFormValues);
-    setIsLoading(false);
-  };
-
-  const errorButton = () => {
-    return (
-      <button
-        type="submit"
-        className="w-full text-red-400 py-1.5 rounded-md font-bold text-xl"
-      >
-        {isLoading ? (
-          <BiLoaderAlt className="animate-spin" />
-        ) : (
-          <span>Something went wrong. Try again.</span>
-        )}
-      </button>
-    );
   };
 
   const formik = useFormik({
     initialValues: initialsFormValues,
-    validate,
+    validationSchema: FormSchema,
     onSubmit: (values) => handleSubmit(values),
   });
 
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-5 w-full mt-5 text-zinc-400 "
+      className="flex flex-col gap-5 w-full mt-5"
     >
       <div className={labelInputContainerClassName}>
         <LabelStd
@@ -211,7 +205,7 @@ export const RegistrationForm = () => {
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
         <LabelStd
-          label="GitHub_Profile"
+          label="GitHub_User"
           htmlFor="gitHubProfile"
           className={labelStdClassName}
         />
@@ -219,10 +213,10 @@ export const RegistrationForm = () => {
           onChange={formik.handleChange}
           value={formik.values.gitHubProfile}
           onBlur={formik.handleBlur}
-          type="url"
+          type="text"
           name="gitHubProfile"
           id="gitHubProfile"
-          placeholder="https://github.com/..."
+          placeholder="Cocodrilette"
           className={checkStateAndSetClass(
             formik.touched.gitHubProfile,
             formik.errors.gitHubProfile,
@@ -256,12 +250,12 @@ export const RegistrationForm = () => {
       </div>
 
       {isError ? (
-        errorButton()
+        <ErrorButton />
       ) : (
         <button
           disabled={formik.isSubmitting || isLoading}
           type="submit"
-          className={`mx-auto hover:text-black transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
+          className={`hover:text-black py-1 hover:border-green-200 hover:shadow-none border-2 shadow-sm hover:bg-green-100 rounded-md border-zinc-300 w-full transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           {isLoading ? (
             <BiLoaderAlt className="mx-auto animate-spin" />
