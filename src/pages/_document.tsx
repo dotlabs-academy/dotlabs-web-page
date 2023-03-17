@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <body className="w-full mx-auto bg-purple-dotlabs bg-gradient-to-tr from-amber-50 to-blue-50">
+      <body className="w-full h-3/4 mx-auto" >
         <Main />
         <NextScript />
       </body>

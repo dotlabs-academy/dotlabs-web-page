@@ -13,3 +13,8 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+body{
+  background-image: url(../../public/assets/images/background_whale.svg);
+  background-size: cover;
+}
