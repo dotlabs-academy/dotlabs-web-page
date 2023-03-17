@@ -1,11 +1,9 @@
-import { ParticlesBack } from "./Particles";
 
 function Home() {
   return (
     <>
-      <ParticlesBack />
       <div className="flex flex-col justify-center items-center  relative z-1 h-screen max-w-4xl mx-auto">
-        <h1 className="mb-4 font-bold text-6xl text-main ">
+        <h1 className="mb-4 font-bold text-6xl text-transparent bg-clip-text bg-gradient-to-l from-gradient-purple  to-gradient-red">
           Bienvenido a Dotlabs( )
         </h1>
         <div className="max-w-lg flex flex-col gap-6 items-center text-center">
@@ -21,10 +19,10 @@ function Home() {
           </p>
 
           <div className="flex gap-12">
-            <button className="text-white p-4 bg-main text-sm">
+            <button className="rounded-md text-white p-4 bg-main text-sm">
               Join discord
             </button>
-            <button className="text-main p-4 bg-white text-sm">
+            <button className="rounded-md text-main p-4 bg-transparent border-2 border-main text-sm">
               Watch our lives
             </button>
           </div>
