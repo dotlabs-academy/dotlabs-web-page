@@ -1,27 +1,28 @@
-import { registrationManagerAbi } from "./registrationManagerAbi";
+import { registrationManagerMetadata } from "./registrationManager/registrationManagerMetada";
 
 export const appConfig: AppConfig = {
-  contracts: {
-    registrationManager: {
-      address: "0x04E478e076A5dFb43515071e15dCe21b9c9C2e13",
-      abi: registrationManagerAbi,
-    },
-  },
-  environment: {
-    alchemyApiKey: process.env.NEXT_PUBLIC_GOERLI_ALCHEMY_API_KEY || "",
-  },
+	contracts: {
+		registrationManager: {
+			address: registrationManagerMetadata.address,
+			abi: registrationManagerMetadata.abi,
+		},
+	},
+	environment: {
+		alchemyApiKey: process.env.NEXT_PUBLIC_POLYGON_MUMBAI_ALCHEMY_API_KEY || "",
+	},
 };
 
 interface AppEnvironments {
-  alchemyApiKey: string | "";
+	alchemyApiKey: string | "";
 }
 
 interface AppConfig {
-  contracts: {
-    registrationManager: {
-      address: `0x${string}`;
-      abi: any;
-    };
-  };
-  environment: AppEnvironments;
+	contracts: {
+		registrationManager: {
+			address: `0x${string}`;
+			// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+			abi: any;
+		};
+	};
+	environment: AppEnvironments;
 }
