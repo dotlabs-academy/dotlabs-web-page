@@ -1,14 +1,14 @@
 function Home() {
-	return (
-		<>
-			<div className="flex flex-col justify-center items-center relative z-1 h-screen max-w-4xl mx-auto">
-				<h1 className="mb-4 font-bold text-6xl text-transparent bg-clip-text bg-gradient-to-l from-gradient-purple  to-gradient-red">
-					Bienvenido a Dotlabs( )
-				</h1>
-				<div className="max-w-lg flex flex-col gap-6 items-center text-center">
-					<p className="text-main text-2xl">
-						Donde aprenderás crypto al lado de los mejores de la comunidad
-					</p>
+  return (
+    <>
+      <div className="flex flex-col justify-center items-center relative z-1 h-screen max-w-4xl mx-auto">
+        <div className="max-w-lg flex flex-col gap-4 items-center text-justify">
+          <h1 className="text-5xl max-w-lg mx-3 text-transparent bg-clip-text bg-gradient-to-l from-gradient-purple  to-gradient-red text-start  font-bold sm:text-center sm:text-5xl lg:text-6xl ">
+            Bienvenido a Dotlabs(&ensp;)
+          </h1>
+          <p className="text-main text-2xl mx-3 sm:text-xl lg:text-2xl">
+            Donde aprenderás crypto al lado de los mejores de la comunidad
+          </p>
 
 					<p>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem,
