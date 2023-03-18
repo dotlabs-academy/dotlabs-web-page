@@ -112,9 +112,15 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
         onlyRole(DEFAULT_ADMIN_ROLE)
         notZeroAddress(_userAddress)
         nonReentrant
-        returns (bool success)
+        returns (bool)
     {
-        (success,) = payable(_userAddress).call{value: registrationFee}("");
+        if (isJoined[_userAddress] || isConfirmed[_userAddress]) {
+            (bool success,) = payable(_userAddress).call{value: registrationFee}("");
+            if (!success) revert("TransactionFailed");
+            return true;
+        }
+
+        revert("UserNotFound");
     }
 
     function refundFeeBatch(address[] memory _usersAddresses)

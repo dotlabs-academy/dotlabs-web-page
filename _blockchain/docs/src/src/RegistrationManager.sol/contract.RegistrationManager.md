@@ -1,5 +1,5 @@
 # RegistrationManager
-[Git Source](https://github.com/dotlabs-academy/dotlabs-web-page/blob/575cc2955a4292a45add1a1dce7bc25aedaab703/src/RegistrationManager.sol)
+[Git Source](https://github.com/dotlabs-academy/dotlabs-web-page/blob/6370cc9fb3d57aa459c27af13a8ec9fdf9ee5aa8/src/RegistrationManager.sol)
 
 **Inherits:**
 Initializable, Pausable, AccessControl, ReentrancyGuard
@@ -18,7 +18,7 @@ When an user is `joined` it's mean that the registration fee was payed and locke
 
 
 ```solidity
-mapping(address => bool) isJoined;
+mapping(address => bool) public isJoined;
 ```
 
 
@@ -27,7 +27,7 @@ This is the admin confirmation about the user quota
 
 
 ```solidity
-mapping(address => bool) isConfirmed;
+mapping(address => bool) public isConfirmed;
 ```
 
 
@@ -36,7 +36,7 @@ mapping(address => bool) isConfirmed;
 
 
 ```solidity
-address[] users;
+address[] public users;
 ```
 
 
@@ -160,7 +160,7 @@ function refundFee(address _userAddress)
     onlyRole(DEFAULT_ADMIN_ROLE)
     notZeroAddress(_userAddress)
     nonReentrant
-    returns (bool success);
+    returns (bool);
 ```
 
 ### refundFeeBatch
