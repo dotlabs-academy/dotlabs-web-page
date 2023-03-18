@@ -1,6 +1,5 @@
-import { RegistrationForm } from "./Form";
 import { Guide } from "./Guide";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { User } from "../../types/index";
 import { UserIsRegisteredOnDb } from "./UserIsRegisteredOnDb";
 
@@ -22,7 +21,7 @@ export const IsWalletConnected = ({
 			{isUserRegisteredOnDB ? (
 				<UserIsRegisteredOnDb userName={user?.name} />
 			) : (
-				<Guide action={() => {}} />
+				<Guide setUser={setUser} setIsUserRegisteredOnDB={setIsUserRegisteredOnDB} />
 			)}
 		</Suspense>
 	);

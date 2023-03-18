@@ -1,7 +1,7 @@
 import Head from "next/head";
 
 import { ComponentWithChildren } from "@/types";
-import { backgroundGradientColor } from "utils/constants";
+import { backgroundGradientColor } from "@/utils/constants";
 import Header from "./Header";
 
 interface LayoutProps extends ComponentWithChildren {

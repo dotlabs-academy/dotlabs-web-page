@@ -145,7 +145,7 @@ export const checkStateAndSetClass = (
 	return baseClass;
 };
 
-export const saveUserToDB = async (userObj: UserDto): Promise<boolean> => {
+export const saveUserToDB = async (userObj: UserDto): Promise<any> => {
 	let ok: boolean = false;
 	const apiRes = await fetch("/api/user", {
 		method: "POST",
@@ -174,8 +174,7 @@ export const saveUserToContract = async ({
 	data: ethers.Signer | undefined;
 }): Promise<boolean> => {
 	if (contract && data) {
-		const tx = await contract.joinIn({ signer: data });
-		const res = await tx.wait();
+		const res = await contract.joinIn(data);
 		console.log({ res });
 		if (res) return true;
 	}

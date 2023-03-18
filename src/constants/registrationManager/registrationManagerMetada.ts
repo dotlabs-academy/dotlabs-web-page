@@ -1,7 +1,7 @@
 import RegistrationManager from "./RegistrationManager.json";
 
 export const registrationManagerMetadata = {
-	address: "0x5F5FDd4959E98C9A5A3b8A2A06D7901D2bc9DF12" as `0x${string}`,
+	address: "0x5Fa0cBcdaFb91207a70D86Ff9c75EE68A0c0b8f1" as `0x${string}`,
 	abi: RegistrationManager.abi as IRegistrationManagerABI["abi"],
 };
 
