@@ -11,11 +11,11 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
     uint256 public registrationFee;
 
     /// @notice When an user is `joined` it's mean that the registration fee was payed and locked
-    mapping(address => bool) isJoined;
+    mapping(address => bool) public isJoined;
     /// @notice This is the admin confirmation about the user quota
-    mapping(address => bool) isConfirmed;
+    mapping(address => bool) public isConfirmed;
     /// @dev This allow to reset the mappings above by iteration
-    address[] users;
+    address[] public users;
 
     event RegistrationFeeUpdated(address indexed admin, uint256 newFee, uint256 previosFee);
 
@@ -135,7 +135,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
     }
 
     /**
-     * @notice Pauses the contract, preventing any further registration, confirmation, or unregistration actions.
+     * @notice Pauses the contract, preventing any further registration.
      * @dev Only the account with the DEFAULT_ADMIN_ROLE can pause the contract.
      */
     function pause() public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -143,7 +143,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
     }
 
     /**
-     * @notice Unpauses the contract, allowing registration, confirmation, and unregistration actions to proceed.
+     * @notice Unpauses the contract, allowing registration actions to proceed.
      * @dev Only the account with the DEFAULT_ADMIN_ROLE can unpause the contract.
      */
     function unpause() public onlyRole(DEFAULT_ADMIN_ROLE) {
