@@ -1,5 +1,5 @@
 # RegistrationManager
-[Git Source](https://github.com/dotlabs-academy/dotlabs-web-page/blob/6370cc9fb3d57aa459c27af13a8ec9fdf9ee5aa8/src/RegistrationManager.sol)
+[Git Source](https://github.com/dotlabs-academy/dotlabs-web-page/blob/f914f7efa329ad93391e07b6c0614e6dac5bdc7c/src/RegistrationManager.sol)
 
 **Inherits:**
 Initializable, Pausable, AccessControl, ReentrancyGuard
@@ -104,7 +104,7 @@ Allow an admint o confirm a user quota.
 
 
 ```solidity
-function confirmUserQuota(address _userAddress) external notZeroAddress(_userAddress) returns (bool);
+function confirmUserQuota(address _userAddress) public notZeroAddress(_userAddress) returns (bool);
 ```
 **Parameters**
 
@@ -153,17 +153,33 @@ function reset() external onlyRole(DEFAULT_ADMIN_ROLE);
 
 ### refundFee
 
+Allow an admin to refund the registration fee.
+
 
 ```solidity
 function refundFee(address _userAddress)
-    external
+    public
     onlyRole(DEFAULT_ADMIN_ROLE)
     notZeroAddress(_userAddress)
     nonReentrant
     returns (bool);
 ```
+**Parameters**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`_userAddress`|`address`|The user address you want to refund|
+
+**Returns**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`<none>`|`bool`|A boolean value indicating whether the operation was successful.|
+
 
 ### refundFeeBatch
+
+Allow an admin to refund the registration fee.
 
 
 ```solidity
@@ -173,6 +189,18 @@ function refundFeeBatch(address[] memory _usersAddresses)
     nonReentrant
     returns (bool);
 ```
+**Parameters**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`_usersAddresses`|`address[]`|The users addresses you want to refund|
+
+**Returns**
+
+|Name|Type|Description|
+|----|----|-----------|
+|`<none>`|`bool`|A boolean value indicating whether the operation was successful.|
+
 
 ### getJoinedUsers
 
