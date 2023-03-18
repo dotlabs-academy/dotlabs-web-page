@@ -9,12 +9,14 @@ interface LayoutProps extends ComponentWithChildren {
 }
 
 const Layout = ({ children, headTitle }: LayoutProps) => {
-	return (
-		<>
-			<Header />
-			<main className="mt-16 p-5">{children}</main>
-		</>
-	);
+  return (
+    <>
+      <Header />
+      <main className="mt-10 overflow-y-scroll scrolling-touch h-screen flex flex-col justify-center items-center">
+        {children}
+      </main>
+    </>
+  );
 };
 
 export default Layout;
