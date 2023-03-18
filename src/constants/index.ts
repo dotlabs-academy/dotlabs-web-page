@@ -1,4 +1,7 @@
-import { registrationManagerMetadata } from "./registrationManager/registrationManagerMetada";
+import {
+	registrationManagerMetadata,
+	ABI,
+} from "./registrationManager/registrationManagerMetada";
 
 export const appConfig: AppConfig = {
 	contracts: {
@@ -20,8 +23,7 @@ interface AppConfig {
 	contracts: {
 		registrationManager: {
 			address: `0x${string}`;
-			// rome-ignore lint/suspicious/noExplicitAny: <explanation>
-			abi: any;
+			abi: ABI[];
 		};
 	};
 	environment: AppEnvironments;

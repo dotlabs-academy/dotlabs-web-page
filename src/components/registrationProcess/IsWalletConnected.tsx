@@ -1,33 +1,29 @@
 import { RegistrationForm } from "./Form";
 import { Guide } from "./Guide";
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { User } from "../../types/index";
+import { UserIsRegisteredOnDb } from "./UserIsRegisteredOnDb";
+
 export interface IRegistrationProcessProps {
-  isUserRegisteredOnDB: boolean;
-  user: any;
-  setUser: React.Dispatch<React.SetStateAction<any>>;
-  setIsUserRegisteredOnDB: React.Dispatch<React.SetStateAction<boolean>>;
+	isUserRegisteredOnDB: boolean;
+	user: User | undefined;
+	setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+	setIsUserRegisteredOnDB: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const IsWalletConnected = ({
-  isUserRegisteredOnDB,
-  user,
-  setUser,
-  setIsUserRegisteredOnDB,
+	isUserRegisteredOnDB,
+	setUser,
+	setIsUserRegisteredOnDB,
+	user,
 }: IRegistrationProcessProps) => {
-  const [isConditionsAccepted, setIsConditionsAccepted] = useState(false);
-
-  if (isConditionsAccepted) {
-    return (
-      <RegistrationForm
-        setUser={setUser}
-        setIsUserRegisteredOnDB={setIsUserRegisteredOnDB}
-      />
-    );
-  }
-
-  if (!isUserRegisteredOnDB) {
-    return <Guide action={setIsConditionsAccepted} />;
-  }
-
-  return <div>User registered on DB. Pay fee.</div>;
+	return (
+		<Suspense>
+			{isUserRegisteredOnDB ? (
+				<UserIsRegisteredOnDb userName={user?.name} />
+			) : (
+				<Guide action={() => {}} />
+			)}
+		</Suspense>
+	);
 };

@@ -29,8 +29,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "lib/db/mongo.js",
-    "lib/db/models/User.js"
+    "src/lib/db/mongo.js",
+    "src/lib/db/models/User.js"
   ],
   "exclude": [
     "node_modules"
