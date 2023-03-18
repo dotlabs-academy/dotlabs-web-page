@@ -69,7 +69,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
      * @notice Allow an admint o confirm a user quota.
      * @return A boolean value indicating whether the operation was successful.
      */
-    function confirmUserQuota(address _userAddress) external notZeroAddress(_userAddress) returns (bool) {
+    function confirmUserQuota(address _userAddress) public notZeroAddress(_userAddress) returns (bool) {
         if (isConfirmed[_userAddress]) revert("AlreadyConfirmed");
         if (!isJoined[_userAddress]) revert("NotJoined");
 
@@ -86,12 +86,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
      */
     function confirmUserQuotaBatch(address[] memory _usersAddresses) external returns (bool) {
         for (uint256 i = 0; i < _usersAddresses.length; i++) {
-            if (_usersAddresses[0] == address(0)) revert("ZeroAddressFound");
-            if (isConfirmed[_usersAddresses[i]]) revert("AlreadyConfirmed");
-            if (!isJoined[_usersAddresses[i]]) revert("NotJoined");
-
-            isJoined[_usersAddresses[i]] = false;
-            isConfirmed[_usersAddresses[i]] = true;
+            confirmUserQuota(_usersAddresses[i]);
         }
         return true;
     }
@@ -107,8 +102,13 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
         delete users;
     }
 
+    /**
+     * @param _userAddress The user address you want to refund
+     * @notice Allow an admin to refund the registration fee.
+     * @return A boolean value indicating whether the operation was successful.
+     */
     function refundFee(address _userAddress)
-        external
+        public
         onlyRole(DEFAULT_ADMIN_ROLE)
         notZeroAddress(_userAddress)
         nonReentrant
@@ -123,6 +123,11 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
         revert("UserNotFound");
     }
 
+    /**
+     * @param _usersAddresses The users addresses you want to refund
+     * @notice Allow an admin to refund the registration fee.
+     * @return A boolean value indicating whether the operation was successful.
+     */
     function refundFeeBatch(address[] memory _usersAddresses)
         external
         onlyRole(DEFAULT_ADMIN_ROLE)
@@ -130,8 +135,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
         returns (bool)
     {
         for (uint256 i = 0; i < _usersAddresses.length; i++) {
-            (bool success,) = payable(_usersAddresses[i]).call{value: registrationFee}("");
-            if (!success) revert("TransactionFailed");
+            refundFee(_usersAddresses[i]);
         }
         return true;
     }
