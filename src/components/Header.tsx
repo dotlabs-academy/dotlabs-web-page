@@ -1,16 +1,14 @@
 import DotlbasLogo from "./DotlbasLogo";
 import { ConnectKitButton } from "connectkit";
+import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="h-16 fixed w-screen top-0 bg-white/50 backdrop-blur-sm z-50 border-b-2 border-main shadow-md">
-      <div
-        className={`flex  justify-between items-center py-3 px-6 md:px-12  text-main`}
-      >
+    <header className="flex items-center justify-between px-5 h-16 fixed w-full bg-white/50 backdrop-blur-sm z-50 border-b-2 border-main shadow-md">
+      <Link href="/" passHref>
         <DotlbasLogo />
-
-        <ConnectKitButton theme="retro" />
-      </div>
+      </Link>
+      <ConnectKitButton theme="retro" />
     </header>
   );
 };

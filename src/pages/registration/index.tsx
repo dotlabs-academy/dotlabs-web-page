@@ -10,37 +10,34 @@ import { InformativeMessage } from "../../components/registrationProcess/Informa
 import Link from "next/link";
 
 const Registration: NextPage = () => {
-	return (
-		<Layout headTitle="dotlabs(Medellin) - Registration">
-			<div
-				className={`
-        flex flex-col w-full font-mono text-zinc-500
+  return (
+    <Layout headTitle="dotlabs(registration)">
+      <div
+        className={`
+        flex flex-col font-mono text-zinc-500 px-5
 		mb-24 max-w-2xl mx-auto
         md:py-10 md:px-16 
         `}
-			>
-				<div>
-					<Link href="/">
-						<div className="flex gap-2 items-center text-zinc-400 hover:text-blue-500 mb-5">
-							<BsArrowLeft />
-							<p className="text-xl md:text-2xl font-bold">
-								Back to home
-							</p>
-						</div>
-					</Link>
-					<InformativeMessage />
-				</div>
-				<div className="flex flex-col items-center mt-5 gap-5">
-					<Suspense fallback={<ProcessLoading />}>
-						<RegistrationManagerContractContext>
-							<RegistrationProcess />
-						</RegistrationManagerContractContext>
-					</Suspense>
-				</div>
-			</div>
-		</Layout >
-	);
+      >
+        <div>
+          <Link href="/">
+            <div className="flex gap-2 items-center text-zinc-400 hover:text-blue-500 mb-5 pt-5 md:pt-0">
+              <BsArrowLeft />
+              <p className="text-xl md:text-2xl font-bold">Back to home</p>
+            </div>
+          </Link>
+          <InformativeMessage />
+        </div>
+        <div className="flex flex-col items-center mt-5 gap-5">
+          <Suspense fallback={<ProcessLoading />}>
+            <RegistrationManagerContractContext>
+              <RegistrationProcess />
+            </RegistrationManagerContractContext>
+          </Suspense>
+        </div>
+      </div>
+    </Layout>
+  );
 };
 
 export default Registration;
-

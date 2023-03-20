@@ -21,7 +21,7 @@ export const Guide = ({ setIsUserRegisteredOnDB, setUser }: IGuideProps) => {
   const ConditionsNotAccepted = () => {
     return (
       <div className="flex flex-col font- font-mono gap-5">
-        <h1 className="text-2xl text-zinc-400 text-center">
+        <h1 className="text-xl md:text-2xl text-zinc-400 text-center">
           - Registration fee: {registrationFee} -
         </h1>
         <p>There are some many things you need to know before.</p>
