@@ -1,6 +1,6 @@
+import { AppConfig } from "@/types";
 import {
 	registrationManagerMetadata,
-	ABI,
 } from "./registrationManager/registrationManagerMetada";
 
 export const appConfig: AppConfig = {
@@ -13,18 +13,11 @@ export const appConfig: AppConfig = {
 	environment: {
 		alchemyApiKey: process.env.NEXT_PUBLIC_POLYGON_MUMBAI_ALCHEMY_API_KEY || "",
 	},
+	styles: {
+		backgroundGradientColor: "bg-gradient-to-tr from-amber-50 to-blue-50",
+		mainGradient: "bg-gradient-to-tr from-main via-main to-orange-dimmed",
+		yellowTextGradient: "text-transparent bg-clip-text bg-gradient-to-b from-yellow-custom to-orange-dimmed",
+	}
 };
 
-interface AppEnvironments {
-	alchemyApiKey: string | "";
-}
 
-interface AppConfig {
-	contracts: {
-		registrationManager: {
-			address: `0x${string}`;
-			abi: ABI[];
-		};
-	};
-	environment: AppEnvironments;
-}
