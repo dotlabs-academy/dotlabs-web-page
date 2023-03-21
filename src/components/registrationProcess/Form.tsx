@@ -16,8 +16,9 @@ import {
 } from "../../hooks/RegistrationManagerContractContext";
 import { checkStateAndSetClass, resetForm } from "../../utils/formUtils";
 
+
 const labelStdClassName = "text-xl font-bold";
-const labelInputContainerClassName = "flex flex-col items-center gap-2";
+const labelInputContainerClassName = "flex flex-col items-start gap-2";
 const inputClassName =
   "min-w-[270px] w-full border-2 border-zinc-300 text-zinc-500 rounded-md px-3 py-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent focus:shadow-md";
 
