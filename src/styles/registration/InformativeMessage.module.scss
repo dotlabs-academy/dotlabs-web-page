@@ -1,5 +1,8 @@
+@use '../base';
+
+
 .title{
-    color: rgb(28, 13, 93);
+    color: base.$main-color;
 }
 
 .title__span{
