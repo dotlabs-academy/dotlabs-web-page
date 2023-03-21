@@ -1,0 +1,18 @@
+.commonButton{
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+    border: solid 2px rgb(28 13 93);
+}
+
+.guide__button{
+    //rgb(28 13 93) este color es el main asi que deberia ser una variable
+    background-color: rgb(28 13 93) ;
+    width: 100%;
+    font-size: 18px;
+    margin: 0 auto;
+    padding: 4px;
+    color:white;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+

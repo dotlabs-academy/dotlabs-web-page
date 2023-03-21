@@ -2,8 +2,7 @@ import Layout from "@/components/Layout";
 import Link from "next/link";
 import styles from "@/styles/components/homepage.module.scss"
 
-const stdButtonClass =
-  "";
+
 
 function HomePage() {
   return (
