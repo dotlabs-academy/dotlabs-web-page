@@ -4,7 +4,7 @@ import { ComponentWithChildren, User } from "../../types/index";
 import { ContractContext } from "@/hooks/RegistrationManagerContractContext";
 import { IContractContext } from "../../hooks/RegistrationManagerContractContext";
 import { ProcessLoading } from "./ProcessLoading";
-import styles from '@/styles/registration/guide.module.scss'
+import styles from '@/styles/components/registration/guide.module.scss'
 
 const DarkerText = ({ children }: ComponentWithChildren) => (
   <span className="text-main">{children}</span>
