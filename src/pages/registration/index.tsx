@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { NextPage } from "next";
-import { BsArrowLeft } from "react-icons/bs";
 import Layout from "@/components/Layout";
 import { RegistrationManagerContractContext } from "../../hooks/RegistrationManagerContractContext";
 import { RegistrationProcess } from "../../components/registrationProcess/Process";
@@ -21,7 +20,7 @@ const Registration: NextPage = () => {
         <div>
           <InformativeMessage />
         </div>
-        <div className="flex flex-col items-center mt-5 gap-5">
+        <div className="flex flex-col items-center mt-5 gap-5 min-h-screen">
           <Suspense fallback={<ProcessLoading />}>
             <RegistrationManagerContractContext>
               <RegistrationProcess />
