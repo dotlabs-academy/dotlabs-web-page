@@ -7,24 +7,24 @@ const stdButtonClass =
 
 function HomePage() {
   return (
-    <Layout headTitle="dotlabs(Medellin)">
+    <Layout headTitle="dotlabs(Medellin)" className={styles.background}>
       <div
-        className={`${styles.container_column} ${styles.main__container} lg:py-14`}
+        className={`${styles.container_column} ${styles.main__container} `}
       >
         <div className={`${styles.container_column} ${styles.container_gap}`}>
-          <h1 className={`${styles.title}  md:text-6xl`}>
+          <h1 className={`${styles.title}  `}>
             Bienvenido a Dotlabs()
           </h1>
-          <p className={`${styles.subtitle} md:text-2xl`}>
+          <p className={`${styles.subtitle} `}>
             Comunidad. Desarrolladores. Blockchain.
           </p>
-          <p>
+          <p className={styles.text}>
             Somos el lugar perfecto para aprender Blockchain de una forma fácil
             y guiada. Aprende, profundiza, conecta y enseña.
           </p>
         </div>
 
-        <div className={`${styles.btn_container} "md:flex-row"`}>
+        <div className={`${styles.btn_container} `}>
           <a
             href="https://dotlabs-workshops-calendar.vercel.app/"
             target="_blank"
