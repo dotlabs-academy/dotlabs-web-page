@@ -4,7 +4,7 @@
     height: 100%;
     justify-content: center;
     padding: 0 20px;
-    max-width: 48rem;
+    padding-bottom: 40px;
     gap: 40px;
 }
 .container_gap {
@@ -81,6 +81,8 @@
 
     .title {
         font-size: 3.4rem;
+        font-weight: bold;
+
     }
     .subtitle {
         font-size: 1.5rem;
@@ -121,6 +123,6 @@
 
 @media screen and (min-width: 1024px) {
     .title {
-        font-size: 4.1rem;
+        font-size: 5rem;
     }
 }
