@@ -8,7 +8,7 @@ export const InformativeMessage = () => {
 			</h1>
 			<h3 className="text-xl md:text-2xl font-bold mx-auto">
 				We are testing a new registration system and we love your{" "}
-				<a href="" target="_blank" rel="noreferrer" className="text-blue-400">
+				<a href="https://forms.gle/uo7WmYfvGoKFA5B2A" target="_blank" rel="noreferrer" className="text-blue-400">
 					feedback
 				</a>{" "}
 				about it.
