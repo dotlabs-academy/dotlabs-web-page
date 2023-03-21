@@ -1,8 +1,10 @@
+import styles from "@/styles/registration/InformativeMessage.module.scss"
+
 export const InformativeMessage = () => {
 	return (
-		<div className="flex flex-col justify-center border-b-2 pb-10 gap-2">
-			<h1 className="text-5xl md:text-7xl font-extrabold ">
-				HI<span className="text-yellow-200">!</span>
+		<div className="flex flex-col justify-center border-b-2 pt-10 pb-10 gap-2">
+			<h1 className={`${styles.title} text-5xl md:text-7xl font-extrabold `}>
+				HI<span className={`${styles.title__span}`}>!</span>
 			</h1>
 			<h3 className="text-xl md:text-2xl font-bold mx-auto">
 				We are testing a new registration system and we love your{" "}

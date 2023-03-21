@@ -4,9 +4,10 @@ import { ComponentWithChildren, User } from "../../types/index";
 import { ContractContext } from "@/hooks/RegistrationManagerContractContext";
 import { IContractContext } from "../../hooks/RegistrationManagerContractContext";
 import { ProcessLoading } from "./ProcessLoading";
+import styles from '@/styles/registration/guide.module.scss'
 
 const DarkerText = ({ children }: ComponentWithChildren) => (
-  <span className="text-zinc-800">{children}</span>
+  <span className="text-main">{children}</span>
 );
 
 interface IGuideProps {
@@ -20,8 +21,8 @@ export const Guide = ({ setIsUserRegisteredOnDB, setUser }: IGuideProps) => {
 
   const ConditionsNotAccepted = () => {
     return (
-      <div className="flex flex-col font- font-mono gap-5">
-        <h1 className="text-xl md:text-2xl text-zinc-400 text-center">
+      <div className="flex flex-col  gap-5">
+        <h1 className="text-xl md:text-2xl font-bold text-black text-center">
           - Registration fee: {registrationFee} -
         </h1>
         <p>There are some many things you need to know before.</p>
@@ -42,11 +43,7 @@ export const Guide = ({ setIsUserRegisteredOnDB, setUser }: IGuideProps) => {
         </ul>
         <button
           onClick={() => setIsConditionsAccepted(true)}
-          className="
-            w-full mx-auto transition-all border-2 rounded-md p-1 
-            border-zinc-400 text-zinc-300 shadow-sm
-            hover:border-green-400 hover:text-green-400 hover:shadow-md 
-        "
+          className={`${styles.guide__button} ${styles.commonButton}`}
         >
           It&apos;s ok for me.
         </button>
