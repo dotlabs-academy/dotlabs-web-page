@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import Link from "next/link";
 
 const stdButtonClass =
-  "rounded-sm text-center flex-1 text-lg text-bold border-2 border-main w-full py-2 shadow-md";
+  "rounded-md text-center flex-1 text-lg font-bold border-2 border-main w-full py-2 shadow-md";
 
 function HomePage() {
   return (
@@ -31,7 +31,7 @@ function HomePage() {
           </a>
           <Link
             href="/registration"
-            className={`${stdButtonClass} bg-transparent  text-main`}
+            className={`${stdButtonClass}  bg-transparent  text-main`}
           >
             Regístrate
           </Link>
