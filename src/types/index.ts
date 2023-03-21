@@ -37,5 +37,8 @@ export interface AppConfig {
 		backgroundGradientColor: string;
 		mainGradient: string;
 		yellowTextGradient: string;
+	},
+	branding: {
+		feedbackForm: string;
 	}
 }
