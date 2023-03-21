@@ -3,13 +3,14 @@ import Header from "./Header";
 
 interface LayoutProps extends ComponentWithChildren {
   headTitle: string;
+  className?: string;
 }
 
-const Layout = ({ children, headTitle }: LayoutProps) => {
+const Layout = ({ children, headTitle, className }: LayoutProps) => {
   return (
-    <div className="">
+    <div className={className}>
       <Header />
-      <main className="pt-16 flex flex-col items-center">{children}</main>
+      <main className="pt-16 flex flex-col justify-center h-full items-center">{children}</main>
     </div>
   );
 };
