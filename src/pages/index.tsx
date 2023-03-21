@@ -12,11 +12,10 @@ function HomePage() {
           <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-tr from-main to-orange-dimmed">
             Bienvenido a Dotlabs()
           </h1>
+          <p>Comunidad. Desarrolladores. Blockchain.</p>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem,
-            voluptates cumque aliquam itaque maiores doloremque ea vel optio
-            similique illum cupiditate totam quaerat veniam non accusamus.
-            Perspiciatis omnis ex sequi.
+            Somos el lugar perfecto para aprender Blockchain de una forma fácil
+            y guiada. Aprende, profundiza, conecta y enseña.
           </p>
         </div>
 
