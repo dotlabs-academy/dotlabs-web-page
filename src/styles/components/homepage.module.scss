@@ -126,3 +126,12 @@
         font-size: 5rem;
     }
 }
+
+.main__container{
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    max-width: 48rem;
+    gap: 40px;
+}
