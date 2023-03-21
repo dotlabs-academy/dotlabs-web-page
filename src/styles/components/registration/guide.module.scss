@@ -1,12 +1,6 @@
-@use '../base';
+@use '../../base';
 
 
-.commonButton {
-    border-radius: 6px;
-    text-align: center;
-    font-weight: bold;
-    border: solid 2px base.$main-color;
-}
 
 .guide__button {
     //rgb(28 13 93) este color es el main asi que deberia ser una variable

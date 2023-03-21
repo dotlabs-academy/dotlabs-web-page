@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import Link from "next/link";
+import styles from "@/styles/components/homepage.module.scss"
 
 const stdButtonClass =
   "rounded-md text-center flex-1 text-lg font-bold border-2 border-main w-full py-2 shadow-md";
@@ -7,7 +8,7 @@ const stdButtonClass =
 function HomePage() {
   return (
     <Layout headTitle="dotlabs(Medellin)">
-      <div className="flex flex-col min-h-screen justify-start items-center px-5 py-10 lg:py-14 max-w-3xl gap-10">
+      <div className={`${styles.container_column} ${styles.main__container}lg:py-14`}>
         <div className="flex flex-col gap-5 items-center">
           <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-tr from-main to-orange-dimmed">
             Bienvenido a Dotlabs()
