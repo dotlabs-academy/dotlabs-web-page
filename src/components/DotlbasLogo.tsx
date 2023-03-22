@@ -9,9 +9,9 @@ const DotlbasLogo = ({white} : IDotlabsLogoProps) => {
   return (
     <Image
       src={
-         white
-        ?"assets/icons/dotlabs-hand.svg"
-        :"assets/icons/dotlabs-hand-white.svg"
+        white
+          ? "assets/icons/dotlabs-hand-white.svg"
+          : "assets/icons/dotlabs-hand.svg"
       }
       alt="Dotlabs"
       width={35}

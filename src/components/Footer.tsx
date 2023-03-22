@@ -8,7 +8,7 @@ export const Footer = (): JSX.Element => {
       <div className="max-w-[55rem] mx-auto flex flex-col gap-11 md:flex-row items-center md:gap-44 px-9 md:px-7 py-14 pb-16">
         <div className="flex flex-col gap-5">
           <div className="flex flex-row items-center gap-5">
-            <DotlbasLogo />
+            <DotlbasLogo white={true} />
             <p className="font-bold text-lg">{"Dotlabs ()"}</p>
           </div>
           <p className="w-full">
