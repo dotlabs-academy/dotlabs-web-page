@@ -1,4 +1,5 @@
 import { ComponentWithChildren } from "@/types";
+import { Footer } from "./Footer";
 import Header from "./Header";
 
 interface LayoutProps extends ComponentWithChildren {
@@ -11,6 +12,7 @@ const Layout = ({ children, headTitle, className }: LayoutProps) => {
     <div className={className}>
       <Header />
       <main className="pt-16 flex flex-col justify-center h-full items-center">{children}</main>
+      <Footer />
     </div>
   );
 };

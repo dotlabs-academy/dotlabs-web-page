@@ -14,8 +14,8 @@ const Socials = ({ white, customStyles }: SocialsProps) => {
         target="_blank"
       >
         <Image
-          width={undefined}
-          height={undefined}
+          width={25}
+          height={25}
           src={
             white
               ? "assets/social-media/twitter-white.svg"
@@ -30,8 +30,8 @@ const Socials = ({ white, customStyles }: SocialsProps) => {
         target="_blank"
       >
         <Image
-          width={undefined}
-          height={undefined}
+          width={25}
+          height={25}
           src={
             white
               ? "assets/social-media/github-white.svg"
@@ -46,8 +46,8 @@ const Socials = ({ white, customStyles }: SocialsProps) => {
         target="_blank"
       >
         <Image
-          width={undefined}
-          height={undefined}
+          width={25}
+          height={25}
           src={
             white
               ? "assets/social-media/instagram-white.svg"

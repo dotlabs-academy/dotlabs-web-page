@@ -1,14 +1,22 @@
 import Image from "next/image";
 
-const DotlbasLogo = () => {
+interface IDotlabsLogoProps {
+  white?: boolean;
+  bigger?: boolean;
+}
+
+const DotlbasLogo = ({white} : IDotlabsLogoProps) => {
   return (
     <Image
-      src="assets/icons/dotlabs-hand.svg"
+      src={
+         white
+        ?"assets/icons/dotlabs-hand.svg"
+        :"assets/icons/dotlabs-hand-white.svg"
+      }
       alt="Dotlabs"
       width={35}
       height={35}
     />
   );
 };
-
 export default DotlbasLogo;
