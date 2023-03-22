@@ -1,0 +1,14 @@
+@use '../../base';
+
+
+
+.guide__button {
+    //rgb(28 13 93) este color es el main asi que deberia ser una variable
+    background-color: base.$main-color;
+    font-size: 18px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 4px;
+    color: white;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
