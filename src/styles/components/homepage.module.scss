@@ -13,13 +13,14 @@
 }
 
 .title {
+    line-height: 1.2;
     font-size: 3rem;
     font-weight: 700;
     color: transparent;
     background: radial-gradient(circle, #2c1b71, #81329c, #483690, base.$complementary-color, #353da6);
     background-size: 600% 600%;
     background-clip: text;
-    animation: gradient 5s ease infinite;
+    animation: gradient 10s ease infinite;
 }
 
 @keyframes gradient {
@@ -97,6 +98,9 @@
 }
 
 @media screen and (min-width: 768px) {
+    .main__container{
+        align-items: center;
+    }
     .container_gap {
         gap: 20px;
         align-items: center;
