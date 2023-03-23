@@ -2,8 +2,6 @@ import Layout from "@/components/Layout";
 import Link from "next/link";
 import styles from "@/styles/components/homepage.module.scss"
 
-
-
 function HomePage() {
   return (
     <Layout headTitle="dotlabs(Medellin)" className={styles.background}>

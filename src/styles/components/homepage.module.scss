@@ -101,6 +101,7 @@
     .main__container{
         align-items: center;
     }
+
     .container_gap {
         gap: 20px;
         align-items: center;
@@ -126,7 +127,6 @@
 }
 
 @media screen and (min-width: 1024px) {
-    .title {
-        font-size: 4.1rem;
+        font-size: 5rem;
     }
 }
