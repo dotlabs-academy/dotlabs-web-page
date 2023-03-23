@@ -2,9 +2,6 @@ import Layout from "@/components/Layout";
 import Link from "next/link";
 import styles from "@/styles/components/homepage.module.scss"
 
-const stdButtonClass =
-  "";
-
 function HomePage() {
   return (
     <Layout headTitle="dotlabs(Medellin)" className={styles.background}>
@@ -19,6 +16,7 @@ function HomePage() {
             Comunidad. Desarrolladores. Blockchain.
           </p>
           <p className={styles.text}>
+
             Somos el lugar perfecto para aprender Blockchain de una forma fácil
             y guiada. Aprende, profundiza, conecta y enseña.
           </p>
