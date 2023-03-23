@@ -1,0 +1,10 @@
+@use '../../base';
+
+
+.title{
+    color: base.$main-color;
+}
+
+.title__span{
+    color: rgb(221, 115, 115, 1);
+}

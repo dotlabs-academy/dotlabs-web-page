@@ -1,4 +1,4 @@
-import styles from "@/styles/registration/InformativeMessage.module.scss"
+import styles from "@/styles/components/registration/InformativeMessage.module.scss";
 import Link from "next/link";
 import {appConfig} from "../../constants"
 
