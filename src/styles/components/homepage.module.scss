@@ -20,7 +20,7 @@
     background: radial-gradient(circle, #2c1b71, #81329c, #483690, base.$complementary-color, #353da6);
     background-size: 600% 600%;
     background-clip: text;
-    animation: gradient 5s ease infinite;
+    animation: gradient 10s ease infinite;
 }
 
 @keyframes gradient {
