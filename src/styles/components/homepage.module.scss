@@ -74,7 +74,8 @@
 
 .background {
     background-image: url(../../../public/assets/images/prueba.webp);
-    background-size: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100vh;
 }
 
