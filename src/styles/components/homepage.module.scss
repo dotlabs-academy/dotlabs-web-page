@@ -7,6 +7,7 @@
     padding-bottom: 40px;
     gap: 40px;
 }
+
 .container_gap {
     gap: 20px;
     align-items: start;
@@ -74,6 +75,7 @@
 .background {
     background-image: url(../../../public/assets/images/prueba.webp);
     background-size: auto;
+    background-size: cover;
     height: 100vh;
 }
 
@@ -84,6 +86,7 @@
         font-weight: bold;
 
     }
+
     .subtitle {
         font-size: 1.5rem;
         line-height: 1.8rem;
@@ -105,17 +108,21 @@
     .title {
         font-size: 4rem;
     }
+
     .subtitle {
         font-size: 1.8rem;
         line-height: 1.8rem;
     }
+
     .text {
         text-align: center;
         padding: 0 10%;
     }
+
     .btn_container {
         width: 80%;
     }
+
     .btn {
         font-size: 1.3rem;
     }
