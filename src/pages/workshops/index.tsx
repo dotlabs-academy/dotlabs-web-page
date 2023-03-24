@@ -5,7 +5,9 @@ import Link from "next/link";
 function WorkshopsPage() {
 	return (
 		<Layout headTitle="">
-			<WorkshopsList />
+			<div>
+				<WorkshopsList />
+			</div>
 		</Layout>
 	);
 }

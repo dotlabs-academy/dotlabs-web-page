@@ -25,7 +25,7 @@ function HomePage() {
 						Workshops
 					</Link>
 					<Link
-						href="/registration"
+						href="/registro"
 						className={`${styles.commonButton} ${styles.btn} ${styles.btn_white} `}
 					>
 						Regístrate
