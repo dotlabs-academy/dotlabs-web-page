@@ -1,6 +1,7 @@
 [
   "constructor()",
   "event Initialized(uint8)",
+  "event JoinedIn(address indexed,uint256)",
   "event Paused(address)",
   "event RegistrationFeeUpdated(address indexed,uint256,uint256)",
   "event RoleAdminChanged(bytes32 indexed,bytes32 indexed,bytes32 indexed)",

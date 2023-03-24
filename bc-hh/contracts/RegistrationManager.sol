@@ -101,7 +101,12 @@ contract RegistrationManager is
      * @notice Allow an admint o confirm a user quota.
      * @return A boolean value indicating whether the operation was successful.
      */
-    function confirmUserQuota(address _userAddress) public notZeroAddress(_userAddress) returns (bool) {
+    function confirmUserQuota(address _userAddress)
+        public
+        notZeroAddress(_userAddress)
+        onlyRole(DEFAULT_ADMIN_ROLE)
+        returns (bool)
+    {
         if (isConfirmed[_userAddress]) revert("RegistrationManager: already confirmed");
         if (!isJoined[_userAddress]) revert("RegistrationManager: not joined");
 
@@ -116,7 +121,11 @@ contract RegistrationManager is
      * @notice Allow an admint o confirm a users quota.
      * @return A boolean value indicating whether the operation was successful.
      */
-    function confirmUserQuotaBatch(address[] memory _usersAddresses) external returns (bool) {
+    function confirmUserQuotaBatch(address[] memory _usersAddresses)
+        external
+        onlyRole(DEFAULT_ADMIN_ROLE)
+        returns (bool)
+    {
         for (uint256 i = 0; i < _usersAddresses.length; i++) {
             confirmUserQuota(_usersAddresses[i]);
         }
