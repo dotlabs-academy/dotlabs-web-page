@@ -1,7 +1,33 @@
 {
-  "name": "blockchain",
+  "name": "dotlabs-web-contracts",
   "scripts": {
-    "deploy:mumbai": "source .env && forge script script/RegistrationManager.s.sol:RegistrationManagerScript --rpc-url $MUMBAI_RPC_URL --broadcast --verify -vvv",
+    "coverage": "npx hardhat coverage",
+    "export-abi": "npx hardhat export-abi",
+    "clear-abi": "npx hardhat clear-abi",
+    "deploy:local": "npx hardhat run scripts/deploy.ts",
+    "deploy:mumbai": "npx hardhat run scripts/deploy.ts --network mumbai",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.2.0",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "test"
+  },
+  "author": "https//github.com/cocodrilette",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "@openzeppelin/hardhat-upgrades": "^1.22.1",
+    "hardhat": "^2.13.0",
+    "hardhat-abi-exporter": "^2.10.1",
+    "hardhat-preprocessor": "^0.1.5"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts-upgradeable": "^4.8.2",
+    "dotenv": "^16.0.3",
+    "solidity-coverage": "^0.8.2"
   }
 }

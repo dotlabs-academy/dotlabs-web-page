@@ -1,13 +1,11 @@
 import { AppConfig } from "@/types";
-import {
-	registrationManagerMetadata,
-} from "./registrationManager/registrationManagerMetada";
+import RegistrationManagerAbi from "./contracts/src/RegistrationManager.sol/RegistrationManager.json";
 
 export const appConfig: AppConfig = {
 	contracts: {
 		registrationManager: {
-			address: registrationManagerMetadata.address,
-			abi: registrationManagerMetadata.abi,
+			address: "0x8cF3Aa7fA8e5bF2C8cC9B9B9B9B9B9B9B9B9B9B9",
+			abi: RegistrationManagerAbi,
 		},
 	},
 	environment: {
@@ -16,11 +14,10 @@ export const appConfig: AppConfig = {
 	styles: {
 		backgroundGradientColor: "bg-gradient-to-tr from-amber-50 to-blue-50",
 		mainGradient: "bg-gradient-to-tr from-main via-main to-orange-dimmed",
-		yellowTextGradient: "text-transparent bg-clip-text bg-gradient-to-b from-yellow-custom to-orange-dimmed",
+		yellowTextGradient:
+			"text-transparent bg-clip-text bg-gradient-to-b from-yellow-custom to-orange-dimmed",
 	},
 	branding: {
-		feedbackForm: "https://forms.gle/2f5TVG5wPuSHwAKU6"
-	}
+		feedbackForm: "https://forms.gle/2f5TVG5wPuSHwAKU6",
+	},
 };
-
-

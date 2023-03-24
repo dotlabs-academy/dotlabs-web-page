@@ -1,13 +1,22 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-import "../lib/openzeppelin-contracts/contracts/security/Pausable.sol";
-import "../lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
-import "../lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol";
-import "../lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 
 /// @custom:security-contact cocodrilette@gmail.com
-contract RegistrationManager is Initializable, Pausable, AccessControl, ReentrancyGuard {
+contract RegistrationManager is
+    Initializable,
+    PausableUpgradeable,
+    AccessControlUpgradeable,
+    ReentrancyGuardUpgradeable
+{
+    /// @notice The pause role is used to pause the contract
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+
+    /// @notice The registration fee to join in the event
     uint256 public registrationFee;
 
     /// @notice When an user is `joined` it's mean that the registration fee was payed and locked
@@ -15,24 +24,47 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
     /// @notice This is the admin confirmation about the user quota
     mapping(address => bool) public isConfirmed;
     /// @dev This allow to reset the mappings above by iteration
-    address[] public users;
+    address[] public joinedUsers;
 
-    event RegistrationFeeUpdated(address indexed admin, uint256 newFee, uint256 previosFee);
+    /**
+     * @param admin The address of the admin who updated the registration fee
+     * @param newFee The new registration fee
+     * @param previousFee The previous registration fee
+     * @notice This event is emitted when the registration fee is updated
+     */
+    event RegistrationFeeUpdated(address indexed admin, uint256 newFee, uint256 previousFee);
+    /**
+     * @param user The address of the user who joined in
+     * @param fee The registration fee paid by the user
+     */
+    event JoinedIn(address indexed user, uint256 fee);
 
+    /// @notice This modifier prevent a contract to call the function
     modifier notContractSender() {
-        if ((msg.sender).code.length != 0) revert("SenderIsContract");
+        if ((msg.sender).code.length != 0) revert("RegistrationManager: contract caller");
         _;
     }
 
+    /// @notice This modifier prevent a zero address to be used
     modifier notZeroAddress(address _address) {
-        if (_address == address(0)) revert("ZeroAddressFound");
-        if (msg.sender == address(0)) revert("ZeroAddressFound");
+        if (_address == address(0)) revert("RegistrationManager: zero address");
+        if (msg.sender == address(0)) revert("RegistrationManager: zero address");
         _;
     }
 
-    constructor(uint256 _initialRegistrationFee) {
-        registrationFee = _initialRegistrationFee;
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
+    /// @notice Initialize the contract and set the admin role to the deployer
+    /// @dev This function is called only once during the contract deployment like a constructor
+    function initialize() public initializer {
+        __Pausable_init();
+        __AccessControl_init();
+
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PAUSER_ROLE, msg.sender);
     }
 
     /**
@@ -53,13 +85,13 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
      * @dev The participant must not have already registered and must pay the registration fee.
      */
     function joinIn() external payable whenNotPaused notContractSender returns (bool) {
-        address sender = _getSenderSafe();
-        if (isConfirmed[sender]) revert("You are already confirmed");
-        if (isJoined[sender]) revert("You are alredy joined");
-        if (msg.value != registrationFee) revert("You sent invalid value.");
+        address sender = msg.sender;
+        if (msg.value != registrationFee) revert("RegistrationManager: invalid fee");
+        if (isConfirmed[sender]) revert("RegistrationManager: already confirmed");
+        if (isJoined[sender]) revert("RegistrationManager: already joined");
 
         isJoined[sender] = true;
-        users.push(sender);
+        joinedUsers.push(sender);
 
         return true;
     }
@@ -70,8 +102,8 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
      * @return A boolean value indicating whether the operation was successful.
      */
     function confirmUserQuota(address _userAddress) public notZeroAddress(_userAddress) returns (bool) {
-        if (isConfirmed[_userAddress]) revert("AlreadyConfirmed");
-        if (!isJoined[_userAddress]) revert("NotJoined");
+        if (isConfirmed[_userAddress]) revert("RegistrationManager: already confirmed");
+        if (!isJoined[_userAddress]) revert("RegistrationManager: not joined");
 
         isJoined[_userAddress] = false;
         isConfirmed[_userAddress] = true;
@@ -94,12 +126,12 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
     /// @notice Set the user related state variables to their default value.
     /// @dev Only users with `DEFAULT_ADMIN_ROLE` can executed it.
     function reset() external onlyRole(DEFAULT_ADMIN_ROLE) {
-        for (uint256 i = 0; i < users.length; i++) {
-            address user = users[i];
+        for (uint256 i = 0; i < joinedUsers.length; i++) {
+            address user = joinedUsers[i];
             isJoined[user] = false;
             isConfirmed[user] = false;
         }
-        delete users;
+        delete joinedUsers;
     }
 
     /**
@@ -117,7 +149,7 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
         if (isJoined[_userAddress] || isConfirmed[_userAddress]) {
             (bool success,) = payable(_userAddress).call{value: registrationFee}("");
             if (!success) revert("TransactionFailed");
-            return true;
+            return success;
         }
 
         revert("UserNotFound");
@@ -137,37 +169,31 @@ contract RegistrationManager is Initializable, Pausable, AccessControl, Reentran
         for (uint256 i = 0; i < _usersAddresses.length; i++) {
             refundFee(_usersAddresses[i]);
         }
+
         return true;
     }
 
+    /**
+     * @notice Returns the list of users who joined in the event.
+     * @return An array of addresses.
+     */
     function getJoinedUsers() external view returns (address[] memory) {
-        return users;
+        return joinedUsers;
     }
 
     /**
      * @notice Pauses the contract, preventing any further registration.
-     * @dev Only the account with the DEFAULT_ADMIN_ROLE can pause the contract.
+     * @dev Only the account with the PAUSER_ROLE can pause the contract.
      */
-    function pause() public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
     /**
      * @notice Unpauses the contract, allowing registration actions to proceed.
-     * @dev Only the account with the DEFAULT_ADMIN_ROLE can unpause the contract.
+     * @dev Only the account with the PAUSER_ROLE can unpause the contract.
      */
-    function unpause() public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function unpause() public onlyRole(PAUSER_ROLE) {
         _unpause();
-    }
-
-    /**
-     * @notice Returns the safe address of the contract's caller.
-     * @return sender The safe address of the contract's caller.
-     * @dev If the caller is a contract, the ContractSender error is thrown.
-     */
-    function _getSenderSafe() private view returns (address) {
-        address sender = msg.sender;
-        if (sender.code.length != 0) revert("ContractSender");
-        return sender;
     }
 }
