@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "../lib/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "../lib/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "../lib/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "../lib/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 
 /// @custom:security-contact cocodrilette@gmail.com
 contract RegistrationManager is
