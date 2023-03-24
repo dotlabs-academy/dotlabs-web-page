@@ -5,14 +5,16 @@ import {
 	IContractContext,
 } from "../../hooks/RegistrationManagerContractContext";
 import { UserIsJoined } from "./UserIsJoined";
-import { ProcessLoading } from './ProcessLoading';
-import { UserIsConfirmed } from './UserIsConfirmed';
+import { ProcessLoading } from "./ProcessLoading";
+import { UserIsConfirmed } from "./UserIsConfirmed";
 import { ContractPaymentProcess } from "./ContractPaymentProcess";
 
 export const UserIsRegisteredOnDb = ({
 	userName,
 }: { userName: string | undefined }) => {
-	const { isJoined, isConfirmed } = useContext(ContractContext) as IContractContext;
+	const { isJoined, isConfirmed } = useContext(
+		ContractContext,
+	) as IContractContext;
 
 	return (
 		<div className="text-xl md:text-2xl">
@@ -23,7 +25,7 @@ export const UserIsRegisteredOnDb = ({
 				<Suspense fallback={<ProcessLoading />}>
 					{isConfirmed && <UserIsConfirmed />}
 					{isJoined && <UserIsJoined />}
-					{!isConfirmed && !isJoined && <ContractPaymentProcess />}
+					{!(isConfirmed || isJoined) && <ContractPaymentProcess />}
 				</Suspense>
 			</div>
 		</div>

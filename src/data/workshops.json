@@ -1,0 +1,76 @@
+{
+    "workshops": [
+        {
+            "title": "BAM",
+            "speakers": [
+                "Platohedro",
+                "Dotlabs"
+            ],
+            "descripcion": "",
+            "date": "03/25/2023",
+            "tags": [
+                "Blockchain"
+            ]
+        },
+        {
+            "title": "OpenZeppelin Governor",
+            "speakers": [
+                "Juan Cogollo",
+                "Tomas Calle"
+            ],
+            "descripcion": "",
+            "date": "04/01/2023",
+            "tags": [
+                "Blockchain",
+                "Open Zeppelin",
+                "Solidity"
+            ]
+        },
+        {
+            "title": "De mortal a Dios con Rust I: Fundamentos.",
+            "speakers": [
+                "Carlos Rodriguez"
+            ],
+            "descripcion": "Aprende los fundamentos y las particularidades del lenguajes de programación Rust. Uno de los lenguajes más amados en la industria.",
+            "date": "04/08/2023",
+            "tags": [
+                "Blockchain",
+                "Rust",
+                "Smart Contracts",
+                "CLI"
+            ]
+        },
+        {
+            "title": "De mortal a Dios con Rust II: Astar Network.",
+            "speakers": [
+                "Carlos Rodriguez"
+            ],
+            "descripcion": "Conoce la parachain más popular del ecosistema de Polkadot. Crea tus primeros Smart Contracts en Astar Network y diseña tu primer proyecto.",
+            "date": "04/15/2023",
+            "tags": [
+                "Blockchain",
+                "Rust",
+                "Smart Contracts",
+                "Astar",
+                "Polkadot",
+                "Substrate"
+            ]
+        },
+        {
+            "title": "De mortal a Dios con Rust III: Astar Network.",
+            "speakers": [
+                "Carlos Rodriguez"
+            ],
+            "descripcion": "Para finalizar con esta sega crea una DApp de tokenizacion en Astar Network. Tokeniza cualquier activo digital y compartelo.",
+            "date": "04/22/2023",
+            "tags": [
+                "Blockchain",
+                "Rust",
+                "Smart Contracts",
+                "Astar",
+                "Polkadot",
+                "Substrate"
+            ]
+        }
+    ]
+}
