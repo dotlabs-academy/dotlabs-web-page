@@ -1,11 +1,11 @@
 import { AppConfig } from "@/types";
-import RegistrationManagerAbi from "./contracts/src/RegistrationManager.sol/RegistrationManager.json";
+import RegistrationManager from "./contracts/RegistrationManager.sol/RegistrationManager.json";
 
 export const appConfig: AppConfig = {
 	contracts: {
 		registrationManager: {
 			address: "0x8cF3Aa7fA8e5bF2C8cC9B9B9B9B9B9B9B9B9B9B9",
-			abi: RegistrationManagerAbi,
+			abi: RegistrationManager.abi,
 		},
 	},
 	environment: {

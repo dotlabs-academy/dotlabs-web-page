@@ -1,21 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-import "../lib/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "../lib/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "../lib/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "../lib/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "../lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
+import "../lib/openzeppelin-contracts/contracts/security/Pausable.sol";
+import "../lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol";
 
 /// @custom:security-contact cocodrilette@gmail.com
-contract RegistrationManager is
-    Initializable,
-    PausableUpgradeable,
-    AccessControlUpgradeable,
-    ReentrancyGuardUpgradeable
-{
-    /// @notice The pause role is used to pause the contract
-    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-
+contract RegistrationManager is Pausable, AccessControl, ReentrancyGuard {
     /// @notice The registration fee to join in the event
     uint256 public registrationFee;
 
@@ -52,19 +43,10 @@ contract RegistrationManager is
         _;
     }
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() {
-        _disableInitializers();
-    }
-
-    /// @notice Initialize the contract and set the admin role to the deployer
-    /// @dev This function is called only once during the contract deployment like a constructor
-    function initialize() public initializer {
-        __Pausable_init();
-        __AccessControl_init();
+    constructor(uint256 _initialFee) {
+        registrationFee = _initialFee;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(PAUSER_ROLE, msg.sender);
     }
 
     /**
@@ -194,7 +176,7 @@ contract RegistrationManager is
      * @notice Pauses the contract, preventing any further registration.
      * @dev Only the account with the PAUSER_ROLE can pause the contract.
      */
-    function pause() public onlyRole(PAUSER_ROLE) {
+    function pause() public onlyRole(DEFAULT_ADMIN_ROLE) {
         _pause();
     }
 
@@ -202,7 +184,7 @@ contract RegistrationManager is
      * @notice Unpauses the contract, allowing registration actions to proceed.
      * @dev Only the account with the PAUSER_ROLE can unpause the contract.
      */
-    function unpause() public onlyRole(PAUSER_ROLE) {
+    function unpause() public onlyRole(DEFAULT_ADMIN_ROLE) {
         _unpause();
     }
 }
