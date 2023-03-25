@@ -76,7 +76,7 @@ export const RegistrationForm = ({
       setIsLoading(false);
       if (apiRes) {
         setIsError(false);
-        console.log({ user: apiRes.data });
+        // console.log({ user: apiRes.data });
         setUser(apiRes.data);
         setIsUserRegisteredOnDB(true);
         resetForm(formik, initialsFormValues);
