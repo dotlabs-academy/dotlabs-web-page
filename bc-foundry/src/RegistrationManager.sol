@@ -14,6 +14,8 @@ contract RegistrationManager is Pausable, AccessControl, ReentrancyGuard {
     mapping(address => bool) public isJoined;
     /// @notice This is the admin confirmation about the user quota
     mapping(address => bool) public isConfirmed;
+    /// @notice This keeps track of the last fee paid by the user
+    mapping(address => uint256) public lastFeePaid;
     /// @dev This allow to reset the mappings above by iteration
     address[] public joinedUsers;
 
@@ -73,6 +75,7 @@ contract RegistrationManager is Pausable, AccessControl, ReentrancyGuard {
         if (isJoined[sender]) revert("RegistrationManager: already joined");
 
         isJoined[sender] = true;
+        lastFeePaid[sender] = msg.value;
         joinedUsers.push(sender);
 
         return true;
@@ -92,7 +95,6 @@ contract RegistrationManager is Pausable, AccessControl, ReentrancyGuard {
         if (isConfirmed[_userAddress]) revert("RegistrationManager: already confirmed");
         if (!isJoined[_userAddress]) revert("RegistrationManager: not joined");
 
-        isJoined[_userAddress] = false;
         isConfirmed[_userAddress] = true;
 
         return true;
@@ -121,6 +123,7 @@ contract RegistrationManager is Pausable, AccessControl, ReentrancyGuard {
             address user = joinedUsers[i];
             isJoined[user] = false;
             isConfirmed[user] = false;
+            lastFeePaid[user] = 0;
         }
         delete joinedUsers;
     }
@@ -138,8 +141,13 @@ contract RegistrationManager is Pausable, AccessControl, ReentrancyGuard {
         returns (bool)
     {
         if (isJoined[_userAddress] || isConfirmed[_userAddress]) {
-            (bool success,) = payable(_userAddress).call{value: registrationFee}("");
+            uint256 _lastFeePaid = lastFeePaid[_userAddress];
+
+            lastFeePaid[_userAddress] = 0;
+
+            (bool success,) = payable(_userAddress).call{value: _lastFeePaid}("");
             if (!success) revert("TransactionFailed");
+
             return success;
         }
 
@@ -151,12 +159,7 @@ contract RegistrationManager is Pausable, AccessControl, ReentrancyGuard {
      * @notice Allow an admin to refund the registration fee.
      * @return A boolean value indicating whether the operation was successful.
      */
-    function refundFeeBatch(address[] memory _usersAddresses)
-        external
-        onlyRole(DEFAULT_ADMIN_ROLE)
-        nonReentrant
-        returns (bool)
-    {
+    function refundFeeBatch(address[] memory _usersAddresses) external onlyRole(DEFAULT_ADMIN_ROLE) returns (bool) {
         for (uint256 i = 0; i < _usersAddresses.length; i++) {
             refundFee(_usersAddresses[i]);
         }
@@ -176,7 +179,7 @@ contract RegistrationManager is Pausable, AccessControl, ReentrancyGuard {
      * @notice Pauses the contract, preventing any further registration.
      * @dev Only the account with the PAUSER_ROLE can pause the contract.
      */
-    function pause() public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function pause() external onlyRole(DEFAULT_ADMIN_ROLE) {
         _pause();
     }
 
@@ -184,7 +187,7 @@ contract RegistrationManager is Pausable, AccessControl, ReentrancyGuard {
      * @notice Unpauses the contract, allowing registration actions to proceed.
      * @dev Only the account with the PAUSER_ROLE can unpause the contract.
      */
-    function unpause() public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function unpause() external onlyRole(DEFAULT_ADMIN_ROLE) {
         _unpause();
     }
 }
