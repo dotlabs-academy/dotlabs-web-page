@@ -1,0 +1,5 @@
+{
+    "scripts": {
+        "deploy:mumbai": "forge script script/RegistrationManager.s.sol:RegistrationManagerScript --rpc-url $MUMBAI_RPC_URL --broadcast --verify -vvv"
+    }
+}
