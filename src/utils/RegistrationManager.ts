@@ -20,9 +20,6 @@ export class RegistrationContract {
 	async isJoined(address: `0x${string}`): Promise<boolean | undefined> {
 		try {
 			const isJoined = await this.contract.isJoined(address);
-			({
-				isJoined,
-			});
 			return isJoined;
 		} catch (error) {
 			console.error({ isConfirmedError: error });
@@ -35,9 +32,7 @@ export class RegistrationContract {
 	): Promise<boolean | undefined> {
 		try {
 			const isConfirmed = await this.contract.isConfirmed(address);
-			({
-				isConfirmed,
-			});
+
 			return isConfirmed;
 		} catch (error) {
 			console.error({ isConfirmedError: error });
@@ -49,12 +44,10 @@ export class RegistrationContract {
 		try {
 			const registrationFee = await this.contract.registrationFee();
 			const registrationFeeInEth = ethers.utils.formatEther(registrationFee);
-			({
-				registrationFeeInEth,
-			});
+
 			return registrationFeeInEth;
 		} catch (error) {
-			({ registrationFeeError: error });
+			return error;
 		}
 	}
 
@@ -71,13 +64,13 @@ export class RegistrationContract {
 			({ success });
 			return success;
 		} catch (error) {
-			({ updatedRegistrationFeeError: error });
+			console.error(error);
 		}
 	}
 
 	async joinIn(signer: ethers.Signer): Promise<boolean | undefined> {
 		try {
-			const currentFee = await this.registrationFee();
+			const currentFee = (await this.registrationFee()) as string;
 			if (!currentFee) return false;
 			const tx = await this.contract.connect(signer).joinIn({
 				value: ethers.utils.parseEther(currentFee),
@@ -86,7 +79,7 @@ export class RegistrationContract {
 			({ success });
 			return success;
 		} catch (error) {
-			({ joinInError: error });
+			console.error(error);
 		}
 	}
 
@@ -97,7 +90,7 @@ export class RegistrationContract {
 			({ success });
 			return success;
 		} catch (error) {
-			({ error });
+			console.error(error);
 		}
 	}
 
@@ -108,7 +101,7 @@ export class RegistrationContract {
 			({ success });
 			return success;
 		} catch (error) {
-			({ error });
+			console.error(error);
 		}
 	}
 
@@ -117,7 +110,7 @@ export class RegistrationContract {
 			const tx = await this.contract.reset();
 			await tx.wait();
 		} catch (error) {
-			({ error });
+			console.error(error);
 		}
 	}
 
@@ -127,7 +120,7 @@ export class RegistrationContract {
 			const success = await tx.wait();
 			return success;
 		} catch (error) {
-			({ error });
+			console.error(error);
 		}
 	}
 
@@ -137,7 +130,7 @@ export class RegistrationContract {
 			const success = await tx.wait();
 			return success;
 		} catch (error) {
-			({ error });
+			console.error(error);
 		}
 	}
 
@@ -158,7 +151,7 @@ export class RegistrationContract {
 			const tx = await this.contract.connect(signer).pause();
 			await tx.wait();
 		} catch (error) {
-			({ pauseError: error });
+			console.error(error);
 		}
 	}
 
@@ -167,19 +160,17 @@ export class RegistrationContract {
 			const tx = await this.contract.connect(signer).unpause();
 			await tx.wait();
 		} catch (error) {
-			({ pauseError: error });
+			console.error(error);
 		}
 	}
 
 	async isPaused() {
 		try {
 			const isPaused = await this.contract.paused();
-			({
-				isPaused,
-			});
+
 			return isPaused;
 		} catch (error) {
-			({ isPausedError: error });
+			console.error(error);
 		}
 	}
 

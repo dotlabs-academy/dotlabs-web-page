@@ -8,12 +8,12 @@ type IResponse = {
 };
 
 export const deleteUser = async (
+	// rome-ignore lint/suspicious/noExplicitAny: <explanation>
 	event: any,
 	res: NextApiResponse<IResponse>,
 ) => {
 	const data = event.query;
 	const user = await userModel.deleteOne({ address: data.address });
-	user;
 	if (!user.deletedCount)
 		return await createErrorResponse("BAD_REQUEST", res, "USER_NOT_EXIST");
 	return createResponse(

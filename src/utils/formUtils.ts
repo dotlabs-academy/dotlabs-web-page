@@ -145,6 +145,7 @@ export const checkStateAndSetClass = (
 	return baseClass;
 };
 
+// rome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const saveUserToDB = async (userObj: UserDto): Promise<any> => {
 	let ok: boolean = false;
 	const apiRes = await fetch("/api/user", {
@@ -158,10 +159,6 @@ export const saveUserToDB = async (userObj: UserDto): Promise<any> => {
 		});
 
 	ok = apiRes.user;
-
-	console.log({
-		apiRes,
-	});
 
 	return ok;
 };

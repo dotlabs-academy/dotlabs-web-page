@@ -31,6 +31,7 @@ const initialsFormValues: FormValues = {
 };
 
 export interface IRegistrationFormProps {
+  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
   setUser: React.Dispatch<React.SetStateAction<any>>;
   setIsUserRegisteredOnDB: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -49,7 +50,7 @@ export const RegistrationForm = ({
         <span className="text-center text-red-400">Something went wrong.</span>
         <button
           type="submit"
-          className={`hover:text-black py-1 hover:border-green-200 hover:shadow-none border-2 shadow-sm hover:bg-green-100 rounded-md bg-red-100 border-red-300 w-full transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
+          className="hover:text-black py-1 hover:border-green-200 hover:shadow-none border-2 shadow-sm hover:bg-green-100 rounded-md bg-red-100 border-red-300 w-full transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? (
             <BiLoaderAlt className="animate-spin" />
@@ -75,7 +76,6 @@ export const RegistrationForm = ({
       setIsLoading(false);
       if (apiRes) {
         setIsError(false);
-        console.log({ user: apiRes.data });
         setUser(apiRes.data);
         setIsUserRegisteredOnDB(true);
         resetForm(formik, initialsFormValues);
@@ -259,7 +259,7 @@ export const RegistrationForm = ({
         <button
           disabled={formik.isSubmitting || isLoading}
           type="submit"
-          className={`hover:text-black py-1 hover:border-green-200 hover:shadow-none border-2 shadow-sm hover:bg-green-100 rounded-md border-zinc-300 w-full transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
+          className="hover:text-black py-1 hover:border-green-200 hover:shadow-none border-2 shadow-sm hover:bg-green-100 rounded-md border-zinc-300 w-full transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? (
             <BiLoaderAlt className="mx-auto animate-spin" />
