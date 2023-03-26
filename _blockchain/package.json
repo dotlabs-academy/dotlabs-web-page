@@ -1,7 +1,0 @@
-{
-  "name": "blockchain",
-  "scripts": {
-    "deploy:mumbai": "source .env && forge script script/RegistrationManager.s.sol:RegistrationManagerScript --rpc-url $MUMBAI_RPC_URL --broadcast --verify -vvv",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  }
-}

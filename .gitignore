@@ -37,3 +37,8 @@ next-env.d.ts
 
 .env
 package-lock.json
+
+#foundry
+bc-foundry/chache
+bc-foundry/out
+bc-foundry/lib
