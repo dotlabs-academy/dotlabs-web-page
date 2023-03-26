@@ -69,8 +69,15 @@ export const WorkshopCard = ({
       <DateEl />
       <Speakers />
       <div className="flex flex-wrap gap-2 mt-3">
-        {tags.map((t) => {
-          return <span className="bg-[#e4eaf4] py-1 px-3 rounded-xl">{t}</span>;
+        {tags.map((t, i) => {
+          return (
+            <span
+              key={`${t}_${i}`}
+              className="bg-[#e4eaf4] py-1 px-3 rounded-xl"
+            >
+              {t}
+            </span>
+          );
         })}
       </div>
     </div>
