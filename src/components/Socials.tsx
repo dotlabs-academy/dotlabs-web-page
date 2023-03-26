@@ -10,8 +10,9 @@ const Socials = ({ white, customStyles }: SocialsProps) => {
     <div className={`flex gap-x-5 justify-self-end ${customStyles ?? ""}`}>
       <a
         className="flex justify-center"
-        href="https://twitter.com/DotlabsAcademy_"
+        href="https://twitter.com/dotlabs__"
         target="_blank"
+        rel="noreferrer"
       >
         <Image
           width={undefined}
@@ -26,8 +27,9 @@ const Socials = ({ white, customStyles }: SocialsProps) => {
       </a>
       <a
         className="flex justify-center"
-        href="https://github.com/EdisonBedoya98/dotlabs-medellin-hackathon-landing"
+        href="https://github.com/dotlabs-academy"
         target="_blank"
+        rel="noreferrer"
       >
         <Image
           width={undefined}
@@ -44,6 +46,7 @@ const Socials = ({ white, customStyles }: SocialsProps) => {
         className="flex justify-center"
         href="https://www.instagram.com/dotlabs__/"
         target="_blank"
+        rel="noreferrer"
       >
         <Image
           width={undefined}
