@@ -1,30 +1,28 @@
-import { IoLocationSharp } from "react-icons/io5";
-
 export interface IWorkshopCard {
-  title: string;
-  date: string;
-  speakers: string[];
-  tags: string[];
-  description: string;
+	title: string;
+	date: string;
+	speakers: string[];
+	tags: string[];
+	description: string;
 }
 
 export const WorkshopCard = ({
-  title,
-  date,
-  speakers,
-  tags,
-  description,
+	title,
+	date,
+	speakers,
+	tags,
+	description,
 }: IWorkshopCard) => {
-  const Speakers = () => (
-    <p>
-      <span className="font-bold">Presentado por:</span> {speakers.join(", ")}
-    </p>
-  );
+	const Speakers = () => (
+		<p>
+			<span className="font-bold">Presentado por:</span> {speakers.join(", ")}
+		</p>
+	);
 
-  const Description = () => {
-    if (description === "") return null;
-    return <p>{description}</p>;
-  };
+	const Description = () => {
+		if (description === "") return null;
+		return <p>{description}</p>;
+	};
 
   const DateEl = () => {
     let elClassName = "w-full py-1 px-3 rounded-2xl";

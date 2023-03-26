@@ -159,9 +159,9 @@ export const saveUserToDB = async (userObj: UserDto): Promise<any> => {
 
 	ok = apiRes.user;
 
-	 ({
-	// 	apiRes,
-	// });
+	console.log({
+		apiRes,
+	});
 
 	return ok;
 };
@@ -175,7 +175,7 @@ export const saveUserToContract = async ({
 }): Promise<boolean> => {
 	if (contract && data) {
 		const res = await contract.joinIn(data);
-		 ({ res });
+		console.log({ res });
 		if (res) return true;
 	}
 
