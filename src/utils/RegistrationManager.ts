@@ -4,8 +4,6 @@ import { ContractInterface, ethers } from "ethers";
 const { environment } = appConfig;
 const { alchemyApiKey } = environment;
 
-type Error = { message: string; stack: string };
-
 export class RegistrationContract {
 	private readonly provider = new ethers.providers.AlchemyProvider(
 		"maticmum",
@@ -22,7 +20,7 @@ export class RegistrationContract {
 	async isJoined(address: `0x${string}`): Promise<boolean | undefined> {
 		try {
 			const isJoined = await this.contract.isJoined(address);
-			// console.log({
+			({
 				isJoined,
 			});
 			return isJoined;
@@ -37,7 +35,7 @@ export class RegistrationContract {
 	): Promise<boolean | undefined> {
 		try {
 			const isConfirmed = await this.contract.isConfirmed(address);
-			// console.log({
+			({
 				isConfirmed,
 			});
 			return isConfirmed;
@@ -51,12 +49,12 @@ export class RegistrationContract {
 		try {
 			const registrationFee = await this.contract.registrationFee();
 			const registrationFeeInEth = ethers.utils.formatEther(registrationFee);
-			// console.log({
+			({
 				registrationFeeInEth,
 			});
 			return registrationFeeInEth;
 		} catch (error) {
-			// console.log({ registrationFeeError: error });
+			({ registrationFeeError: error });
 		}
 	}
 
@@ -70,25 +68,25 @@ export class RegistrationContract {
 				{ signer },
 			);
 			const success = await tx.wait();
-			// console.log({ success });
+			({ success });
 			return success;
 		} catch (error) {
-			// console.log({ updatedRegistrationFeeError: error });
+			({ updatedRegistrationFeeError: error });
 		}
 	}
 
 	async joinIn(signer: ethers.Signer): Promise<boolean | undefined> {
-		try {	
+		try {
 			const currentFee = await this.registrationFee();
 			if (!currentFee) return false;
 			const tx = await this.contract.connect(signer).joinIn({
 				value: ethers.utils.parseEther(currentFee),
 			});
 			const success = await tx.wait();
-			// console.log({ success });
+			({ success });
 			return success;
 		} catch (error) {
-			// console.log({ joinInError: error });
+			({ joinInError: error });
 		}
 	}
 
@@ -96,10 +94,10 @@ export class RegistrationContract {
 		try {
 			const tx = await this.contract.confirmUserQuota(address);
 			const success = await tx.wait();
-			// console.log({ success });
+			({ success });
 			return success;
 		} catch (error) {
-			// console.log({ error });
+			({ error });
 		}
 	}
 
@@ -107,10 +105,10 @@ export class RegistrationContract {
 		try {
 			const tx = await this.contract.confirmUserQuota(addresses);
 			const success = await tx.wait();
-			// console.log({ success });
+			({ success });
 			return success;
 		} catch (error) {
-			// console.log({ error });
+			({ error });
 		}
 	}
 
@@ -119,7 +117,7 @@ export class RegistrationContract {
 			const tx = await this.contract.reset();
 			await tx.wait();
 		} catch (error) {
-			// console.log({ error });
+			({ error });
 		}
 	}
 
@@ -129,7 +127,7 @@ export class RegistrationContract {
 			const success = await tx.wait();
 			return success;
 		} catch (error) {
-			// console.log({ error });
+			({ error });
 		}
 	}
 
@@ -139,14 +137,14 @@ export class RegistrationContract {
 			const success = await tx.wait();
 			return success;
 		} catch (error) {
-			// console.log({ error });
+			({ error });
 		}
 	}
 
 	async getJoinedUsers(): Promise<`0x${string}`[] | undefined> {
 		try {
 			const users = await this.contract.getJoinedUsers();
-			// console.log({
+			({
 				users,
 			});
 			return users;
@@ -160,7 +158,7 @@ export class RegistrationContract {
 			const tx = await this.contract.connect(signer).pause();
 			await tx.wait();
 		} catch (error) {
-			// console.log({ pauseError: error });
+			({ pauseError: error });
 		}
 	}
 
@@ -169,19 +167,19 @@ export class RegistrationContract {
 			const tx = await this.contract.connect(signer).unpause();
 			await tx.wait();
 		} catch (error) {
-			// console.log({ pauseError: error });
+			({ pauseError: error });
 		}
 	}
 
 	async isPaused() {
 		try {
 			const isPaused = await this.contract.paused();
-			// console.log({
+			({
 				isPaused,
 			});
 			return isPaused;
 		} catch (error) {
-			// console.log({ isPausedError: error });
+			({ isPausedError: error });
 		}
 	}
 

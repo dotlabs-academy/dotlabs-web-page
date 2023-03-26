@@ -16,7 +16,6 @@ import {
 } from "../../hooks/RegistrationManagerContractContext";
 import { checkStateAndSetClass, resetForm } from "../../utils/formUtils";
 
-
 const labelStdClassName = "text-xl font-bold";
 const labelInputContainerClassName = "flex flex-col items-start gap-2";
 const inputClassName =
@@ -76,7 +75,7 @@ export const RegistrationForm = ({
       setIsLoading(false);
       if (apiRes) {
         setIsError(false);
-        // console.log({ user: apiRes.data });
+        ({ user: apiRes.data });
         setUser(apiRes.data);
         setIsUserRegisteredOnDB(true);
         resetForm(formik, initialsFormValues);

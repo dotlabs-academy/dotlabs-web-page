@@ -28,17 +28,16 @@ export const WorkshopCard = ({
 
   const DateEl = () => {
     let elClassName = "w-full py-1 px-3 rounded-2xl";
-    const isToday = () =>
+
+    const checkDayAndSetClassName = () =>
       new Date(date).toDateString() === new Date().toDateString()
-        ? true
-        : false;
+        ? "bg-green-300"
+        : "bg-gray-200";
+
     if (date === "") return null;
+
     return (
-      <p
-        className={`${elClassName} ${
-          isToday() ? "bg-green-300" : "bg-gray-200"
-        }`}
-      >
+      <p className={`${elClassName} ${checkDayAndSetClassName()}`}>
         {new Date(date).toDateString()}
       </p>
     );
