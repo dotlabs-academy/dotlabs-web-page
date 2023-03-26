@@ -47,7 +47,7 @@ export class RegistrationContract {
 
 			return registrationFeeInEth;
 		} catch (error) {
-			return error;
+			console.error("registrationFeeError: ", error);
 		}
 	}
 
@@ -61,10 +61,9 @@ export class RegistrationContract {
 				{ signer },
 			);
 			const success = await tx.wait();
-			({ success });
 			return success;
 		} catch (error) {
-			console.error(error);
+			console.error("updatedRegistrationFeeError: ", error);
 		}
 	}
 
@@ -76,10 +75,9 @@ export class RegistrationContract {
 				value: ethers.utils.parseEther(currentFee),
 			});
 			const success = await tx.wait();
-			({ success });
 			return success;
 		} catch (error) {
-			console.error(error);
+			console.error("joinInError: ", error);
 		}
 	}
 
@@ -87,10 +85,9 @@ export class RegistrationContract {
 		try {
 			const tx = await this.contract.confirmUserQuota(address);
 			const success = await tx.wait();
-			({ success });
 			return success;
 		} catch (error) {
-			console.error(error);
+			console.error("confirmUserQuotaError", error);
 		}
 	}
 
@@ -98,10 +95,9 @@ export class RegistrationContract {
 		try {
 			const tx = await this.contract.confirmUserQuota(addresses);
 			const success = await tx.wait();
-			({ success });
 			return success;
 		} catch (error) {
-			console.error(error);
+			console.error("confirmUserQuotaBatchError", error);
 		}
 	}
 
@@ -110,7 +106,7 @@ export class RegistrationContract {
 			const tx = await this.contract.reset();
 			await tx.wait();
 		} catch (error) {
-			console.error(error);
+			console.error("resetError", error);
 		}
 	}
 
@@ -120,7 +116,7 @@ export class RegistrationContract {
 			const success = await tx.wait();
 			return success;
 		} catch (error) {
-			console.error(error);
+			console.error("refundFeeError", error);
 		}
 	}
 
@@ -130,19 +126,16 @@ export class RegistrationContract {
 			const success = await tx.wait();
 			return success;
 		} catch (error) {
-			console.error(error);
+			console.error("refundFeeBatchError", error);
 		}
 	}
 
 	async getJoinedUsers(): Promise<`0x${string}`[] | undefined> {
 		try {
 			const users = await this.contract.getJoinedUsers();
-			({
-				users,
-			});
 			return users;
 		} catch (error) {
-			console.error({ getAllUsersError: error });
+			console.error("getAllUsersError", error);
 		}
 	}
 
@@ -151,7 +144,7 @@ export class RegistrationContract {
 			const tx = await this.contract.connect(signer).pause();
 			await tx.wait();
 		} catch (error) {
-			console.error(error);
+			console.error("pauseError", error);
 		}
 	}
 
@@ -160,7 +153,7 @@ export class RegistrationContract {
 			const tx = await this.contract.connect(signer).unpause();
 			await tx.wait();
 		} catch (error) {
-			console.error(error);
+			console.error("unpauseError", error);
 		}
 	}
 
@@ -170,7 +163,7 @@ export class RegistrationContract {
 
 			return isPaused;
 		} catch (error) {
-			console.error(error);
+			console.error("isPausedError", error);
 		}
 	}
 
