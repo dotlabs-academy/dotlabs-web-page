@@ -1,12 +1,12 @@
 export const UserIsJoined = () => {
-	return (
-		<>
-			<p className="text-base">
-				You are already joined to our contract.{" "}
-				<span className="text-zinc-800">
-					Please wait while we check out your information 🫡.
-				</span>
-			</p>
-		</>
-	);
+  return (
+    <>
+      <p className="text-base">
+        Ya estas registrado.{" "}
+        <span className="text-zinc-800">
+          Espera mientras verificamos tu información.
+        </span>
+      </p>
+    </>
+  );
 };
