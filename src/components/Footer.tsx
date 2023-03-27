@@ -8,9 +8,8 @@ export const Footer = () => {
         <div className="flex flex-col gap-5">
           <Logo />
           <p className="w-full">
-            dotlabs() es una comunidad sin ánimo de lucro, donde se enseña Web3
-            a cualquier persona que esté interesada en escribir el futuro del
-            internet
+            dotlabs() donde se enseña Web3 a cualquier persona que esté
+            interesada en escribir el futuro del internet
           </p>
           <Socials white={true} />
         </div>
