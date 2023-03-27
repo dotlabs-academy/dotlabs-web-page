@@ -4,7 +4,7 @@ import { ComponentWithChildren, User } from "../../types/index";
 import { ContractContext } from "@/hooks/RegistrationManagerContractContext";
 import { IContractContext } from "../../hooks/RegistrationManagerContractContext";
 import { ProcessLoading } from "./ProcessLoading";
-import styles from '@/styles/components/registration/guide.module.scss'
+import styles from "@/styles/components/registration/guide.module.scss";
 
 const DarkerText = ({ children }: ComponentWithChildren) => (
   <span className="text-main">{children}</span>
@@ -23,29 +23,30 @@ export const Guide = ({ setIsUserRegisteredOnDB, setUser }: IGuideProps) => {
     return (
       <div className="flex flex-col  gap-5">
         <h1 className="text-xl md:text-2xl font-bold text-black text-center">
-          - Registration fee: {registrationFee} -
+          - <span className="italic">Fee</span> de registro: {registrationFee} -
         </h1>
-        <p>There are some many things you need to know before.</p>
+        <p>Hay algunas cosas que queremos contarte.</p>
         <ul className="flex flex-col gap-2">
           <li>
-            You need to pay the <DarkerText>registration fee</DarkerText> (see
-            it above) to sign your participation.{" "}
+            Para participar en el workshop, debes pagar el{" "}
+            <DarkerText>fee de registro</DarkerText> (ver arriba).{" "}
             <DarkerText>
-              You also need enough funds to pay the gas fee
+              También necesitas tener suficientes fondos para pagar el gas que
+              consuma la transacción
             </DarkerText>
             .
           </li>
           <li>
-            You will get back the registration fee when you proof your presence
-            in the workshop{" "}
-            <DarkerText>-Our team will assurance your attendance-</DarkerText>
+            Te devolveremos el <DarkerText>fee de registro</DarkerText> cuando
+            pruebes tu asistencia en el taller{" "}
+            <DarkerText>-Nuestro equipo se asegurará tu asistencia-</DarkerText>
           </li>
         </ul>
         <button
           onClick={() => setIsConditionsAccepted(true)}
           className={`${styles.guide__button} ${styles.commonButton}`}
         >
-          It&apos;s ok for me.
+          Está bien, quiero participar.
         </button>
       </div>
     );

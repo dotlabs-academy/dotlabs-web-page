@@ -1,0 +1,68 @@
+{
+    "workshops": [
+        {
+            "title": "OpenZeppelin Governor",
+            "speakers": [
+                "Juan Cogollo",
+                "Tomas Calle"
+            ],
+            "descripcion": "Aprendamos un poco sobre los contratos de governanza creado por el equipo de Open Zeppelin y como podemos utilizarlos para crear nuestros propios protocolos de governanza.",
+            "date": "04/08/2023",
+            "tags": [
+                "Blockchain",
+                "Open Zeppelin",
+                "Solidity"
+            ],
+            "calendarEventUrl": "http://www.google.com/calendar/event?location=Globant+-+One+Plaza+-+Medellin&action=TEMPLATE&details=Aprendamos+un+poco+de+los+contratos+de+gobernanza+y+sus+usos.&text=OpenZeppelin+Governor&dates=20230408T190000Z%2F20230408T213000Z"
+        },
+        {
+            "title": "De mortal a Dios con Rust I: Fundamentos.",
+            "speakers": [
+                "Carlos Rodriguez"
+            ],
+            "descripcion": "Aprende los fundamentos y las particularidades del lenguajes de programación Rust. Uno de los lenguajes más amados en la industria.",
+            "date": "04/15/2023",
+            "tags": [
+                "Blockchain",
+                "Rust",
+                "Smart Contracts",
+                "CLI"
+            ],
+            "calendarEventUrl": "http://www.google.com/calendar/event?location=Globant+-+One+Plaza+-+Medellin&action=TEMPLATE&details=Aprende+los+fundamentos+y+las+particularidades+del+lenguajes+de+programación+Rust.+Uno+de+los+lenguajes+más+amados+en+la+industria.&text=De+mortal+a+Dios+con+Rust+I:+Fundamentos&dates=20230415T190000Z%2F20230415T213000Z"
+        },
+        {
+            "title": "De mortal a Dios con Rust II: Astar Network.",
+            "speakers": [
+                "Carlos Rodriguez"
+            ],
+            "descripcion": "Conoce la parachain más popular del ecosistema de Polkadot. Crea tus primeros Smart Contracts en Astar Network y diseña tu primer proyecto.",
+            "date": "04/22/2023",
+            "tags": [
+                "Blockchain",
+                "Rust",
+                "Smart Contracts",
+                "Astar",
+                "Polkadot",
+                "Substrate"
+            ],
+            "calendarEventUrl": "http://www.google.com/calendar/event?location=Globant+-+One+Plaza+-+Medellin&action=TEMPLATE&details=Conoce+la+parachain+más+popular+del+ecosistema+de+Polkadot.+Crea+tus+primeros+Smart+Contracts+en+Astar+Network+y+diseña+tu+primer+proyecto.&text=De+mortal+a+Dios+con+Rust+II:+Astar+Network&dates=20230422T190000Z%2F20230422T213000Z"
+        },
+        {
+            "title": "De mortal a Dios con Rust III: Astar Network.",
+            "speakers": [
+                "Carlos Rodriguez"
+            ],
+            "descripcion": "Para finalizar con esta sega crea una DApp de tokenizacion en Astar Network. Tokeniza cualquier activo digital y compartelo.",
+            "date": "04/29/2023",
+            "tags": [
+                "Blockchain",
+                "Rust",
+                "Smart Contracts",
+                "Astar",
+                "Polkadot",
+                "Substrate"
+            ],
+            "calendarEventUrl": "http://www.google.com/calendar/event?location=Globant+-+One+Plaza+-+Medellin&action=TEMPLATE&details=Para+finalizar+con+esta+saga+crea+una+DApp+de+tokenizacion+en+Astar+Network.+Tokeniza+cualquier+activo+digital+y+compartelo.&text=De+mortal+a+Dios+con+Rust+III:+Astar+Network&dates=20230429T190000Z%2F20230429T213000Z"
+        }
+    ]
+}

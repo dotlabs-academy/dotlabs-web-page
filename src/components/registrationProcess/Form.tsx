@@ -16,7 +16,6 @@ import {
 } from "../../hooks/RegistrationManagerContractContext";
 import { checkStateAndSetClass, resetForm } from "../../utils/formUtils";
 
-
 const labelStdClassName = "text-xl font-bold";
 const labelInputContainerClassName = "flex flex-col items-start gap-2";
 const inputClassName =
@@ -32,6 +31,7 @@ const initialsFormValues: FormValues = {
 };
 
 export interface IRegistrationFormProps {
+  // rome-ignore lint/suspicious/noExplicitAny: <explanation>
   setUser: React.Dispatch<React.SetStateAction<any>>;
   setIsUserRegisteredOnDB: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -50,7 +50,7 @@ export const RegistrationForm = ({
         <span className="text-center text-red-400">Something went wrong.</span>
         <button
           type="submit"
-          className={`hover:text-black py-1 hover:border-green-200 hover:shadow-none border-2 shadow-sm hover:bg-green-100 rounded-md bg-red-100 border-red-300 w-full transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
+          className="hover:text-black py-1 hover:border-green-200 hover:shadow-none border-2 shadow-sm hover:bg-green-100 rounded-md bg-red-100 border-red-300 w-full transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? (
             <BiLoaderAlt className="animate-spin" />
@@ -76,7 +76,6 @@ export const RegistrationForm = ({
       setIsLoading(false);
       if (apiRes) {
         setIsError(false);
-        console.log({ user: apiRes.data });
         setUser(apiRes.data);
         setIsUserRegisteredOnDB(true);
         resetForm(formik, initialsFormValues);
@@ -100,7 +99,7 @@ export const RegistrationForm = ({
     >
       <div className={labelInputContainerClassName}>
         <LabelStd
-          label="Ethereum_Address"
+          label="Llave pública"
           htmlFor="name"
           className={labelStdClassName}
         />
@@ -116,7 +115,11 @@ export const RegistrationForm = ({
       </div>
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
-        <LabelStd label="Name" htmlFor="name" className={labelStdClassName} />
+        <LabelStd
+          label="Nombre completo"
+          htmlFor="name"
+          className={labelStdClassName}
+        />
 
         <input
           onChange={formik.handleChange}
@@ -139,7 +142,7 @@ export const RegistrationForm = ({
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
         <LabelStd
-          label="Legal_ID"
+          label="Identificación"
           htmlFor="legalID"
           className={labelStdClassName}
         />
@@ -164,7 +167,7 @@ export const RegistrationForm = ({
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
         <LabelStd
-          label="E_Mail"
+          label="Correo"
           htmlFor="email"
           className={labelStdClassName}
         />
@@ -210,7 +213,7 @@ export const RegistrationForm = ({
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
         <LabelStd
-          label="GitHub_User"
+          label="Usuario de GitHub"
           htmlFor="gitHubProfile"
           className={labelStdClassName}
         />
@@ -234,7 +237,11 @@ export const RegistrationForm = ({
       </div>
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
-        <LabelStd label="phone" htmlFor="phone" className={labelStdClassName} />
+        <LabelStd
+          label="Teléfono"
+          htmlFor="phone"
+          className={labelStdClassName}
+        />
         <input
           onChange={formik.handleChange}
           value={formik.values.phone}
@@ -260,12 +267,12 @@ export const RegistrationForm = ({
         <button
           disabled={formik.isSubmitting || isLoading}
           type="submit"
-          className={`hover:text-black py-1 hover:border-green-200 hover:shadow-none border-2 shadow-sm hover:bg-green-100 rounded-md border-zinc-300 w-full transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed`}
+          className="hover:text-black py-1 hover:border-green-200 hover:shadow-none border-2 shadow-sm hover:bg-green-100 rounded-md border-zinc-300 w-full transition-all mt-5 font-extrabold disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? (
             <BiLoaderAlt className="mx-auto animate-spin" />
           ) : (
-            "Send"
+            "Enviar"
           )}
         </button>
       )}
