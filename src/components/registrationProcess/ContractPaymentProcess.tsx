@@ -27,7 +27,8 @@ export const ContractPaymentProcess = () => {
   return (
     <div className="flex flex-col items-center gap-10">
       <p className="text-xl font-bold text-zinc-600">
-        - Current registration fee is <span>{registrationFee}</span> ETH -
+        - El <span className="italic">fee</span> actual es:{" "}
+        <span>{registrationFee}</span> MATIC -
       </p>
       <button
         onClick={handleJoin}
@@ -36,7 +37,7 @@ export const ContractPaymentProcess = () => {
         {isLoading ? (
           <BiLoaderAlt className="animate-spin mx-auto" />
         ) : (
-          <>Join</>
+          <>Unirme</>
         )}
       </button>
     </div>

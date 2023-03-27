@@ -1,4 +1,5 @@
 import { IoLocationSharp } from "react-icons/io5";
+import { FiExternalLink } from "react-icons/fi";
 
 export interface IWorkshopCard {
   title: string;
@@ -6,6 +7,7 @@ export interface IWorkshopCard {
   speakers: string[];
   tags: string[];
   description: string;
+  calendarEventUrl: string;
 }
 
 export const WorkshopCard = ({
@@ -14,6 +16,7 @@ export const WorkshopCard = ({
   speakers,
   tags,
   description,
+  calendarEventUrl,
 }: IWorkshopCard) => {
   const Speakers = () => (
     <p>
@@ -38,7 +41,7 @@ export const WorkshopCard = ({
 
     return (
       <p className={`${elClassName} ${checkDayAndSetClassName()}`}>
-        {new Date(date).toDateString()}
+        {new Intl.DateTimeFormat("es").format(new Date(date))}
       </p>
     );
   };
@@ -57,13 +60,31 @@ export const WorkshopCard = ({
     );
   };
 
+  const AddToCalendar = () => {
+    return (
+      <a
+        href={calendarEventUrl}
+        rel="noreferrer"
+        target="_blank"
+        className="flex items-center gap-2"
+      >
+        <FiExternalLink />
+        <p>Agendar</p>
+      </a>
+    );
+  };
+
   return (
     <div className="flex flex-col border-2 border-main rounded-md z-30 p-5 h-min mx-auto w-full gap-2 backdrop-blur-sm shadow-lg max-w-2xl">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl md:text-4xl font-extrabold flex items-start  text-transparent  bg-clip-text bg-gradient-to-r from-blue-800 via-blue-600 to-pink-500">
           {title}
         </h1>
-        <Location />
+        <div className="flex text-sm md:text-base gap-2 md:gap-5">
+          <Location />
+          <span>|</span>
+          <AddToCalendar />
+        </div>
         <Description />
       </div>
       <DateEl />

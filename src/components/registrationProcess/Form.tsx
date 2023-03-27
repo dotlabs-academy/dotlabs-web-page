@@ -99,7 +99,7 @@ export const RegistrationForm = ({
     >
       <div className={labelInputContainerClassName}>
         <LabelStd
-          label="Ethereum_Address"
+          label="Llave pública"
           htmlFor="name"
           className={labelStdClassName}
         />
@@ -115,7 +115,11 @@ export const RegistrationForm = ({
       </div>
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
-        <LabelStd label="Name" htmlFor="name" className={labelStdClassName} />
+        <LabelStd
+          label="Nombre completo"
+          htmlFor="name"
+          className={labelStdClassName}
+        />
 
         <input
           onChange={formik.handleChange}
@@ -138,7 +142,7 @@ export const RegistrationForm = ({
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
         <LabelStd
-          label="Legal_ID"
+          label="Identificación"
           htmlFor="legalID"
           className={labelStdClassName}
         />
@@ -163,7 +167,7 @@ export const RegistrationForm = ({
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
         <LabelStd
-          label="E_Mail"
+          label="Correo"
           htmlFor="email"
           className={labelStdClassName}
         />
@@ -209,7 +213,7 @@ export const RegistrationForm = ({
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
         <LabelStd
-          label="GitHub_User"
+          label="Usuario de GitHub"
           htmlFor="gitHubProfile"
           className={labelStdClassName}
         />
@@ -233,7 +237,11 @@ export const RegistrationForm = ({
       </div>
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
-        <LabelStd label="phone" htmlFor="phone" className={labelStdClassName} />
+        <LabelStd
+          label="Teléfono"
+          htmlFor="phone"
+          className={labelStdClassName}
+        />
         <input
           onChange={formik.handleChange}
           value={formik.values.phone}
@@ -264,7 +272,7 @@ export const RegistrationForm = ({
           {isLoading ? (
             <BiLoaderAlt className="mx-auto animate-spin" />
           ) : (
-            "Send"
+            "Enviar"
           )}
         </button>
       )}
