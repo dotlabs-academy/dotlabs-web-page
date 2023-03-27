@@ -142,7 +142,7 @@ export const RegistrationForm = ({
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
         <LabelStd
-          label="Identificacion"
+          label="Identificación"
           htmlFor="legalID"
           className={labelStdClassName}
         />
@@ -213,7 +213,7 @@ export const RegistrationForm = ({
       {/* ------------------------------------------------------------------ */}
       <div className={labelInputContainerClassName}>
         <LabelStd
-          label="Usuario de Github"
+          label="Usuario de GitHub"
           htmlFor="gitHubProfile"
           className={labelStdClassName}
         />

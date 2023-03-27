@@ -46,7 +46,7 @@ export const Guide = ({ setIsUserRegisteredOnDB, setUser }: IGuideProps) => {
           onClick={() => setIsConditionsAccepted(true)}
           className={`${styles.guide__button} ${styles.commonButton}`}
         >
-          Esta bien, quiero participar.
+          Está bien, quiero participar.
         </button>
       </div>
     );

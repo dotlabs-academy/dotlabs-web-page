@@ -12,7 +12,7 @@ export const IsPaused = () => {
       </p>
       <p>
         Puedes ir a reclamar tus tokens en un{" "}
-        <ExternalLink href="https://goerlifaucet.com/">Faucet</ExternalLink>
+        <ExternalLink href="https://mumbaifaucet.com/">Faucet</ExternalLink>
       </p>
     </div>
   );
