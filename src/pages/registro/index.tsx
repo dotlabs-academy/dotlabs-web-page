@@ -9,26 +9,27 @@ import { InformativeMessage } from "../../components/registrationProcess/Informa
 
 const Registration: NextPage = () => {
 	return (
-		<Layout headTitle="dotlabs(registration)">
-			<div
-				className={`
-        flex flex-col px-5
-		    mb-24 max-w-2xl mx-auto
-        md:py-10 md:px-16 
-        `}
-			>
-				<div>
-					<InformativeMessage />
-				</div>
-				<div className="flex flex-col items-center mt-5 gap-5">
-					<Suspense fallback={<ProcessLoading />}>
-						<RegistrationManagerContractContext>
-							<RegistrationProcess />
-						</RegistrationManagerContractContext>
-					</Suspense>
-				</div>
-			</div>
-		</Layout>
+		null
+		// <Layout headTitle="dotlabs(registration)">
+		// 	<div
+		// 		className={`
+        // flex flex-col px-5
+		//     mb-24 max-w-2xl mx-auto
+        // md:py-10 md:px-16 
+        // `}
+		// 	>
+		// 		<div>
+		// 			<InformativeMessage />
+		// 		</div>
+		// 		<div className="flex flex-col items-center mt-5 gap-5">
+		// 			<Suspense fallback={<ProcessLoading />}>
+		// 				<RegistrationManagerContractContext>
+		// 					<RegistrationProcess />
+		// 				</RegistrationManagerContractContext>
+		// 			</Suspense>
+		// 		</div>
+		// 	</div>
+		// </Layout>
 	);
 };
 

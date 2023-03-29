@@ -1,0 +1,18 @@
+@mixin commonBtn($color)
+    border-radius: 6px
+    text-align: center
+    font-weight: bold
+    border: solid 2px $color
+
+
+@mixin smartphone
+    @media only screen and (min-width: 640px)
+        @content
+
+@mixin tablet
+    @media only screen and (min-width: 768px)
+        @content
+
+@mixin desktop
+    @media only screen and (min-width: 1024px)
+        @content

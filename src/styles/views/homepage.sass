@@ -1,0 +1,106 @@
+@import "../base/_colors"
+@import "../utilities/_mixins"
+
+@keyframes gradient
+    0%
+        background-position: 0% 50%
+
+    50%
+        background-position: 100% 50%
+
+    100%
+        background-position: 0% 50%
+
+.homepage
+
+    color: $main-font
+
+    &__container
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        padding: 2rem 20px
+        gap: 15px
+       
+
+    &__title
+        font-size: 3rem
+        font-weight: 700
+        color: transparent
+        background: radial-gradient(circle, #2c1b71, #81329c, #483690, $complementary-color, #353da6)
+        background-size: 600% 600%
+        background-clip: text
+        animation: gradient 10s ease infinite
+        line-height: 3rem
+        @include smartphone
+            font-size: 3.4rem
+            font-weight: bold
+            line-height: 5rem
+        @include tablet
+            font-size: 4rem
+            text-align: center
+        @include desktop
+            font-size: 5rem
+        
+
+    &__subtitle
+        font-size: 1.25rem
+        line-height: 1.75rem
+        @include smartphone
+            font-size: 1.5rem
+            line-height: 1.8rem
+        @include tablet
+            font-size: 1.8rem
+            line-height: 1.8rem
+
+
+
+    &__copy
+        text-align: justify
+        @include tablet
+            text-align: center
+            padding: 0 10%
+
+        
+
+    &__btn--container
+        display: flex
+        flex-direction: column
+        gap: 8px
+        width: 100%
+        margin: 0
+        @include smartphone
+            flex-direction: row
+            gap: 8px
+            width: 100%
+        @include tablet
+            width: 80%
+
+
+    &__btn
+        @include commonBtn($main-color)
+        flex: 1 1 0%
+        font-size: 1.125rem
+        line-height: 1.75rem
+        width: 100%
+        padding: 8px 0
+        @include tablet
+            font-size: 1.3rem
+
+        &--blue
+            background-color: $main-color
+            color: white
+        &--white
+            background-color: transparent
+            color: $main-color
+
+.background
+    min-height: 100vh
+    background-color: black
+    // background-image: url(../../../public/assets/images/prueba.webp)
+    // background-size: auto
+    // background-size: cover
+
+
+
