@@ -1,33 +1,24 @@
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import styles from "@/styles/components/homepage.module.scss";
 
 function HomePage() {
   return (
-    <Layout headTitle="dotlabs(Medellin)" className={styles.background}>
-      <div className={`${styles.container_column} ${styles.main__container} `}>
-        <div className={`${styles.container_column} ${styles.container_gap}`}>
-          <h1 className={`${styles.title}  `}>Bienvenido a Dotlabs()</h1>
-          <p className={`${styles.subtitle} `}>
-            Comunidad. Desarrolladores. Blockchain.
-          </p>
-          <p className={styles.text}>
-            Somos el lugar perfecto para aprender Blockchain de una forma fácil
-            y guiada. Aprende, profundiza, conecta y enseña.
-          </p>
-        </div>
+    <Layout headTitle="dotlabs(Medellin)" className="background">
+      <div className="homepage homepage__container">
+        <h1 className="homepage__title">Bienvenido a Dotlabs()</h1>
+        <p className="homepage__subtitle">
+          Comunidad. Desarrolladores. Blockchain.
+        </p>
+        <p className="homepage__copy">
+          Somos el lugar perfecto para aprender Blockchain de una forma fácil y
+          guiada. Aprende, profundiza, conecta y enseña.
+        </p>
 
-        <div className={`${styles.btn_container} `}>
-          <Link
-            href="/talleres"
-            className={`${styles.commonButton} ${styles.btn} ${styles.btn_blue} `}
-          >
+        <div className="homepage__btn--container">
+          <Link href="/" className="homepage__btn homepage__btn--blue">
             Talleres
           </Link>
-          <Link
-            href="/registro"
-            className={`${styles.commonButton} ${styles.btn} ${styles.btn_white} `}
-          >
+          <Link href="/" className="homepage__btn homepage__btn--white">
             Regístrate
           </Link>
         </div>
