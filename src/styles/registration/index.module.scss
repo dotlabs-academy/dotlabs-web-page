@@ -1,0 +1,39 @@
+.registration__container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 1.5rem;
+    margin-bottom: 6rem;
+    max-width: 42rem;
+    gap: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.registration__title {
+    line-height: 1.8rem;
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: .5rem;
+}
+
+.registration__helpMessage {
+    font-size: 0.875rem;
+    font-weight: 400;
+}
+
+@media (min-width: 768px) {
+    .registration__title {
+        line-height: 2.8rem;
+        font-size: 2.8rem;
+    }
+
+    .registration__helpMessage {
+        font-size: 1.5rem;
+    }
+
+    .registration__container {
+        padding-top: 3.5rem;
+    }
+}

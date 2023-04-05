@@ -24,24 +24,21 @@ export const WorkshopCard = ({
     </p>
   );
 
-  const Description = () => {
-    if (description === "") return null;
-    return <p>{description}</p>;
-  };
-
   const DateEl = () => {
-    let elClassName = "w-full py-1 px-3 rounded-2xl";
+    const elClassName = "w-full py-1 px-3 rounded-2xl text-black";
 
     const checkDayAndSetClassName = () =>
       new Date(date).toDateString() === new Date().toDateString()
         ? "bg-green-300"
-        : "bg-gray-200";
+        : "bg-zinc-300";
 
     if (date === "") return null;
 
     return (
       <p className={`${elClassName} ${checkDayAndSetClassName()}`}>
-        {new Intl.DateTimeFormat("es").format(new Date(date))}
+        {new Intl.DateTimeFormat("es", { dateStyle: "full" }).format(
+          new Date(date)
+        )}
       </p>
     );
   };
@@ -75,7 +72,7 @@ export const WorkshopCard = ({
   };
 
   return (
-    <div className="flex flex-col border-2 border-main rounded-md z-30 p-5 h-min mx-auto w-full gap-2 backdrop-blur-sm shadow-lg max-w-2xl">
+    <div className="flex flex-col border-2 border-zinc-700 hover:border-white transition-all duration-500 z-30 p-5 h-min mx-auto w-full gap-2 backdrop-blur-sm shadow-lg max-w-2xl">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl md:text-4xl font-extrabold flex items-start  text-transparent  bg-clip-text bg-gradient-to-r from-blue-800 via-blue-600 to-pink-500">
           {title}
@@ -85,7 +82,7 @@ export const WorkshopCard = ({
           <span>|</span>
           <AddToCalendar />
         </div>
-        <Description />
+        {description !== "" && <p className="text-sm">{description}</p>}
       </div>
       <DateEl />
       <Speakers />
@@ -94,7 +91,7 @@ export const WorkshopCard = ({
           return (
             <span
               key={`${t}_${i}`}
-              className="bg-[#e4eaf4] py-1 px-3 rounded-xl"
+              className="bg-[#e4eaf4] text-black py-1 px-3 rounded-md"
             >
               {t}
             </span>

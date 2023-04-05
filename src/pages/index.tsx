@@ -1,36 +1,35 @@
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import styles from "@/styles/components/homepage.module.scss";
+import Socials from "@/components/Socials";
 
 function HomePage() {
   return (
-    <Layout headTitle="dotlabs(Medellin)" className={styles.background}>
+    <Layout headTitle="dotlabs(Medellin)">
       <div className={`${styles.container_column} ${styles.main__container} `}>
         <div className={`${styles.container_column} ${styles.container_gap}`}>
-          <h1 className={`${styles.title}  `}>Bienvenido a Dotlabs()</h1>
-          <p className={`${styles.subtitle} `}>
-            Comunidad. Desarrolladores. Blockchain.
-          </p>
+          <h1 className={`${styles.title}`}>Bienvenido a dotlabs()</h1>
           <p className={styles.text}>
-            Somos el lugar perfecto para aprender Blockchain de una forma fácil
-            y guiada. Aprende, profundiza, conecta y enseña.
+            Somos el lugar perfecto para aprender Blockchain de una forma fácil,
+            divertidad y profesional. Aprende, profundiza, conecta y enseña.
           </p>
         </div>
 
         <div className={`${styles.btn_container} `}>
           <Link
             href="/talleres"
-            className={`${styles.commonButton} ${styles.btn} ${styles.btn_blue} `}
+            className={`${styles.commonButton} ${styles.btn} ${styles.btn_primary} `}
           >
             Talleres
           </Link>
-          <Link
+          {/* <Link
             href="/registro"
-            className={`${styles.commonButton} ${styles.btn} ${styles.btn_white} `}
+            className={`${styles.commonButton} ${styles.btn} ${styles.btn_bordered} `}
           >
             Regístrate
-          </Link>
+          </Link> */}
         </div>
+        <Socials white={true} />
       </div>
     </Layout>
   );
