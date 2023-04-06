@@ -12,7 +12,7 @@ function HomePage() {
           <h1 className={`${styles.title}`}>Bienvenido a dotlabs()</h1>
           <p className={styles.text}>
             Somos el lugar perfecto para aprender Blockchain de una forma fácil,
-            divertidad y profesional. Aprende, profundiza, conecta y enseña.
+            divertida y profesional. Aprende, profundiza, conecta y enseña.
           </p>
         </div>
 
