@@ -1,14 +1,8 @@
 import Image from "next/image";
+import dotlabsLogo from "../../public/assets/icons/dotlabs_noBG_white.png";
 
 const DotlbasLogo = () => {
-  return (
-    <Image
-      src="assets/icons/dotlabs-hand.svg"
-      alt="Dotlabs"
-      width={35}
-      height={35}
-    />
-  );
+  return <Image src={dotlabsLogo} alt="dotlabs()" width={50} height={50} />;
 };
 
 export default DotlbasLogo;

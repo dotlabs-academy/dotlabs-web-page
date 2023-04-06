@@ -1,35 +1,27 @@
-import { Suspense } from "react";
 import { NextPage } from "next";
 
-import Layout from "@/components/Layout";
-import { RegistrationManagerContractContext } from "../../hooks/RegistrationManagerContractContext";
-import { RegistrationProcess } from "../../components/registrationProcess/Process";
-import { ProcessLoading } from "../../components/registrationProcess/ProcessLoading";
-import { InformativeMessage } from "../../components/registrationProcess/InformativeMessage";
+import Layout from "../../components/Layout";
+import styles from "../../styles/components/registration/index.module.scss";
+import Socials from "../../components/Socials";
+import { BackToHomeButton } from "../../components/buttons/BackToHomeButton";
 
 const Registration: NextPage = () => {
-	return (
-		<Layout headTitle="dotlabs(registration)">
-			<div
-				className={`
-        flex flex-col px-5
-		    mb-24 max-w-2xl mx-auto
-        md:py-10 md:px-16 
-        `}
-			>
-				<div>
-					<InformativeMessage />
-				</div>
-				<div className="flex flex-col items-center mt-5 gap-5">
-					<Suspense fallback={<ProcessLoading />}>
-						<RegistrationManagerContractContext>
-							<RegistrationProcess />
-						</RegistrationManagerContractContext>
-					</Suspense>
-				</div>
-			</div>
-		</Layout>
-	);
+  return (
+    <Layout headTitle="dotlabs(registration)">
+      <div className={`${styles.registration__container}`}>
+        <BackToHomeButton />
+        <h1 className={`${styles.registration__title}`}>
+          Estamos haciendo cambios en nuestro sistema para que sea más fácil
+          para ti 👷‍♂️👷‍♀️
+        </h1>
+        <p className={`${styles.registration__helpMessage}`}>
+          Siguenos en nuestras redes sociales para enterarte de las ultimas
+          novedades.
+        </p>
+        <Socials white={true} />
+      </div>
+    </Layout>
+  );
 };
 
 export default Registration;

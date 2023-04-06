@@ -6,8 +6,8 @@ export const BackToHomeButton = () => {
     <Link
       href="/"
       className="
-      flex items-center max-w-max gap-3 md:text-xl border-2 border-main shadow-md px-3 py-1 transition-all 
-       hover:bg-main hover:text-white"
+      flex items-center max-w-max gap-3 text-base md:text-xl border-2 border-zinc-700 shadow-md px-3 py-1 transition-all 
+       hover:bg-white hover:text-black hover:border-white"
     >
       <BsArrowLeft />
       Volver al inicio

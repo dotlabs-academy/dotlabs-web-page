@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { BsDiscord, BsInstagram, BsGithub, BsTwitter } from "react-icons/bs";
 
 export interface SocialsProps {
   white?: boolean;
@@ -14,16 +14,7 @@ const Socials = ({ white, customStyles }: SocialsProps) => {
         target="_blank"
         rel="noreferrer"
       >
-        <Image
-          width={25}
-          height={25}
-          src={
-            white
-              ? "assets/social-media/twitter-white.svg"
-              : "assets/social-media/twitter.svg"
-          }
-          alt="Twitter Icon"
-        />
+        <BsTwitter className="text-2xl" />
       </a>
       <a
         className="flex justify-center"
@@ -31,16 +22,7 @@ const Socials = ({ white, customStyles }: SocialsProps) => {
         target="_blank"
         rel="noreferrer"
       >
-        <Image
-          width={25}
-          height={25}
-          src={
-            white
-              ? "assets/social-media/github-white.svg"
-              : "assets/social-media/github.svg"
-          }
-          alt="Github"
-        />
+        <BsGithub className="text-2xl" />
       </a>
       <a
         className="flex justify-center"
@@ -48,16 +30,16 @@ const Socials = ({ white, customStyles }: SocialsProps) => {
         target="_blank"
         rel="noreferrer"
       >
-        <Image
-          width={25}
-          height={25}
-          src={
-            white
-              ? "assets/social-media/instagram-white.svg"
-              : "assets/social-media/instagram.svg"
-          }
-          alt="Instagram"
-        />
+        <BsInstagram className="text-2xl" />
+      </a>
+
+      <a
+        className="flex justify-center"
+        href="https://discord.gg/5a6V3tnXpW"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <BsDiscord className="text-2xl" />
       </a>
     </div>
   );
