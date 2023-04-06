@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 html {
-  font-family: "Inter", sans-serif;
+  scroll-behavior: smooth;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Chrome, Safari, Edge, Opera */
