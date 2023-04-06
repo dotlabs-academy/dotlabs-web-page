@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 html {
-  @apply flex flex-col bg-gradient-to-tr from-amber-50 to-blue-50;
+  scroll-behavior: smooth;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -17,6 +18,3 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
-
-
-

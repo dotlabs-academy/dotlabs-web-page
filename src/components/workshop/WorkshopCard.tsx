@@ -1,6 +1,10 @@
 import { IoLocationSharp } from "react-icons/io5";
 import { FiExternalLink } from "react-icons/fi";
+import { RxDividerHorizontal } from "react-icons/rx";
 
+import styles from "@/styles/components/workshops/workshopCard.module.scss";
+
+type WordShopCardTheme = "colorful" | "dark";
 export interface IWorkshopCard {
   title: string;
   date: string;
@@ -8,6 +12,7 @@ export interface IWorkshopCard {
   tags: string[];
   description: string;
   calendarEventUrl: string;
+  theme?: WordShopCardTheme;
 }
 
 export const WorkshopCard = ({
@@ -17,6 +22,7 @@ export const WorkshopCard = ({
   tags,
   description,
   calendarEventUrl,
+  theme = "colorful",
 }: IWorkshopCard) => {
   const Speakers = () => (
     <p>
@@ -24,24 +30,14 @@ export const WorkshopCard = ({
     </p>
   );
 
-  const Description = () => {
-    if (description === "") return null;
-    return <p>{description}</p>;
-  };
-
   const DateEl = () => {
-    let elClassName = "w-full py-1 px-3 rounded-2xl";
-
-    const checkDayAndSetClassName = () =>
-      new Date(date).toDateString() === new Date().toDateString()
-        ? "bg-green-300"
-        : "bg-gray-200";
-
     if (date === "") return null;
 
     return (
-      <p className={`${elClassName} ${checkDayAndSetClassName()}`}>
-        {new Intl.DateTimeFormat("es").format(new Date(date))}
+      <p>
+        {new Intl.DateTimeFormat("es", { dateStyle: "long" }).format(
+          new Date(date)
+        )}
       </p>
     );
   };
@@ -74,32 +70,34 @@ export const WorkshopCard = ({
     );
   };
 
+  const themeToClassNameMap = {
+    cardMetadata: {
+      colorful: styles.card__colorful,
+      dark: styles.card__dark,
+    },
+    cardLocationMetadata: {
+      colorful: styles.card__locationMetadata__colorful,
+      dark: styles.card__locationMetadata__dark,
+    },
+  };
   return (
-    <div className="flex flex-col border-2 border-main rounded-md z-30 p-5 h-min mx-auto w-full gap-2 backdrop-blur-sm shadow-lg max-w-2xl">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-2xl md:text-4xl font-extrabold flex items-start  text-transparent  bg-clip-text bg-gradient-to-r from-blue-800 via-blue-600 to-pink-500">
-          {title}
-        </h1>
-        <div className="flex text-sm md:text-base gap-2 md:gap-5">
-          <Location />
-          <span>|</span>
-          <AddToCalendar />
+    <div
+      className={`${styles.card} ${themeToClassNameMap["cardMetadata"][theme]}`}
+    >
+      <div className={`${styles.card__metadata}`}>
+        <div className={`${styles.card__metadata__title}`}>
+          <h1>{title}</h1>
+          <p> -&gt; {speakers.join(" & ")}</p>
         </div>
-        <Description />
+        <div className={`${styles.card__metadata__description} `}>
+          <p>{description}</p>
+          <p>{tags.join(", ")}</p>
+        </div>
       </div>
-      <DateEl />
-      <Speakers />
-      <div className="flex flex-wrap gap-2 mt-3">
-        {tags.map((t, i) => {
-          return (
-            <span
-              key={`${t}_${i}`}
-              className="bg-[#e4eaf4] py-1 px-3 rounded-xl"
-            >
-              {t}
-            </span>
-          );
-        })}
+      <div className={`${themeToClassNameMap["cardLocationMetadata"][theme]}`}>
+        <DateEl />
+        <RxDividerHorizontal />
+        <p>Lugar por definir...</p>
       </div>
     </div>
   );

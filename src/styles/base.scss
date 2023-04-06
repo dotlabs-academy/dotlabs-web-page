@@ -1,12 +1,8 @@
 $main-color: rgb(28 13 93);
-$complementary-color:rgb(221,115,115,1);
-
+$complementary-color: rgb(221, 115, 115, 1);
 
 .commonButton {
-    border-radius: 6px;
     text-align: center;
-    font-weight: bold;
-    border: solid 2px $main-color;
 }
 
 .container_column {
