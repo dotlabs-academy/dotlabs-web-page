@@ -22,7 +22,7 @@ const Layout = ({ children, headTitle, className }: LayoutProps) => {
         <link rel="icon" href="favicon.ico" />
       </Head>
       <Header />
-      <main className="pt-16 flex flex-col min-h-screen items-center bg-[#101010] text-white">
+      <main className="pt-16 flex flex-col min-h-screen bg-[#101010] text-white">
         {children}
       </main>
       <Footer />
