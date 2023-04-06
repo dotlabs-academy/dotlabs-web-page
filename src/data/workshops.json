@@ -47,7 +47,7 @@
             "calendarEventUrl": "http://www.google.com/calendar/event?location=Globant+-+One+Plaza+-+Medellin&action=TEMPLATE&details=Aprendamos+un+poco+de+los+contratos+de+gobernanza+y+sus+usos.&text=OpenZeppelin+Governor&dates=20230408T190000Z%2F20230408T213000Z"
         },
         {
-            "title": "De mortal a Dios con Rust I: Fundamentos.",
+            "title": "De mortal a Dios con Ink I: Fundamentos.",
             "speakers": [
                 "Carlos Rodriguez"
             ],
@@ -62,7 +62,7 @@
             "calendarEventUrl": "http://www.google.com/calendar/event?location=Globant+-+One+Plaza+-+Medellin&action=TEMPLATE&details=Aprende+los+fundamentos+y+las+particularidades+del+lenguajes+de+programación+Rust.+Uno+de+los+lenguajes+más+amados+en+la+industria.&text=De+mortal+a+Dios+con+Rust+I:+Fundamentos&dates=20230415T190000Z%2F20230415T213000Z"
         },
         {
-            "title": "De mortal a Dios con Rust II: Astar Network.",
+            "title": "De mortal a Dios con Ink II: Astar Network.",
             "speakers": [
                 "Carlos Rodriguez"
             ],
@@ -79,7 +79,7 @@
             "calendarEventUrl": "http://www.google.com/calendar/event?location=Globant+-+One+Plaza+-+Medellin&action=TEMPLATE&details=Conoce+la+parachain+más+popular+del+ecosistema+de+Polkadot.+Crea+tus+primeros+Smart+Contracts+en+Astar+Network+y+diseña+tu+primer+proyecto.&text=De+mortal+a+Dios+con+Rust+II:+Astar+Network&dates=20230422T190000Z%2F20230422T213000Z"
         },
         {
-            "title": "De mortal a Dios con Rust III: Astar Network.",
+            "title": "De mortal a Dios con Ink III: Astar Network.",
             "speakers": [
                 "Carlos Rodriguez"
             ],
