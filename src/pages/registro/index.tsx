@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 
-import Layout from "@/components/Layout";
-import styles from "@/styles/registration/index.module.scss";
-import Socials from "@/components/Socials";
-import { BackToHomeButton } from "@/components/buttons/BackToHomeButton";
+import Layout from "../../components/Layout";
+import styles from "../../styles/components/registration/index.module.scss";
+import Socials from "../../components/Socials";
+import { BackToHomeButton } from "../../components/buttons/BackToHomeButton";
 
 const Registration: NextPage = () => {
   return (

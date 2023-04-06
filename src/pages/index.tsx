@@ -1,7 +1,8 @@
-import Layout from "@/components/Layout";
 import Link from "next/link";
-import styles from "@/styles/components/homepage.module.scss";
-import Socials from "@/components/Socials";
+
+import Layout from "../components/Layout";
+import styles from "../styles/components/homepage.module.scss";
+import Socials from "../components/Socials";
 
 function HomePage() {
   return (
