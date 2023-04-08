@@ -1,0 +1,26 @@
+@import "../base/_colors"
+@import "../utilities/_mixins"
+
+.footer
+    height: fit-content
+    background-color: $main-color
+    color: $main-font
+    border-top: 2px solid #3f3f46
+    &__container
+        max-width: 55rem
+        margin: 0 auto
+        display: flex
+        flex-direction: column
+        gap: 2.75rem
+        align-items: center
+        padding: 3.5rem 1rem
+        padding-bottom: 4rem
+        @include tablet
+            gap: 11rem
+            flex-direction: row
+    &__content
+        display: flex
+        flex-direction: column
+        gap: 1.25rem
+    &__text
+        width: 100%

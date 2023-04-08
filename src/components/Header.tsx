@@ -4,11 +4,18 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between px-5 h-16 fixed w-full z-50 bg-[#101010] border-b-2 border-zinc-700">
+    <header>
       <Link href="/" passHref>
         <DotlbasLogo />
       </Link>
-      <ConnectKitButton theme="minimal" />
+      <ConnectKitButton
+        theme="rounded"
+        customTheme={{
+          "--ck-connectbutton-box-shadow":
+            "box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;",
+          "--ck-connectbutton-hover-color": "#483690",
+        }}
+      />
     </header>
   );
 };
