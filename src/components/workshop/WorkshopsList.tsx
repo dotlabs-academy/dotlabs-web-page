@@ -10,7 +10,7 @@ const isOddIndex = (index: number): boolean => {
 
 export const WorkshopsList = () => {
   return (
-    <div className="flex flex-col gap-10 mt-10 mb-32 px-4">
+    <div className="workshopList">
       <BackToHomeButton />
       {workshops.map((w, i) => {
         return (
