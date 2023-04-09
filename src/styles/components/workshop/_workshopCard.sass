@@ -2,16 +2,8 @@
 @import ../../base/_colors
 
 .card
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-items: center
-    justify-content: space-between
     gap: 5rem
-    padding: 3rem 1rem
-    border-radius: 1rem
-    transition-timing-function: cubic-bezier(.4,0,.2,1)
-    transition-duration: .15s
+    transition: all 0.2s ease-in-out
 
     @include smartphone
         flex-direction: row
@@ -21,12 +13,11 @@
         box-shadow: 0 4px 80px 2px rgba(43,217,194,.14)
 
     &__metadata
-        max-width: 400px
 
         &__title h1
             font-size: 2rem
             font-weight: 700
-            line-height: 2.2rem
+            line-height: 2rem
             @include smartphone
                 font-size: 2rem
                 font-weight: 700
@@ -44,60 +35,46 @@
             gap: 2rem
             padding-top: 1rem
             font-size: 0.9rem
-            font-weight: 500
+            font-weight: 400
 
         &__description p:last-child
-            font-weight: 200
+            font-weight: 300
             font-style: italic
 
         &__location
-            max-width: 400px
             display: flex
             flex-direction: column
-            justify-content: center
-            align-items: center
-            gap: 1rem
-            width: 100%
-            padding: 3rem 1rem
+            align-items: left
             z-index: 1
+            gap: .5rem
+            margin: 0.5rem 0 0 0
+
+            &__link 
+                display: flex
+                align-items: center
+                gap: .5rem
+                color: #d1cff3
 
             &--colorful
                 /* From https://css.glass */
-                background: rgba(255, 255, 255, 0.26)
-                border-radius: 16px
-                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1)
-                border: 1px solid rgba(255, 255, 255, 0.3)
-                backdrop-filter: blur(10.4px)
-                -webkit-backdrop-filter: blur(10.4px)
-                border: 1px solid rgba(255, 255, 255, 0.63)
 
             &--dark
-                background: rgba(255, 255, 255, 0.2)
-                border-radius: 16px
-                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1)
-                border: 1px solid rgba(255, 255, 255, 0.3)
-                backdrop-filter: blur(5px)
-                -webkit-backdrop-filter: blur(5px)
-                color: $main-font
+
     &--colorful
         color: $main-font
-        border: 1px solid white
-        transition-timing-function: cubic-bezier(.4,0,.2,1)
-        transition-duration: .15s
-        background: linear-gradient(135deg,#0ae09dc9 3.63%,#40bdf3ad 46.17%,#8d0b4ec5 100.56%)
+        border: none
+        @include smartphone
+            padding: 5rem 2rem
+            border: 1px solid white
 
     &--dark
-        background: rgba(255, 255, 255, 0.2)
-        border-radius: 16px
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1)
-        backdrop-filter: blur(5px)
-        -webkit-backdrop-filter: blur(5px)
-        border: 1px solid rgba(255, 255, 255, 0.3)
+        border-top: 1px solid rgba(255, 255, 255, 1)
+        border-bottom: 1px solid rgba(255, 255, 255, 1)
+        padding: 3rem 0
         @include smartphone
+            padding: 5rem 2rem
+            border: 1px solid white
             display: flex
             flex-direction: row-reverse
 
-.divider
-    border-top: 1px solid black
-    margin-top: 1rem
-    margin-bottom: 1rem

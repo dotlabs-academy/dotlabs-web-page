@@ -22,6 +22,7 @@ export const WorkshopsList = () => {
             description={w.description}
             calendarEventUrl={w.calendarEventUrl}
             key={`${i}_${w.title}`}
+            location={w.location}
             theme={isOddIndex(i) ? "dark" : "colorful"}
           />
         );
