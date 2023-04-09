@@ -1,0 +1,93 @@
+@import "../base/_colors"
+@import "../utilities/_mixins"
+
+@keyframes gradient
+    0%
+        background-position: 0% 50%
+
+    50%
+        background-position: 100% 50%
+
+    100%
+        background-position: 0% 50%
+
+.homepage
+
+    color: $main-font
+
+    &__container
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        max-width: 60rem
+        padding: 2rem 20px
+        gap: 15px
+        z-index: 50
+
+    &__title
+        display: flex
+
+        font-family: monospace
+        font-size: 2.4rem
+        font-weight: 700
+        color: $main-font
+        line-height: 3rem
+        flex-wrap: wrap
+        @include tablet
+            font-size: 3.5rem
+            line-height: 5rem
+            text-align: center
+        @include desktop
+            font-size: 4rem
+            max-width: 1100px
+
+    &__title > span
+        background: radial-gradient(circle at center center, #4A00E0 0%, #8E2DE2 100%)
+        -webkit-background-clip: text
+        -webkit-text-fill-color: transparent
+
+    &__copy
+        max-width: 700px
+        text-align: center
+        font-weight: 300
+        font-size: 1.1rem
+        @include tablet
+            text-align: justify
+            font-size: 1.3rem
+            text-align: center
+
+    &__copy > span
+        font-weight: 700
+
+    &__btn--container
+        display: flex
+        flex-direction: column
+        margin: 0
+        width: 100%
+        @include smartphone
+            max-width: 700px
+            flex-direction: row
+            gap: 8px
+            width: 100%
+        @include tablet
+            max-width: 700px
+            width: 80%
+
+    &__btn
+        @include commonBtn($complementary-color)
+        flex: 1 1 0%
+        margin: 1rem 0rem
+        font-size: 1.125rem
+        line-height: 1.75rem
+        width: 100%
+        padding: 8px 0
+        @include tablet
+            font-size: 1.3rem
+
+        &--black
+            background-color: transparent
+            color: $main-font
+        &--white
+            background-color: $complementary-color
+            color: $complementary-font

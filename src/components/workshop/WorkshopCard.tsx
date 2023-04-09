@@ -1,17 +1,19 @@
-import { IoLocationSharp } from "react-icons/io5";
+import { IoLocationSharp, IoCalendarOutline } from "react-icons/io5";
 import { FiExternalLink } from "react-icons/fi";
-import { RxDividerHorizontal } from "react-icons/rx";
-
-import styles from "@/styles/components/workshops/workshopCard.module.scss";
 
 type WordShopCardTheme = "colorful" | "dark";
+
+type Location = { text: string; url: string };
+type Date = { text: string; url: string };
+
 export interface IWorkshopCard {
   title: string;
-  date: string;
+  date: Date;
   speakers: string[];
   tags: string[];
   description: string;
   calendarEventUrl: string;
+  location: Location;
   theme?: WordShopCardTheme;
 }
 
@@ -22,48 +24,41 @@ export const WorkshopCard = ({
   tags,
   description,
   calendarEventUrl,
+  location,
+
   theme = "colorful",
 }: IWorkshopCard) => {
-  const Speakers = () => (
-    <p>
-      <span className="font-bold">Presentado por:</span> {speakers.join(", ")}
-    </p>
-  );
-
   const DateEl = () => {
-    if (date === "") return null;
-
+    if (date.text === "") return null;
     return (
-      <p>
-        {new Intl.DateTimeFormat("es", { dateStyle: "long" }).format(
-          new Date(date)
-        )}
-      </p>
+      <a href={date.url} className="card__metadata__location__link">
+        <IoCalendarOutline />
+        <p>
+          {new Intl.DateTimeFormat("es", { dateStyle: "long" }).format(
+            new Date(date.text)
+          )}
+        </p>
+      </a>
     );
   };
 
   const Location = () => {
     return (
       <a
-        href="https://goo.gl/maps/jni89bkMGe9MtFb1A"
+        href={location.url}
+        className="card__metadata__location__link"
         rel="noreferrer"
         target="_blank"
-        className="flex items-center gap-2"
       >
         <IoLocationSharp />
-        <p>Globant, One Plaza</p>
+        {location.text === "" ? "Lugar por definir..." : location.text}
       </a>
     );
   };
 
   const AddToCalendar = () => {
     return (
-      <a
-        href={calendarEventUrl}
-        rel="noreferrer"
-        target="_blank"
-        className="flex items-center gap-2"
-      >
+      <a href={calendarEventUrl} rel="noreferrer" target="_blank">
         <FiExternalLink />
         <p>Agendar</p>
       </a>
@@ -72,32 +67,33 @@ export const WorkshopCard = ({
 
   const themeToClassNameMap = {
     cardMetadata: {
-      colorful: styles.card__colorful,
-      dark: styles.card__dark,
+      colorful: "card--colorful",
+      dark: "card--dark",
     },
     cardLocationMetadata: {
-      colorful: styles.card__locationMetadata__colorful,
-      dark: styles.card__locationMetadata__dark,
+      colorful: "card__metadata__location--colorful",
+      dark: "card__metadata__location--dark",
     },
   };
   return (
-    <div
-      className={`${styles.card} ${themeToClassNameMap["cardMetadata"][theme]}`}
-    >
-      <div className={`${styles.card__metadata}`}>
-        <div className={`${styles.card__metadata__title}`}>
+    <div className={`card ${themeToClassNameMap["cardMetadata"][theme]}`}>
+      <div className="card__metadata">
+        <div className="card__metadata__title">
           <h1>{title}</h1>
           <p> -&gt; {speakers.join(" & ")}</p>
         </div>
-        <div className={`${styles.card__metadata__description} `}>
+        <div>
+          <div
+            className={`card__metadata__location ${themeToClassNameMap["cardLocationMetadata"][theme]}`}
+          >
+            <DateEl />
+            <Location />
+          </div>
+        </div>
+        <div className="card__metadata__description">
           <p>{description}</p>
           <p>{tags.join(", ")}</p>
         </div>
-      </div>
-      <div className={`${themeToClassNameMap["cardLocationMetadata"][theme]}`}>
-        <DateEl />
-        <RxDividerHorizontal />
-        <p>Lugar por definir...</p>
       </div>
     </div>
   );

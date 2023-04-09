@@ -1,0 +1,79 @@
+@import ../../utilities/_mixins
+@import ../../base/_colors
+
+.card
+    gap: 5rem
+    transition: all 0.2s ease-in-out
+
+    @include smartphone
+        flex-direction: row
+        padding: 5rem 2rem
+
+    &:hover
+        box-shadow: 0 4px 80px 2px rgba(43,217,194,.14)
+
+    &__metadata
+
+        &__title h1
+            font-size: 2rem
+            font-weight: 700
+            line-height: 2rem
+            @include smartphone
+                font-size: 2rem
+                font-weight: 700
+
+        &__title p
+            padding-left: .5rem
+            font-style: italic
+            font-size: 1rem
+            font-weight: 200
+            line-height: 1.3rem
+
+        &__description
+            display: flex
+            flex-direction: column
+            gap: 2rem
+            padding-top: 1rem
+            font-size: 0.9rem
+            font-weight: 400
+
+        &__description p:last-child
+            font-weight: 300
+            font-style: italic
+
+        &__location
+            display: flex
+            flex-direction: column
+            align-items: left
+            z-index: 1
+            gap: .5rem
+            margin: 0.5rem 0 0 0
+
+            &__link 
+                display: flex
+                align-items: center
+                gap: .5rem
+                color: #ffffff
+
+            &--colorful
+
+            &--dark
+
+    &--colorful
+        color: $main-font
+        border: none
+        @include smartphone
+            padding: 5rem 2rem
+            border: 1px solid white
+
+    &--dark
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1)
+        border-top: 1px solid rgba(255, 255, 255, 1)
+        border-bottom: 1px solid rgba(255, 255, 255, 1)
+        padding: 3rem 0
+        @include smartphone
+            padding: 5rem 2rem
+            border: 1px solid white
+            display: flex
+            flex-direction: row-reverse
+

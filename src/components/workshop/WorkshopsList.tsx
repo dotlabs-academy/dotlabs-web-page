@@ -10,7 +10,7 @@ const isOddIndex = (index: number): boolean => {
 
 export const WorkshopsList = () => {
   return (
-    <div className="flex flex-col gap-10 mt-10 mb-32 px-4">
+    <div className="workshopList">
       <BackToHomeButton />
       {workshops.map((w, i) => {
         return (
@@ -22,6 +22,7 @@ export const WorkshopsList = () => {
             description={w.description}
             calendarEventUrl={w.calendarEventUrl}
             key={`${i}_${w.title}`}
+            location={w.location}
             theme={isOddIndex(i) ? "dark" : "colorful"}
           />
         );

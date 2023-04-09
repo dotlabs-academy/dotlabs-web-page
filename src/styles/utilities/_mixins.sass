@@ -1,0 +1,20 @@
+@mixin commonBtn($color)
+    text-align: center
+    font-weight: 600
+    border: solid 2px $color
+    transition: all 0.2s ease-in-out
+
+    &:hover
+        border-radius: .5rem
+
+@mixin smartphone
+    @media only screen and (min-width: 640px)
+        @content
+
+@mixin tablet
+    @media only screen and (min-width: 768px)
+        @content
+
+@mixin desktop
+    @media only screen and (min-width: 1024px)
+        @content
