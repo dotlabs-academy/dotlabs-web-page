@@ -73,19 +73,31 @@ function HomePage() {
         />
       </svg>
       <div className="homepage homepage__container">
-        <h1 className="homepage__title">Bienvenido a dotlabs(&nbsp;)</h1>
+        <h1 className="homepage__title">
+          <span>{"{"}</span>
+          {"knowledge"}
+          <span>{"}"}</span> = dotlabs()
+        </h1>
         <p className="homepage__copy">
-          Somos el lugar perfecto para aprender Blockchain de una forma fácil,
-          divertida y profesional. Aprende, profundiza, conecta y enseña.
+          Impulsamos el desarrollo y la adopción de blockchain a través de la
+          enseñanza, la investigación y la creación de proyectos.{" "}
+          <span>
+            Queremos que la tecnología blockchain sea accesible para todos.
+          </span>
         </p>
 
         <div className="homepage__btn--container">
           <Link href="/talleres" className="homepage__btn homepage__btn--white">
             Talleres
           </Link>
-          {/* <Link href="/registro" className="homepage__btn homepage__btn--white">
+          <a
+            href="https://discord.gg/5a6V3tnXpW"
+            target="_blank"
+            rel="noreferrer"
+            className="homepage__btn homepage__btn--bordered"
+          >
             ¡Únete a la comunidad!
-          </Link> */}
+          </a>
         </div>
         <Socials white={true} />
       </div>
