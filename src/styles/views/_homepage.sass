@@ -20,40 +20,58 @@
         flex-direction: column
         justify-content: center
         align-items: center
+        max-width: 60rem
         padding: 2rem 20px
         gap: 15px
         z-index: 50
 
     &__title
-        font-size: 2.2rem
+        display: flex
+
+        font-family: monospace
+        font-size: 2.4rem
         font-weight: 700
         color: $main-font
         line-height: 3rem
+        flex-wrap: wrap
         @include tablet
             font-size: 3.5rem
             line-height: 5rem
             text-align: center
         @include desktop
-            font-size: 4.3rem
+            font-size: 4rem
             max-width: 1100px
 
+    &__title > span
+        background: radial-gradient(circle at center center, #4A00E0 0%, #8E2DE2 100%)
+        -webkit-background-clip: text
+        -webkit-text-fill-color: transparent
+
     &__copy
-        text-align: justify
+        max-width: 700px
+        text-align: center
+        font-weight: 300
+        font-size: 1.1rem
         @include tablet
+            text-align: justify
+            font-size: 1.3rem
             text-align: center
-            padding: 0 10%
+
+    &__copy > span
+        font-weight: 700
 
     &__btn--container
         display: flex
         flex-direction: column
-        gap: 8px
-        width: 100%
         margin: 0
+        width: 100%
         @include smartphone
+            max-width: 700px
             flex-direction: row
             gap: 8px
             width: 100%
         @include tablet
+            max-width: 700px
             width: 80%
 
     &__btn
@@ -73,4 +91,3 @@
         &--white
             background-color: $complementary-color
             color: $complementary-font
-

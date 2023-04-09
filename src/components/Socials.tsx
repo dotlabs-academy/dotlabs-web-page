@@ -33,14 +33,14 @@ const Socials = ({ white, customStyles }: SocialsProps) => {
         <BsInstagram className="text-2xl" />
       </a>
 
-      <a
+      {/* <a
         className="flex justify-center"
         href="https://discord.gg/5a6V3tnXpW"
         target="_blank"
         rel="noreferrer"
       >
         <BsDiscord className="text-2xl" />
-      </a>
+      </a> */}
     </div>
   );
 };
