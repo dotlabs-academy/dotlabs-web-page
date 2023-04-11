@@ -49,7 +49,6 @@ function HomePage() {
           width: "90%",
           height: "90%",
           zIndex: 0,
-          transform:"rotate(10deg)",
         }}
       >
         <defs>
