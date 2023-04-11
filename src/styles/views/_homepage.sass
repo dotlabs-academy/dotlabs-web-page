@@ -27,7 +27,7 @@
 
     &__title
         display: flex
-
+        justify-content: center
         font-family: monospace
         font-size: 2.4rem
         font-weight: 700
@@ -39,13 +39,16 @@
             line-height: 5rem
             text-align: center
         @include desktop
-            font-size: 4rem
+            font-size: 3.8rem
             max-width: 1100px
+
 
     &__title > span
         background: radial-gradient(circle at center center, #4A00E0 0%, #8E2DE2 100%)
+        background-size: 600% 600%
         -webkit-background-clip: text
         -webkit-text-fill-color: transparent
+        animation: gradient 1s 
 
     &__copy
         max-width: 700px
@@ -63,7 +66,8 @@
     &__btn--container
         display: flex
         flex-direction: column
-        margin: 0
+        margin: 1rem 0
+        gap: 1rem
         width: 100%
         @include smartphone
             max-width: 700px
@@ -77,9 +81,9 @@
     &__btn
         @include commonBtn($complementary-color)
         flex: 1 1 0%
-        margin: 1rem 0rem
         font-size: 1.125rem
         line-height: 1.75rem
+        border-radius: 8px
         width: 100%
         padding: 8px 0
         @include tablet

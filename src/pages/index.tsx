@@ -13,7 +13,7 @@ function HomePage() {
           position: "absolute",
           top: 0,
           left: 0,
-          width: "70%",
+          width: "80%",
           height: "100%",
         }}
       >
@@ -28,7 +28,7 @@ function HomePage() {
           >
             <stop
               offset="0%"
-              style={{ stopColor: "#1d1160", stopOpacity: 1 }}
+              style={{ stopColor: "#101C7A", stopOpacity: 1 }}
             />
             <stop offset="100%" style={{ stopColor: "#000", stopOpacity: 1 }} />
           </linearGradient>
@@ -45,10 +45,11 @@ function HomePage() {
         style={{
           position: "absolute",
           bottom: 0,
-          right: 0,
-          width: "100%",
-          height: "100%",
+          left: 0,
+          width: "90%",
+          height: "90%",
           zIndex: 0,
+          transform:"rotate(10deg)",
         }}
       >
         <defs>
@@ -61,7 +62,7 @@ function HomePage() {
           >
             <stop
               offset="0%"
-              style={{ stopColor: "#1d1160", stopOpacity: 1 }}
+              style={{ stopColor: "#01754B", stopOpacity: 1 }}
             />
             <stop offset="100%" style={{ stopColor: "#000", stopOpacity: 1 }} />
           </linearGradient>
@@ -69,14 +70,14 @@ function HomePage() {
         <path
           d="M484.333 630.421L704.919 377.788C677.311 384.461 600.369 393.804 513.467 377.788C404.839 357.767 569.654 258.145 484.333 123.248C399.013 -11.6485 547.179 72.7212 786.493 6.94126C977.945 -45.6827 1059.94 213.814 1077 350.141L845.594 824.9C867.375 648.216 875.06 377.025 731.555 705.734C588.05 1034.44 598.788 818.227 622.095 669.031L533.861 746.727L484.333 630.421Z"
           fill="url(#paint1_linear_837_2898)"
-          fill-opacity="0.8"
+          fill-opacity="1"
         />
       </svg>
       <div className="homepage homepage__container">
         <h1 className="homepage__title">
           <span>{"{"}</span>
           {"knowledge"}
-          <span>{"}"}</span> = dotlabs()
+          <span>{"}"}</span>&nbsp;= dotlabs()
         </h1>
         <p className="homepage__copy">
           Impulsamos el desarrollo y la adopción de blockchain a través de la

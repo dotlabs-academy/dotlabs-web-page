@@ -8,7 +8,13 @@ const Header = () => {
       <Link href="/" passHref>
         <DotlbasLogo />
       </Link>
-      <ConnectKitButton theme="minimal" />
+      <ConnectKitButton 
+      // customTheme={
+      //   {
+      //     "--ck-overlay-background": "rgba(255, 0, 0, 0)",
+      //   }
+      // } 
+      />
     </header>
   );
 };
