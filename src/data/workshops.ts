@@ -22,7 +22,7 @@ export const workshops = [
 		speakers: ["Juan Cogollo", "Tomas Calle"],
 		imgUrl: ozGovernor,
 		description:
-			"Aprendamos un poco sobre los contratos de governanza creado por el equipo de Open Zeppelin y como podemos utilizarlos para crear nuestros propios protocolos de governanza.",
+			"Aprendamos un poco sobre los contratos de gobernanza creado por el equipo de Open Zeppelin y como podemos utilizarlos para crear nuestros propios protocolos de gobernanza.",
 		date: "04/22/2023",
 		tags: ["Blockchain", "Open Zeppelin", "Solidity"],
 		calendarEventUrl:
