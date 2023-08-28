@@ -2,9 +2,18 @@
 	path = _blockchain/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
 [submodule "lib/forge-std"]
-	branch = v1.5.0
+	branch = v1.5.2
 [submodule "_blockchain/lib/openzeppelin-contracts"]
 	path = _blockchain/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
 [submodule "lib/openzeppelin-contracts"]
-	branch = v4.8.2
+	branch = v4.5.0
+[submodule "_blockchain/foundry/lib/forge-std"]
+	path = _blockchain/foundry/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "bc-foundry/lib/forge-std"]
+	path = bc-foundry/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "bc-foundry/lib/openzeppelin-contracts"]
+	path = bc-foundry/lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts

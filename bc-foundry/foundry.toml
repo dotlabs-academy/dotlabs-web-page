@@ -1,0 +1,10 @@
+[profile.default]
+src = 'src'
+out = 'out'
+libs = ['lib']
+
+[rpc_endpoints]
+polygon_mumbai = "${MUMBAI_RPC_URL}"
+
+[etherscan]
+polygon_mumbai = { key = "${ETHERSCAN_API_KEY}" }
